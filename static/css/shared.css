@@ -1,0 +1,25 @@
+body{
+    background: #120C1E;
+    text-align: center;
+}
+
+h1{
+    color: #008044;
+    font-family: 'VT323', monospace;
+    font-size: 10em;
+}
+
+.question{
+    color: #5CC52B;
+    font-size: 2.5em;
+}
+
+.yes{
+    color: #D60A6C;
+    font-size: 2.5em;
+}
+
+.no{
+    color: #5D0057;
+    font-size: 2.5em;
+}
