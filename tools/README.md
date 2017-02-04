@@ -7,3 +7,5 @@ otherwise,
 ```
 pip install beautifulsoup4
 ```
+
+then you can play around :)
