@@ -38,6 +38,8 @@ for m in MovieList:
 target = raw_input("Please use one word to describe the movie you would like to watch today ==> \n")
 
 # Use word2vec to calculate similarity between two words
+# Uncomment this chunk of code for the first time, it's training word2vec model and save it so that if you are using it
+# next time, you just need to load it. Training process is super slow, we don't want to wait for it every time.
 '''
 # save the model first so that the speed will become faster
 sentences = MySentence('processed_plot_summaries.txt')
