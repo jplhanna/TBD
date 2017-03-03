@@ -1,4 +1,4 @@
-## This folder contains some algorithms we implement for the website
+## This folder contains some algorithms we tried for the website
 
 ### WordDescription Part
 
