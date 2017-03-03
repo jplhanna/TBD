@@ -2,7 +2,6 @@ import os
 import csv
 from word2vec import *
 import gensim, logging
-import nltk
 
 # A movie class that's used to record the information of a Movie
 class Movie:
