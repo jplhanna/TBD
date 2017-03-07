@@ -1,0 +1,14 @@
+Commenting before all functions
+Member variables will start with an underscore: _
+Iterators: title_itr
+Temp variables: title_tmp
+Correctly use == vs .equals()
+Function names will be camel case
+Heuristics are {and, or ,not}
+Spaces are all {= ,( , ) , etc}
+Parenthesis around all boolean operations
+No global variables unless 100% necessary
+In all ALL_CAPS_AND_UNDERSCORES
+Limit god classes and functions
+Files should be the same name as the main class, header or implementation
+Stay away from switch statements
