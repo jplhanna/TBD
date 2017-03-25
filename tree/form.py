@@ -16,7 +16,7 @@ class LoginForm(forms.Form):
     )
     password = forms.CharField(
         required=True,
-        label=u"密码",
+        label="Password",
         error_messages={'required': 'Please enter the password'},
         widget=forms.PasswordInput(
             attrs={
