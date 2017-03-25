@@ -20,7 +20,7 @@ class Command(BaseCommand):
     def CreateMovies(self, csv):
         _movie_Data=MovieParser(csv)
         for _movie_tmp in _movie_Data:
-            _new_Movie_tmp=Movie(_movie_tmp[1],_movie_tmp[2],_movie_tmp[0],_movie_tmp[3])
+            _new_Movie_tmp=Movie(title=_movie_tmp[1],imdb=_movie_tmp[2],duration=_movie_tmp[0],year=_movie_tmp[3])
             _new_Movie_tmp.save()
         
     '''
