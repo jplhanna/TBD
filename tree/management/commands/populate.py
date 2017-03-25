@@ -1,11 +1,16 @@
-from django.core.management.base import BaseCommand
-from .models import Movie
+from django.core.management.base import BaseCommand, CommandError
+from tree.models import Movie
 from parser import MovieParser
 
 #So rather than calling the parser we call manage with a specific function line which will call this. The function should include the location of the file being added
 #Parser could be called to parse the file and return the proper list. The parser could be a factor method
 
 class Command(BaseCommand):
+    help="Populates Movie table/database with data given in csv's"
+    
+    def add_arguments(self,parser):
+        #The argument of the populate command, aka the csv file location, there should be at least 1
+        parser.add_argument('csv_location',nargs='+',help='Must input one valid csv file location')
     
     '''
     CreateMovies: A method which populates or adds movies into the database
@@ -24,6 +29,5 @@ class Command(BaseCommand):
            **options: A map of operations, which contain options for the command which is being run. 
     '''
     def handle(self,*args,**options):
-        if(len(args)!=1):
-            raise IndexError('Incorrect number of arguments for command')
-        self.CreateMovies(options[0])
+        for _csv_tmp in options['csv_location']:
+            self.CreateMovies(_csv_tmp)
