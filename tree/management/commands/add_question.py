@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from tree.models import *
+import sys
 
 #So rather than calling the parser we call manage with a specific function line which will call this. The function should include the location of the file being added
 #Parser could be called to parse the file and return the proper list. The parser could be a factor method
@@ -23,9 +24,13 @@ class Command(BaseCommand):
         _new_Question_tmp=Question(question_text=question)
         _new_Question_tmp.save()
         _movies_array_tmp = Movie.objects.all()
+        _count_tmp = 0.0
         for m in _movies_array_tmp:
+            _count_tmp += 1
             _new_Score_tmp=Score(movie=m, question=_new_Question_tmp, score=.5)
             _new_Score_tmp.save()
+            sys.stdout.write("Creation progress: %f%%   \r" % (100 * _count_tmp / len(_movies_array_tmp)) )
+            sys.stdout.flush()
         
     '''
     handle: The command connected to the manage.py command prompt. Is meant to update/populate the movie database using a csv
