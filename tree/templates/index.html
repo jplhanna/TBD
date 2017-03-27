@@ -16,6 +16,7 @@
         <link rel="stylesheet" type="text/css" href="{% static 'css/shared.css' %}"/>
     </head>
     <body>
+        <!--
         {% if request.flavour == "mobile" %}
             <h1 class="col-md-12">TBD</h1>
         {% else %}
@@ -25,5 +26,32 @@
         <p class="col-md-12 question">Are you ready to play a game?</p>
         <p class="col-md-6 yes">Yes</p>
         <p class="col-md-6 no">No</p>
+        -->
+        <h1 id = "header"></h1>
+        <p id = "answer"></p>
+        <script>
+            var header = document.getElementById("header");
+            header.innerHTML = "Delphi Recommendation Engine";
+            header.style.color = "rgb(155, 102, 102)";
+            
+            var answer = document.getElementById("answer");
+            answer.innerHTML = "--not yet answered--";
+            answer.style.color = "rgb(200, 200, 200)";
+            answer.style.fontSize = "35px";
+        </script>
+        <button id = "buttonYes" onclick = "clickYes()" style = "font-size = 35px;">YES!</button>
+        <script>
+        function clickYes() {
+            var answer = document.getElementById("answer");
+            answer.innerHTML = "-- answered yes --";
+        }
+        </script>
+        <button id = "bettonNO" onclick = "clickNo()">NO!</button>
+        <script>
+        function clickNo () {
+            var answer = document.getElementById("answer");
+            answer.innerHTML = "-- answered no --";
+        }
+        </script>
     </body>
 </html>
