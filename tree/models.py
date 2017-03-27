@@ -29,9 +29,10 @@ class Movie(models.Model):
     duration=models.IntegerField(default=0)
     year=models.IntegerField(default=2017)#current year, might be able to switch this to time current year
     
+class Question(models.Model):
+    question_text=models.CharField(max_length=500, unique=True)
     
-    
-class Review(models.Model):
+class Score(models.Model):
     movie=models.ForeignKey(Movie,on_delete=models.CASCADE)
-    text=models.CharField(max_length=500)
-    score=models.IntegerField(default=0)
+    question=models.ForeignKey(Question, null=False)
+    score=models.DecimalField(default=0.5, decimal_places=3, max_digits=5)
