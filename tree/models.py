@@ -36,3 +36,8 @@ class Score(models.Model):
     movie=models.ForeignKey(Movie,on_delete=models.CASCADE)
     question=models.ForeignKey(Question, null=False)
     score=models.DecimalField(default=0.5, decimal_places=3, max_digits=5)
+    
+class Review(models.Model):
+    movie=models.ForeignKey(Movie,on_delete=models.CASCADE)
+    text=models.CharField(max_length=500)
+    score=models.IntegerField(default=0)
