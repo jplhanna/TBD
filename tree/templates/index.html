@@ -10,6 +10,7 @@
         
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="{% static 'js/shared.js' %}"></script>
         
         <!-- Edited bootstrap -->
         <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
@@ -29,29 +30,7 @@
         -->
         <h1 id = "header"></h1>
         <p id = "answer"></p>
-        <script>
-            var header = document.getElementById("header");
-            header.innerHTML = "Delphi Recommendation Engine";
-            header.style.color = "rgb(155, 102, 102)";
-            
-            var answer = document.getElementById("answer");
-            answer.innerHTML = "--not yet answered--";
-            answer.style.color = "rgb(200, 200, 200)";
-            answer.style.fontSize = "35px";
-        </script>
         <button id = "buttonYes" onclick = "clickYes()" style = "font-size = 35px;">YES!</button>
-        <script>
-        function clickYes() {
-            var answer = document.getElementById("answer");
-            answer.innerHTML = "-- answered yes --";
-        }
-        </script>
         <button id = "bettonNO" onclick = "clickNo()">NO!</button>
-        <script>
-        function clickNo () {
-            var answer = document.getElementById("answer");
-            answer.innerHTML = "-- answered no --";
-        }
-        </script>
     </body>
 </html>
