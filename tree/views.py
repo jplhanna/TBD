@@ -15,3 +15,7 @@ def populate(request):
         for row in spamreader:
             print row[11]
     return render(request, "index.html")
+def signup(request):
+    return render(request, "signup.html")
+def signin(request):
+    return render(request, "signin.html")
