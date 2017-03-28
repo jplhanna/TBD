@@ -27,3 +27,8 @@ class questions(generic.ListView):
         print self.getQuestions()
         context['question_list'] = self.getQuestions()
         return context
+        
+def signup(request):
+    return render(request, "signup.html")
+def signin(request):
+    return render(request, "signin.html")
