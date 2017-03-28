@@ -13,9 +13,9 @@ class Command(BaseCommand):
         parser.add_argument('question_text',nargs='+',help='Must input question text')
     
     '''
-    CreateMovies: A method which populates or adds movies into the database
-    input: csv: A string containing the file location with the movies to be input
-    modifies: The movie database contained in db.splite3, and based on the Movie model in the Tree application. Adds movies into said database
+    CreateQuestion: A method which adds a movie to the tree database 
+    input: question: A string containing the question which is being created
+    modifies: The Question table contained in db.splite3, and based on the Question model in the Tree application. Adds a question into said database
     '''
     def CreateQuestion(self, question):
         if(len(question) >= 500):
@@ -27,15 +27,15 @@ class Command(BaseCommand):
         _count_tmp = 0.0
         for m in _movies_array_tmp:
             _count_tmp += 1
-            _new_Score_tmp=Score(movie=m, question=_new_Question_tmp, score=.5)
+            _new_Score_tmp=Score(movie=m, question=_new_Question_tmp, score=0)
             _new_Score_tmp.save()
             sys.stdout.write("Creation progress: %f%%   \r" % (100 * _count_tmp / len(_movies_array_tmp)) )
             sys.stdout.flush()
         
     '''
-    handle: The command connected to the manage.py command prompt. Is meant to update/populate the movie database using a csv
-    input: *args: A list of arguments which have been input. Which should just include the csv file location
-           **options: A map of operations, which contain options for the command which is being run. 
+    handle: The command connected to the manage.py command prompt. Is meant to update/populate the question table using a csv
+    input: *args: A list of arguments which have been input.
+           **options: A map of operations, which contain options for the command which is being run. Which should just include the question text
     '''
     def handle(self,*args,**options):
         str = ""

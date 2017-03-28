@@ -23,6 +23,9 @@ class Movie(models.Model):
         self.duration=duration
         self.year=year
     
+    def __str__(self):
+        return self.title
+    
     #might need to increase this size if there are any movies with titles larger than this
     title=models.CharField(max_length=200)#can set this as primary key
     imdb=models.CharField(max_length=500)
@@ -32,12 +35,17 @@ class Movie(models.Model):
 class Question(models.Model):
     question_text=models.CharField(max_length=500, unique=True)
     
+    def __str__(self):
+        return self.question_text
+    
 class Score(models.Model):
     movie=models.ForeignKey(Movie,on_delete=models.CASCADE)
     question=models.ForeignKey(Question, null=False)
-    score=models.DecimalField(default=0.5, decimal_places=3, max_digits=5)
+    score=models.DecimalField(default=0, decimal_places=3, max_digits=5)
     
 class Review(models.Model):
     movie=models.ForeignKey(Movie,on_delete=models.CASCADE)
     text=models.CharField(max_length=500)
     score=models.IntegerField(default=0)
+    
+#Might need to add a model here, for the yes and no choices

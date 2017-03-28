@@ -15,7 +15,7 @@ class Command(BaseCommand):
     '''
     CreateMovies: A method which populates or adds movies into the database
     input: csv: A string containing the file location with the movies to be input
-    modifies: The movie database contained in db.splite3, and based on the Movie model in the Tree application. Adds movies into said database
+    modifies: The movie table contained in db.splite3, and based on the Movie model in the Tree application. Adds movies into said database
     '''
     def CreateMovies(self, csv):
         _movie_Data=MovieParser(csv)
@@ -25,8 +25,8 @@ class Command(BaseCommand):
         
     '''
     handle: The command connected to the manage.py command prompt. Is meant to update/populate the movie database using a csv
-    input: *args: A list of arguments which have been input. Which should just include the csv file location
-           **options: A map of operations, which contain options for the command which is being run. 
+    input: *args: A list of arguments which have been input. 
+           **options: A map of operations, which contain options for the command which is being run. Which should just include the csv file location
     '''
     def handle(self,*args,**options):
         for _csv_tmp in options['csv_location']:
