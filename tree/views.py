@@ -83,6 +83,7 @@ class questions(generic.ListView):
         context['question_list'], str = self.getQuestions()
         context['scores'] = current_scores
         self.request.session.__setitem__('questions', str)
+        self.request.session.__setitem__('response', '0')
         print "...SORRY TO HAVE DOUBTED YOU"
         return context
         
@@ -119,6 +120,40 @@ def handleQuestion(request):
             scores = np.matrix(scores)
             response_data['best_movie'] = movies[np.argmax(scores)].id
         
+
+        response_data['result'] = 'Create post successful!'
+
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
+        
+'''
+handleResponse: Handles the users interactions with questions: outputing questions, collecting the answer and updating the session,
+                eventually outputting the recommended movie
+input: request: An html request which is sent by the user as they are on the Question webpage
+ouput: An http_response which contains the movie object and other needed information.
+'''
+def handleResponse(request):
+    response_data = {}
+    if request.method == "GET":
+        response = request.GET.get('like')
+        current_response = int(request.session.__getitem__('response'))
+        movie = int(request.GET.get('movie'))
+        multiplier = float(1 * response)
+        if response == current_response:
+            return
+        elif current_response != 0:
+            multiplier = float(2 * response)
+        scores = request.session.__getitem__('scores').split(',')
+        questions = request.session.__getitem__('questions').split(',')
+        for itr in range(0, 10):
+            score = int(scores[itr])
+            if score == 0:
+                return
+            score_obj = get_object_or_404(Score, movie_id=movie, question_id=int(questions[itr]))
+            score_obj.score += multiplier * float(.05) * float(score)
+            score_obj.save()
 
         response_data['result'] = 'Create post successful!'
 

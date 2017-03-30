@@ -22,7 +22,7 @@ function clickNo () {
 
 // AJAX for posting
 function submit(yn) {
-    console.log("yes is working!") // sanity check
+    console.log("yes is working!"); // sanity check
     if(_question_num >= 9){
         $('#buttons').html(" ");
     }
@@ -41,6 +41,23 @@ function submit(yn) {
                 window.location.href = '/tbd/movie/' + data["best_movie"];
             }
             $('#question').html(questions[_question_num]);
+        }
+    });
+};
+
+// AJAX for posting
+function submitResponse(like) {
+    console.log("submitResponse is working!"); // sanity check
+
+    $.ajax({
+        url: '/tbd/handleResponse',
+        data: {
+            'like': like,
+            'movie': movie_id
+        },
+        dataType: 'json',
+        success: function (data) {
+            console.log(data);
         }
     });
 };

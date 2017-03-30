@@ -19,6 +19,7 @@
         
         <!-- Edited bootstrap -->
         <title>Delphi Recommendation Engine</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
     	<link rel="stylesheet" href="{% static 'css/style.css' %}">
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     </head>
@@ -50,8 +51,8 @@
         <p id = "results"></p>
         <p id = "answer"></p>
         <div id="buttons">
-            <button class="btn" id="buttonYes" onclick="submit(1)" style="font-size = 35px;">Yes</button>
-            <button class="btn" id="buttonNo" onclick="submit(-1)" style="font-size = 35px;">No</button>
+            <button type="button" class="btn btn-success" id="buttonYes" onclick="submit(1)" style="font-size = 35px;">Yes</button>
+            <button type="button" class="btn btn-danger" id="buttonNo" onclick="submit(-1)" style="font-size = 35px;">No</button>
         </div>
     </body>
 </html>

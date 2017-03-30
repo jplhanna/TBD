@@ -141,7 +141,7 @@ form h3{
 	height:4em;
 	font-size: 1em;
 	color:#fff;
-	background-color: #419BF9;
+	/*background-color: #419BF9;*/
 	border:none;
 	border-radius: 6px;
 	-webkit-transition: margin-top 0.3s;
@@ -168,9 +168,9 @@ form h3{
 	margin:1em;
 }
 
-#buttonNo{
-	background-color: #fb6161;
-}
+/*#buttonNo{*/
+/*	background-color: #fb6161;*/
+/*}*/
 
 #link{
 	color:#419bf9;

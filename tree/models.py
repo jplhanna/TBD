@@ -42,7 +42,7 @@ Score: A class used by the websites sqlite database to create the template for t
 class Score(models.Model):
     movie=models.ForeignKey(Movie,on_delete=models.CASCADE)
     question=models.ForeignKey(Question, null=False)
-    score=models.DecimalField(default=0, decimal_places=3, max_digits=5)
+    score=models.FloatField(default=0)
     
 '''
 Review: A class used by the websites sqlite database to create the template for the corresponding table
