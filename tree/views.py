@@ -8,6 +8,8 @@ import json
 
 from .models import *
 
+#For more information on the adt's of the subclasses of ListView can be found by looking in the Django documentation
+
 # Create your views here.
 def index(request):
     return render(request, "index.html")
@@ -39,6 +41,7 @@ class questions(generic.ListView):
     input: question_string: A string which should contain 1 or more questions seperated by ,s. All of which should be in the Questions table of the sqlite database.
     output: A list containing the Question objects in order corresponding to the string of questions input
     throws: A DoesNotExist exception if any of the questions in the string do not exist in the Questions table
+            A MultipleObjectsReturned if a Question being querried for occurs more than once in the Questions table
     '''
     def getQuestionsFromString(self, questions_string):
         print questions_string
@@ -48,9 +51,22 @@ class questions(generic.ListView):
             questions_tmp.append(Question.objects.get(id=int(itr)))
         return questions_tmp
         
-    
+    '''
+    get_queryset: Querries for the entire Questions table from the sqlite server
+    output: A list of Question objects
+    '''
     def get_queryset(self):
         return Question.objects.all()
+        
+    '''
+    get_context_data: Used to set up the order in which questions will be asked, and preparing the scoring system. This also saves the current question session, for users.
+    input: kwargs: Is a dictionary used by django for command inputs. Should be empty.
+    output: context: A dictionary containing a list of questions under the key question_list, a corresponding list of the current scores for questions to movies
+                     under the key scores
+    modifies: Creates a new session if one does not exist for the current user.
+              Creates self.request.session.scores if it doesnt not exist already, or sets them all to 0 if the last item in the scores list is 0.
+              self.request.session.questions to be the current list of questions left to be answered.
+    '''
     def get_context_data(self, **kwargs):
         context = super(questions, self).get_context_data(**kwargs)
         scores_str = '0,0,0,0,0,0,0,0,0,0'
@@ -70,6 +86,13 @@ class questions(generic.ListView):
         print "...SORRY TO HAVE DOUBTED YOU"
         return context
         
+        
+'''
+handleQuestion: Handles the users interactions with questions: outputing questions, collecting the answer and updating the session,
+                eventually outputting the recommended movie
+input: request: An html request which is sent by the user as they are on the Question webpage
+ouput: An http_response which contains the movie object and other needed information.
+'''
 def handleQuestion(request):
     response_data = {}
     if request.method == "GET":
@@ -104,11 +127,27 @@ def handleQuestion(request):
             content_type="application/json"
         )
 
+'''
+getMovie: A class used to return the movie found by the questions, and to be recommended to the user.
+'''
 class getMovie(generic.ListView):
     template_name = 'movie.html'
     context_object_name = 'question_list'
+    
+    '''
+    get_queryset: A method which returns the entire Movies table from the sqlite database
+    output: A list containing Movie objects
+    '''
     def get_queryset(self):
         return Movie.objects.all()
+        
+    '''
+    get_context_data: Handles returning 
+    input: A dictionary used by django to represent command options, should be empty.
+    output: A dictionary containing the movie to be recommended to the user, under the key movie
+    modifies: The current session data, so that the session is aware of what movie was recommended for the user.
+    throws: 404 error if the movie being recommended dne in the Movies table.
+    '''
     def get_context_data(self, **kwargs):
         context = super(getMovie, self).get_context_data(**kwargs)
         context['movie'] = get_object_or_404(Movie, id=int(self.kwargs["movie_id"]))
