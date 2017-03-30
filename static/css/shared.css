@@ -1,6 +1,5 @@
 body{
     background: #120C1E;
-    text-align: center;
 }
 
 h1{
@@ -22,4 +21,26 @@ h1{
 .no{
     color: #5D0057;
     font-size: 2.5em;
+}
+
+body {
+    padding-top: 100px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+}
+
+.navbar-fixed-top .nav {
+    padding: 15px 0;
+}
+
+.navbar-fixed-top .navbar-brand {
+    padding: 0 15px;
+}
+
+@media(min-width:768px) {
+    body {
+        padding-top: 100px; /* Required padding for .navbar-fixed-top. Change if height of navigation changes. */
+    }
+
+    .navbar-fixed-top .navbar-brand {
+        padding: 15px 0;
+    }
 }
