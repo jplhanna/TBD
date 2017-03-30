@@ -76,7 +76,6 @@ class questions(generic.ListView):
             self.request.session.__setitem__('scores', scores_str)
         current_scores = self.request.session.__getitem__('scores')
         if current_scores[0] != '0' and current_scores[-1] == '0':
-            print "YOU FUCKER I KNEW IT", current_scores
             context['question_list'] = self.getQuestionsFromString(self.request.session.__getitem__('questions'))
             context['scores'] = current_scores
             return context
@@ -84,7 +83,6 @@ class questions(generic.ListView):
         context['scores'] = current_scores
         self.request.session.__setitem__('questions', str)
         self.request.session.__setitem__('response', '0')
-        print "...SORRY TO HAVE DOUBTED YOU"
         return context
         
         
