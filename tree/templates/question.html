@@ -9,14 +9,21 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         
         <!-- Latest compiled JavaScript -->
+        <script>
+            var scores = [{{ scores }}];
+            var questions = [];
+            {% for q in question_list %}
+                questions.push( "{{ q.question_text }}" );
+            {% endfor %}
+        </script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="{% static 'js/shared.js' %}"></script>
         
         <!-- Edited bootstrap -->
         <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="{% static 'img/shared.css' %}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/shared.css' %}"/>
     </head>
-    <body>
+    <body onload="initQuestions()">
         <!--
         {% if request.flavour == "mobile" %}
             <h1 class="col-md-12">TBD</h1>
@@ -29,7 +36,12 @@
         <p class="col-md-6 no">No</p>
         -->
         <h1 id = "header"></h1>
+        <p id = "question"></p>
+        <p id = "results"></p>
         <p id = "answer"></p>
-        <p>{{ question_list }}</p>
+        <div id="buttons">
+            <button id="buttonYes" onclick="submit(1)" style="font-size = 35px;">YES!</button>
+            <button id="buttonNo" onclick="submit(-1)" style="font-size = 35px;">NO!</button>
+        </div>
     </body>
 </html>
