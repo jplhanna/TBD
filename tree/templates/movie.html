@@ -1,0 +1,34 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="{% static 'js/shared.js' %}"></script>
+        
+        <!-- Edited bootstrap -->
+        <link href="https://fonts.googleapis.com/css?family=VT323" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/shared.css' %}"/>
+    </head>
+    <body>
+        <!--
+        {% if request.flavour == "mobile" %}
+            <h1 class="col-md-12">TBD</h1>
+        {% else %}
+            <h1 class="col-md-12">To Be Determined</h1>
+        {% endif %}
+        
+        <p class="col-md-12 question">Are you ready to play a game?</p>
+        <p class="col-md-6 yes">Yes</p>
+        <p class="col-md-6 no">No</p>
+        -->
+        <h1 id="title">{{movie.title}}</h1>
+        <a id="link" href="{{movie.imdb}}">{{movie.imdb}}</a>
+    </body>
+</html>

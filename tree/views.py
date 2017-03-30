@@ -94,7 +94,7 @@ def handleQuestion(request):
                 for choice in choices:
                     scores[choice.movie_id - 1] += float(array[itr]) * float(choice.score)
             scores = np.matrix(scores)
-            response_data['best_movie'] = movies[np.argmax(scores)].title
+            response_data['best_movie'] = movies[np.argmax(scores)].id
         
 
         response_data['result'] = 'Create post successful!'
@@ -103,7 +103,17 @@ def handleQuestion(request):
             json.dumps(response_data),
             content_type="application/json"
         )
-        
+
+class getMovie(generic.ListView):
+    template_name = 'movie.html'
+    context_object_name = 'question_list'
+    def get_queryset(self):
+        return Movie.objects.all()
+    def get_context_data(self, **kwargs):
+        context = super(getMovie, self).get_context_data(**kwargs)
+        context['movie'] = get_object_or_404(Movie, id=int(self.kwargs["movie_id"]))
+        return context
+    
 def signup(request):
     return render(request, "signup.html")
     

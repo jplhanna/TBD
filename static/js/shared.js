@@ -39,7 +39,7 @@ function submit(yn) {
         success: function (data) {
             _question_num++;
             if(_question_num >= 10){
-                alert(data['best_movie']);
+                window.location.href = '/tbd/movie/' + data["best_movie"];
             }
             $('#question').html(questions[_question_num]);
         }
@@ -51,5 +51,4 @@ function initQuestions() {
         if(scores[_question_num] == 0){ break; }
     }
     $('#question').html(questions[_question_num]);
-    alert("HEY");
 }
