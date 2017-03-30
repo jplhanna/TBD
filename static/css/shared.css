@@ -7,6 +7,9 @@ h1{
     font-family: 'VT323', monospace;
     font-size: 10em;
 }
+p{
+    color:#FFFFFF;
+}
 
 .question{
     color: #5CC52B;

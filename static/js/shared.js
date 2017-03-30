@@ -3,7 +3,6 @@ var _question_num = 0;
 $( document ).ready(function(){
     var header = document.getElementById("header");
     header.innerHTML = "Delphi Recommendation Engine";
-    header.style.color = "rgb(155, 102, 102)";
     
     var answer = document.getElementById("answer");
     answer.innerHTML = "--not yet answered--";
