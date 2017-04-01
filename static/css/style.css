@@ -28,6 +28,36 @@ a{
 	display: inline-block;
 }
 
+#imdb_logo{
+	width:10em;
+	height:4.8em;
+	margin:6em 1em 0em 77em;
+	background-image:url("../img/IMDb_logo.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	display: inline-block;
+}
+
+#delphi_logo{
+	width:8em;
+	height:8em;
+	margin:-1em 0 1em 2em;
+	background-image:url("../img/logo_256x256.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	display: inline-block;
+}
+
+#delphiSimple_logo{
+	width:4.5em;
+	height:4.5em;
+	margin:0.8em 0 1em 3em;
+	background-image:url("../img/logoSimple_256x256.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	display: inline-block;
+}
+
 ul{
 	display: inline-block;
 	list-style-type: none;
