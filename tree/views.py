@@ -191,3 +191,37 @@ def signup(request):
     
 def signin(request):
     return render(request, "signin.html")
+    
+    
+def createAccount(request):
+    email_tmp=request.POST.get('email')
+    password_tmp=request.POST.get('password')
+    new_user=create_user(email_tmp,email_tmp,password_tmp)
+    new_user.save()
+    
+    
+class password_change(generic.ListView):
+    
+    
+    def get_context_data(self,**kwargs):
+        context=super(password_change,self).get_context_data(**kwargs)
+        context['email']=get_object_or_404(User,id=int(self.kwargs['email_id']))
+        return context
+    
+def change_password(request):
+    user_name_tmp=request.POST.get('email')
+    new_pass_tmp=request.POST.get('password')
+    user_tmp=User.objects.get(user_name_tmp)
+    user_tmp.set_password(new_pass_tmp)
+    user_tmp.save()
+    
+    
+def sign_in(request):
+    email_tmp=request.POST.get('email')
+    password_tmp=request.POST.get('password')
+    is_user_tmp=authenticate(email_tmp,password_tmp)
+    if(is_user_tmp is not None):
+        return redirect('/tbd/')
+    else:
+        return redirect('/tbd/signin')
+        
