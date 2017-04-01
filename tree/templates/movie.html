@@ -20,18 +20,7 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     </head>
     <body>
-        <div id = "nav">
-            <div id="delphiSimple_logo"></div>
-            <ul>
-                <li>About</li>
-                <li>
-                    <a href = "/tbd/signin">Sign In</a>
-                </li>
-                <li>
-                    <a href = "/tbd/signup">Sign Up</a>
-                </li>
-            </ul>
-        </div>
+        {% include "navigation.html" %}
         <!--
         {% if request.flavour == "mobile" %}
             <h1 class="col-md-12">TBD</h1>
