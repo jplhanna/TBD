@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponseRedirect, HttpResponse, HttpRequest
 from django.views import generic
 from django.db.models.aggregates import Count
+from django.contrib.auth.models import User
 import numpy as np
 import random
 import json
@@ -193,12 +194,12 @@ def signin(request):
     return render(request, "signin.html")
     
     
-def createAccount(request):
-    email_tmp=request.POST.get('email')
-    password_tmp=request.POST.get('password')
-    new_user=create_user(email_tmp,email_tmp,password_tmp)
+def handleSignUp(request):
+    email_tmp=request.POST['inputEmail']
+    password_tmp=request.POST.get('inputPassword')
+    new_user=User.objects.create_user(email_tmp,email_tmp,password_tmp)
     new_user.save()
-    
+    return redirect('/tbd/')
     
 class password_change(generic.ListView):
     
@@ -221,7 +222,11 @@ def sign_in(request):
     password_tmp=request.POST.get('password')
     is_user_tmp=authenticate(email_tmp,password_tmp)
     if(is_user_tmp is not None):
+        login(request,is_user_tmp)
         return redirect('/tbd/')
     else:
         return redirect('/tbd/signin')
         
+def sign_out(request):
+    logout(request)
+    return redirect('/tbd/')
