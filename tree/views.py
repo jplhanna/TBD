@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpRequest
 from django.views import generic
 from django.db.models.aggregates import Count
 from django.contrib.auth.models import User
-from djangao.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate
 import numpy as np
 import random
 import json
