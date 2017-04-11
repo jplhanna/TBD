@@ -221,13 +221,13 @@ def change_password(request):
 def handleSignIn(request):
     email_tmp=request.POST.get('inputEmail')
     password_tmp=request.POST.get('inputPassword')
-    is_user_tmp=authenticate(email_tmp,password_tmp)
+    is_user_tmp=authenticate(username=email_tmp,password=password_tmp)
     if(is_user_tmp is not None):
         login(request,is_user_tmp)
         return redirect('/tbd/')
     else:
         return redirect('/tbd/signin')
         
-def sign_out(request):
+def handleSignOut(request):
     logout(request)
     return redirect('/tbd/')
