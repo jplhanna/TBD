@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpRequest
 from django.views import generic
 from django.db.models.aggregates import Count
 from django.contrib.auth.models import User
+from djangao.contrib.auth import login, authenticate
 import numpy as np
 import random
 import json
@@ -217,9 +218,9 @@ def change_password(request):
     user_tmp.save()
     
     
-def sign_in(request):
-    email_tmp=request.POST.get('email')
-    password_tmp=request.POST.get('password')
+def handleSignIn(request):
+    email_tmp=request.POST.get('inputEmail')
+    password_tmp=request.POST.get('inputPassword')
     is_user_tmp=authenticate(email_tmp,password_tmp)
     if(is_user_tmp is not None):
         login(request,is_user_tmp)

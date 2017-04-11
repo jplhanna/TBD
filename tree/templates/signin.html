@@ -18,11 +18,10 @@
     {% include "navigation.html" %}
     
     <div class="container">
-
-      <form class="form-signin">
-        <h3 class="form-signin-heading">Welcome Back!</h3>
-        <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+      <h3 class="form-signin-heading">Welcome Back!</h3>
+      <form class="form-signin"action="/tbd/handleSignIn" method="post">{% csrf_token %}
+        <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
         <div class="checkbox">
             <input type="checkbox" value="remember-me">
             <label for = "checkbox">Remember me</label>
