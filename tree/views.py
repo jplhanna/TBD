@@ -3,7 +3,7 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpRequest
 from django.views import generic
 from django.db.models.aggregates import Count
 from django.contrib.auth.models import User
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 import numpy as np
 import random
 import json
@@ -194,12 +194,20 @@ def signup(request):
 def signin(request):
     return render(request, "signin.html")
     
-    
+'''
+handleSignUp: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
+input: request: An html request which is sent by the user as they are on the SignUp webpage
+output: redirects the user to the TBD front page
+'''
 def handleSignUp(request):
     email_tmp=request.POST['inputEmail']
     password_tmp=request.POST.get('inputPassword')
+    if(User.objects.filter(username=email_tmp).exists()):
+        return redirect('/tbd/signup')
     new_user=User.objects.create_user(email_tmp,email_tmp,password_tmp)
     new_user.save()
+    aut_login_temp=authenticate(username=email_tmp, password=password_tmp)
+    login(request,aut_login_temp)
     return redirect('/tbd/')
     
 class password_change(generic.ListView):
