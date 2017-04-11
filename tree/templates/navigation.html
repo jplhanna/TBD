@@ -1,12 +1,22 @@
 <div id = "nav">
     <div id="delphiSimple_logo"></div>
+    {% if user.is_authenticated %}
+        {{ user.username }}
+    {% else %}
+        Hi
+    {% endif %}
     <ul>
-        <li>About</li>
-        <li>
-            <a href = "/tbd/signin">Sign In</a>
-        </li>
-        <li>
-            <a href = "/tbd/signup">Sign Up</a>
-        </li>
+        {% if user.is_authenticated %}
+            <li>
+                <a href = "/tbd/handleSignOut">Sign Out</a>
+            </li>
+        {% else %}
+            <li>
+                <a href = "/tbd/signin">Sign In</a>
+            </li>
+            <li>
+                <a href = "/tbd/signup">Sign Up</a>
+            </li>
+        {% endif %}
     </ul>
 </div>
