@@ -1,0 +1,8 @@
+Hello new Delphi user,
+You have recently made an account with the movie recommendation Web App, Delphi.
+#Insert webpage address here
+Having an account gains you access to a favorites list, your past recommendations,
+and improving the recommendation service based on streaming services you have.
+
+We hope you enjoy your stay,
+The Delphi Team.

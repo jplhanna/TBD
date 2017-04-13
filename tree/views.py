@@ -4,9 +4,12 @@ from django.views import generic
 from django.db.models.aggregates import Count
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
+from django.core.mail import send_mail
 import numpy as np
 import random
 import json
+import emailHandler as eH_tmp
+emailHandler=eH_tmp.emailHandler()
 
 from .models import *
 
@@ -211,6 +214,7 @@ def handleSignUp(request):
     new_user.save()
     aut_login_temp=authenticate(username=email_tmp, password=password_tmp)
     login(request,aut_login_temp)
+    emailHandler.emailNewUser(email_tmp)
     return redirect('/tbd/')
     
 '''
@@ -227,7 +231,8 @@ class password_change(generic.ListView):
         context=super(password_change,self).get_context_data(**kwargs)
         context['email']=get_object_or_404(User,id=int(self.kwargs['email_id']))
         return context
-    
+   
+
 def handlePasswordChange(request):
     user_name_tmp=request.POST.get('email')
     old_pass_tmp=request.POST.get('old_password')
@@ -239,9 +244,17 @@ def handlePasswordChange(request):
     user_tmp.set_password(new_pass_tmp)
     user_tmp.save()
     #should probably either return a success state or redirect the user back to their settings page
-    
+
+'''
+handleForgotPassword: The method called when a user signifies that they forgot their password on the signin page.
+input: request: An html request which is sent by the user as they are on the SignIn webpage
+output: a redirect call which send the user back to the SignIn webpage
+'''
 def handleForgotPassword(request):
     user_name_tmp=request.POST.get('email')
+    emailHandler.emailForgPass(user_name_tmp)
+    return redirect('/tbd/signin')
+    
     
     
 '''
