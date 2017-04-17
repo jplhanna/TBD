@@ -3,10 +3,13 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpRequest
 from django.views import generic
 from django.db.models.aggregates import Count
 from django.contrib.auth.models import User
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, authenticate, logout
+from django.core.mail import send_mail
 import numpy as np
 import random
 import json
+import emailHandler as eH_tmp
+emailHandler=eH_tmp.emailHandler()
 
 from .models import *
 
@@ -194,30 +197,71 @@ def signup(request):
 def signin(request):
     return render(request, "signin.html")
     
+def forgotpassword(request):
+    return render(request, "forgotpassword.html")
     
+'''
+handleSignUp: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
+input: request: An html request which is sent by the user as they are on the SignUp webpage
+output: redirects the user to the TBD front page
+'''
 def handleSignUp(request):
     email_tmp=request.POST['inputEmail']
     password_tmp=request.POST.get('inputPassword')
+    if(User.objects.filter(username=email_tmp).exists()):
+        return redirect('/tbd/signup')
     new_user=User.objects.create_user(email_tmp,email_tmp,password_tmp)
     new_user.save()
+    aut_login_temp=authenticate(username=email_tmp, password=password_tmp)
+    login(request,aut_login_temp)
+    emailHandler.emailNewUser(email_tmp)
     return redirect('/tbd/')
     
+'''
+password_change: A class used to aid change_password in changing the user's password.
+'''
 class password_change(generic.ListView):
     
-    
+    '''
+    get_context_data: a method used to retrieve contextual data for the current webpage. Specifically used when the user is asking to change their password.
+    input: kwargs: Is a dictionary used by django for command inputs. Should be empty.
+    output: context: a Dictionary containg the key 'email' which maps to the email connected to the current user
+    '''
     def get_context_data(self,**kwargs):
         context=super(password_change,self).get_context_data(**kwargs)
         context['email']=get_object_or_404(User,id=int(self.kwargs['email_id']))
         return context
-    
-def change_password(request):
+   
+
+def handlePasswordChange(request):
     user_name_tmp=request.POST.get('email')
-    new_pass_tmp=request.POST.get('password')
+    old_pass_tmp=request.POST.get('old_password')
+    old_pass_matches_tmp=authenticate(username=user_name_tmp, password=old_pass_tmp)
+    if(old_pass_matches_tmp is None):
+        return None #should redirect the user back to their settings page, once that page has been made.
+    new_pass_tmp=request.POST.get('new_password')
     user_tmp=User.objects.get(user_name_tmp)
     user_tmp.set_password(new_pass_tmp)
     user_tmp.save()
+    #should probably either return a success state or redirect the user back to their settings page
+
+'''
+handleForgotPassword: The method called when a user signifies that they forgot their password on the signin page.
+input: request: An html request which is sent by the user as they are on the SignIn webpage
+output: a redirect call which send the user back to the SignIn webpage
+'''
+def handleForgotPassword(request):
+    user_name_tmp=request.POST.get('email')
+    emailHandler.emailForgPass(user_name_tmp)
+    return redirect('/tbd/signin')
     
     
+    
+'''
+handleSignIn: The method called when a user attemps to sign in.
+input: request: An html request which is sent by the user as they are on the SignIn webpage
+output: a redirect call which will either send the user to the front page if the credentials are correct, or back to the signin page if not 
+'''
 def handleSignIn(request):
     email_tmp=request.POST.get('inputEmail')
     password_tmp=request.POST.get('inputPassword')
@@ -227,7 +271,12 @@ def handleSignIn(request):
         return redirect('/tbd/')
     else:
         return redirect('/tbd/signin')
-        
+
+'''
+handleSignOut: The method called when a user attempts to sign out.
+input: request: An html request which is sent by the user when on page within the TBD application, while they are logged in.
+output: A redirect call that send the user back to the front page 
+'''
 def handleSignOut(request):
     logout(request)
     return redirect('/tbd/')

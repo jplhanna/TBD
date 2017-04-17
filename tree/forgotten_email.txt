@@ -1,0 +1,8 @@
+Hello Delphi User,
+You are recieving this email, because someone has requested a change of password.
+If this was not you, we suggest you still change you password.
+
+To change your password follow the below link, which will direct you to the Delphi website.
+
+Thank you and have a nice day,
+The Delphi Team
