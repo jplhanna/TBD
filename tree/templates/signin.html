@@ -3,7 +3,12 @@
 <html lang="en">
   <head>
     {% include "head.html" %}
-    <title>sign in</title>
+    <title>DELPHI | Sign In</title>
+    <script>
+      function forgotPassword(){
+        ;
+      }
+    </script>
   </head>
 
   <body>
@@ -17,9 +22,9 @@
         <!--<label class="checkbox-inline"><input type="checkbox" value="remember-me">Remember me</label>-->
         <div class="col-md-2"></div>
         <div class="col-md-4"><button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button></div>
-        <div class="col-md-4"><button class="btn btn-lg btn-danger btn-block">Forgot Password</button></div>
-        <div class="col-md-2"></div>
       </form>
+      <div class="col-md-4"><button class="btn btn-lg btn-danger btn-block" onclick="window.location.href = '/tbd/forgotPassword'">Forgot Password</button></div>
+      <div class="col-md-2"></div>
 
     </div>
   </body>

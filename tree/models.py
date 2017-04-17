@@ -71,3 +71,8 @@ class UserFavorites(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
 #NEED TO ACTUALLY MIGRATE THIS CLASS, WAITING FOR STREAMING DATA TO BE AVAILABLE
 #AS WELL AS DECIDING ON HOW TO SAVE MOVIE TO THE USER
+
+class ForgotPass(models.Model):
+    username=models.CharField(max_length=500)
+    random=models.CharField(max_length=500)
+    

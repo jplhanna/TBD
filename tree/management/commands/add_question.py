@@ -13,7 +13,7 @@ class Command(BaseCommand):
         parser.add_argument('question_text',nargs='+',help='Must input question text')
     
     '''
-    CreateQuestion: A method which adds a movie to the tree database 
+    CreateQuestion: A method which adds a question to the tree database 
     input: question: A string containing the question which is being created
     modifies: The Question table contained in db.splite3, and based on the Question model in the Tree application. Adds a question into said database
     '''

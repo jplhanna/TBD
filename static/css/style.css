@@ -213,7 +213,7 @@ form h3{
 }
 
 /* navbar */
-.navbar-primary .navbar { background:#071F37; border-bottom:none; }
+.navbar-primary .navbar { background: #071F37;; border-bottom:none; }
 .navbar-primary .navbar .nav > li > a {color: white;}
 .navbar-primary .navbar .nav > li > a:hover {background-color: #434f69;}
 .navbar-primary .navbar .nav .active > a,.navbar .nav .active > a:hover {background-color: #434f69;}
