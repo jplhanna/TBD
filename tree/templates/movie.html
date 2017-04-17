@@ -19,23 +19,17 @@
         <p class="col-md-6 no">No</p>
         -->
         <h3 id="title" style="width:60%;">{{movie.title}}</h3>
-        <div class="col-sm-3"></div>
-        <div class="col-sm-2">
+        <div class="row-sm-3">
             <button type="button" class="btn btn-success" aria-label="Left Align" onclick="submitResponse(1)">
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="false"></span>
             </button>
-        </div>
-        <div class="col-sm-2" style="text-align:center;">
-            <a id="imdb_logo" href="{{movie.imdb}}" target="_blank"><img src="{% static 'img/IMDb_logo.png' %}" width="100px"/></a>
-        </div>
-        <div class="col-sm-2">
             <button type="button" class="btn btn-danger" aria-label="Left Align" onclick="submitResponse(-1)">
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="false"></span>
             </button>
         </div>
-        <div class="col-sm-3"></div>
-        <div class="col-sm-12">
-            <a href="/tbd/question"><button class="btn btn-primary">Start over</button></a>
+        <div class="row-sm-2" style="text-align:center;">
+            <a href="{{movie.imdb}}" target="_blank"><img src="{% static 'img/IMDb_logo.png' %}" width="100px"/></a>
         </div>
+        <a href="/tbd/question"><button class="btn btn-primary">Start over</button></a>
     </body>
 </html>
