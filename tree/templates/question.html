@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        
+        {% include "head.html" %}
         <!-- jQuery library -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
         
@@ -14,28 +14,13 @@
                 questions.push( "{{ q.question_text }}" );
             {% endfor %}
         </script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="{% static 'js/shared.js' %}"></script>
         
         <!-- Edited bootstrap -->
         <title>Delphi Recommendation Engine</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous" />
-    	<link rel="stylesheet" href="{% static 'css/style.css' %}">
-        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     </head>
     <body onload="initQuestions()">
         {% include "navigation.html" %}
-        <!--
-        {% if request.flavour == "mobile" %}
-            <h1 class="col-md-12">TBD</h1>
-        {% else %}
-            <h1 class="col-md-12">To Be Determined</h1>
-        {% endif %}
-        
-        <p class="col-md-12 question">Are you ready to play a game?</p>
-        <p class="col-md-6 yes">Yes</p>
-        <p class="col-md-6 no">No</p>
-        -->
         <h3 id = "question"></h3>
         <p id = "results"></p>
         <p id = "answer"></p>

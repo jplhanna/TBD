@@ -1,22 +1,50 @@
-<div id = "nav">
-    <div id="delphiSimple_logo"></div>
-    {% if user.is_authenticated %}
-        {{ user.username }}
-    {% else %}
-        Hi
-    {% endif %}
-    <ul>
-        {% if user.is_authenticated %}
-            <li>
-                <a href = "/tbd/handleSignOut">Sign Out</a>
-            </li>
-        {% else %}
-            <li>
-                <a href = "/tbd/signin">Sign In</a>
-            </li>
-            <li>
-                <a href = "/tbd/signup">Sign Up</a>
-            </li>
-        {% endif %}
-    </ul>
+{% load staticfiles %}
+<!--<nav class="navbar navbar-default navbar-fixed-top" style="border-color: transparent; opacity: 1;">-->
+<!--    <a href="/tbd/"><div id="delphiSimple_logo"></div></a>-->
+<!--    <ul class="nav navbar-nav navbar-right">-->
+<!--        {% if user.is_authenticated %}-->
+<!--            <li>-->
+<!--                <a href = "/tbd/handleSignOut">{{ user.username }}</a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a href = "/tbd/handleSignOut">Sign Out</a>-->
+<!--            </li>-->
+<!--        {% else %}-->
+<!--            <li>-->
+<!--                <a href = "/tbd/signin">Sign In</a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a href = "/tbd/signup">Sign Up</a>-->
+<!--            </li>-->
+<!--        {% endif %}-->
+<!--    </ul>-->
+<!--</nav>-->
+
+<div class="navbar-xs">
+   <div class="navbar-primary">
+       <nav class="navbar navbar-static-top" role="navigation">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-8">
+                 <span class="sr-only">Toggle navigation</span>
+                 <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#"><img src="{% static 'img/logoSimple_256x256.png' %}" height="84px"/></a>
+          </div>
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="nav navbar-nav navbar-right" id="bs-example-navbar-collapse-8">
+              <ul class="nav navbar-nav">
+                  {% if user.is_authenticated %}
+                      <li><a href="/tbd/handleSignOut">{{user.username}}</a></li>
+                      <li><a href="/tbd/handleSignOut">Sign Out</a></li>
+                  {% else %}
+                      <li><a href="/tbd/signin">Sign In</a></li>
+                      <li><a href="/tbd/signup">Sign Up</a></li>
+                  {% endif %}
+              </ul>
+          </div><!-- /.navbar-collapse -->
+      </nav>
+  </div>
 </div>

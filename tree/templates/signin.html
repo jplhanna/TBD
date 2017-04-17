@@ -2,31 +2,23 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <meta name="description" content="">
-    <meta name="author" content="">
+    {% include "head.html" %}
     <title>sign in</title>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
   </head>
 
   <body>
     {% include "navigation.html" %}
     
-    <div class="container">
-      <h3 class="form-signin-heading">Welcome Back!</h3>
-      <form class="form-signin"action="/tbd/handleSignIn" method="post">{% csrf_token %}
-        <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+    <div class="col-md-12 container">
+      <h1 class="form-signin-heading">Welcome Back!</h3>
+      <form class="form-group" action="/tbd/handleSignIn" method="post">{% csrf_token %}
+        <input type="text" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
         <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
-        <div class="checkbox">
-            <input type="checkbox" value="remember-me">
-            <label for = "checkbox">Remember me</label>
-        </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+        <!--<label class="checkbox-inline"><input type="checkbox" value="remember-me">Remember me</label>-->
+        <div class="col-md-2"></div>
+        <div class="col-md-4"><button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button></div>
+        <div class="col-md-4"><button class="btn btn-lg btn-danger btn-block">Forgot Password</button></div>
+        <div class="col-md-2"></div>
       </form>
 
     </div>
