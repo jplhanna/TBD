@@ -4,5 +4,7 @@ If this was not you, we suggest you still change you password.
 
 To change your password follow the below link, which will direct you to the Delphi website.
 
+https://tbd-tristanvillamil.c9users.io/tbd/resetPassword/{url}
+
 Thank you and have a nice day,
 The Delphi Team

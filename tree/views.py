@@ -57,7 +57,7 @@ class questions(generic.ListView):
         return questions_tmp
         
     '''
-    get_queryset: Querries for the entire Questions table from the sqlite server
+    get_queryset: Queries for the entire Questions table from the sqlite server
     output: A list of Question objects
     '''
     def get_queryset(self):
@@ -192,13 +192,22 @@ class getMovie(generic.ListView):
         return context
     
 def signup(request):
-    return render(request, "signup.html")
+    if request.user.username == "":
+        return render(request, "signup.html")
+    else:
+        return redirect('/tbd')
     
 def signin(request):
-    return render(request, "signin.html")
+    if request.user.username == "":
+        return render(request, "signin.html")
+    else:
+        return redirect('/tbd')
     
 def forgotpassword(request):
-    return render(request, "forgotpassword.html")
+    if request.user.username == "":
+        return render(request, "forgotPassword.html")
+    else:
+        return redirect('/tbd')
     
 '''
 handleSignUp: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
@@ -252,9 +261,55 @@ output: a redirect call which send the user back to the SignIn webpage
 '''
 def handleForgotPassword(request):
     user_name_tmp=request.POST.get('email')
-    emailHandler.emailForgPass(user_name_tmp)
+    user_tmp = get_object_or_404(User, username=user_name_tmp)
+    random_url = ""
+    if(ForgotPass.objects.filter(username=user_name_tmp).exists()):
+        random_url = ForgotPass.objects.filter(username=user_name_tmp).random
+    else:
+        for count_tmp in range(1, 10):
+            for itr in range(0, 5 * count_tmp):
+                tmp = int(random.random()*62)
+                if tmp < 10:
+                    random_url += str(tmp)
+                elif tmp < 36:
+                    random_url += chr(tmp + 55)
+                else:
+                    random_url += chr(tmp + 61)
+            if(not ForgotPass.objects.filter(random=random_url).exists()):
+                break
+            else:
+                random_url = ""
+        if random_url == "":
+            return redirect('/tbd/forgotPassword')
+        forgotpass_tmp = ForgotPass(username=user_name_tmp, random=random_url)
+        forgotpass_tmp.save()
+    emailHandler.emailForgPass(user_name_tmp, random_url)
     return redirect('/tbd/signin')
     
+    
+'''
+password_change: A class used to aid change_password in changing the user's password.
+'''
+class resetPassword(generic.ListView):
+    template_name = 'resetPassword.html'
+    context_object_name = 'question_list'
+    
+    '''
+    get_queryset: A method which returns the entire Movies table from the sqlite database
+    output: A list containing Movie objects
+    '''
+    def get_queryset(self):
+        return Movie.objects.all()
+    
+    '''
+    get_context_data: a method used to retrieve contextual data for the current webpage. Specifically used when the user is asking to change their password.
+    input: kwargs: Is a dictionary used by django for command inputs. Should be empty.
+    output: context: a Dictionary containg the key 'email' which maps to the email connected to the current user
+    '''
+    def get_context_data(self,**kwargs):
+        context=super(resetPassword,self).get_context_data(**kwargs)
+        context['random']=self.kwargs["user_id"]
+        return context
     
     
 '''

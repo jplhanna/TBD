@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.core.mail',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -127,3 +128,13 @@ STATICFILES_DIRS = (
     '/static/',
     os.path.join(os.path.abspath(BASE_DIR), 'static'),
 )
+
+#################################################
+# Email settings                                #
+#################################################
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'delphi.tbd@gmail.com'
+EMAIL_HOST_PASSWORD = 'SDDGroup17'
+EMAIL_PORT = 587

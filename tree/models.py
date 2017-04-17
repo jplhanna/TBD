@@ -52,4 +52,11 @@ class Review(models.Model):
     text=models.CharField(max_length=500)
     score=models.IntegerField(default=0)
     
+'''
+Review: A class used by the websites sqlite database to create the template for the corresponding table
+'''
+class ForgotPass(models.Model):
+    username=models.CharField(max_length=500)
+    random=models.CharField(max_length=500)
+    
 #Might need to add a model here, for the yes and no choices

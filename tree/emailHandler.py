@@ -24,8 +24,8 @@ class emailHandler:
                    unique web address which allows them to change their password.
     input: to_email: the email address of a user
     '''
-    def emailForgPass(self, to_email):
+    def emailForgPass(self, to_email, random_url):
         with open(self._forg_pass_email_file,'r') as email_file_tmp:
-            email_body_tmp=email_file_tmp.read()
+            email_body_tmp=email_file_tmp.read().replace('{url}', random_url)
         #must insert the random webpage for a newpassword here
-        send_mail(self._forget_pass_sbuject,email_body_tmp,self._email_account,[to_email],fail_silently=False)
+        send_mail(self._forget_pass_subject,email_body_tmp,self._email_account,[to_email],fail_silently=False)
