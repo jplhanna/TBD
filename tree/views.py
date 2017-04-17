@@ -97,6 +97,8 @@ handleQuestion: Handles the users interactions with questions: outputing questio
 input: request: An html request which is sent by the user as they are on the Question webpage
 ouput: An http_response which contains the movie object and other needed information.
 '''
+#Will need to add user functionality to this function so that when a movie is returned, and a user is logged in, that movie is saved to the user account
+#Also, need to figure out how the movies will get saved to the user.
 def handleQuestion(request):
     response_data = {}
     if request.method == "GET":
@@ -279,4 +281,10 @@ output: A redirect call that send the user back to the front page
 '''
 def handleSignOut(request):
     logout(request)
+    return redirect('/tbd/')
+    
+def handleDeleteAccount(request):
+    user_name_tmp=request.POST.get('email')
+    user_tmp=User.objects.get(user_name_tmp)
+    user_tmp.delete()
     return redirect('/tbd/')

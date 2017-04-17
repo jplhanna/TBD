@@ -1,12 +1,14 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.models import User
 
 #None of the classes are described in ADT form due to how basic they are, especially in their implementaion of the models class
 #For more information about the model class, look into the django 1.9 documentations
 
 '''
 Movie: A class used by the websites sqlite database to create the template for the corresponding table
+Contains all of the basic used data for movies
 '''
 class Movie(models.Model):
     
@@ -25,6 +27,7 @@ class Movie(models.Model):
     
 '''
 Question: A class used by the websites sqlite database to create the template for the corresponding table
+Contains a question which is used by the Delphi website
 '''
 class Question(models.Model):
     question_text=models.CharField(max_length=500, unique=True)
@@ -38,6 +41,7 @@ class Question(models.Model):
    
 '''
 Score: A class used by the websites sqlite database to create the template for the corresponding table
+Contains the weight between a question and a movie
 ''' 
 class Score(models.Model):
     movie=models.ForeignKey(Movie,on_delete=models.CASCADE)
@@ -52,4 +56,18 @@ class Review(models.Model):
     text=models.CharField(max_length=500)
     score=models.IntegerField(default=0)
     
-#Might need to add a model here, for the yes and no choices
+'''
+UserData: A class used by the websites sqlite database to crea the template for the corresponing data.
+In this case it connects a django user to user data.
+'''
+class UserData(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    hulu=models.BooleanField(default=False)
+    amazon=models.BooleanField(default=False)
+    netflix=models.BooleanField(default=False)
+    
+class UserFavorites(models.Model):
+    movie=models.ForeignKey(Movie,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+#NEED TO ACTUALLY MIGRATE THIS CLASS, WAITING FOR STREAMING DATA TO BE AVAILABLE
+#AS WELL AS DECIDING ON HOW TO SAVE MOVIE TO THE USER
