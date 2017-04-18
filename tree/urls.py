@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^question$', views.questions.as_view(), name='index'),
     url(r'^forgotPassword$', views.forgotpassword, name='index'),
     url(r'^handleQuestion$', views.handleQuestion, name='handleQuestion'),
+    url(r'^handleRandom$', views.handleRandom, name='handleRandom'),
     url(r'^handleResponse$', views.handleResponse, name='handleResponse'),
     url(r'^handleSignUp$', views.handleSignUp, name='handleSignUp'),
     url(r'^handleSignIn$', views.handleSignIn, name='handleSignIn'),

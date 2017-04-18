@@ -168,6 +168,17 @@ def handleResponse(request):
         )
 
 '''
+handleRandom: Handles the user pressing the random movie button which exists on the front page of the Delphi website
+input: request: An html request which is sent by the user as they are on the front page through the random button
+output: Redirects the user to a random movie info page
+'''
+def handleRandom(request):
+    total_movies_tmp=Movie.objects.count()-1
+    rand_movie_index_tmp=random.randint(0,total_movies_tmp)
+    rand_movie_id_tmp=Movies.objects.filter(title=title).value_list('id',flat=True)[rand_movie_index_tmp]
+    return redirect('/tbd/movie/'+rand_movie_id_tmp+'/')
+
+'''
 getMovie: A class used to return the movie found by the questions, and to be recommended to the user.
 '''
 class getMovie(generic.ListView):
