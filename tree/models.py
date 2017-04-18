@@ -24,6 +24,12 @@ class Movie(models.Model):
     imdb=models.CharField(max_length=500)
     duration=models.IntegerField(default=0)
     year=models.IntegerField(default=2017)#current year, might be able to switch this to time current year
+    hulu=models.BooleanField(default=False)
+    amazon=models.BooleanField(default=False)
+    amazonPrime=models.BooleanField(default=False)
+    googlePlay=models.BooleanField(default=False)
+    itunes=models.BooleanField(default=False)
+    netflix=models.BooleanField(default=False)
     
 '''
 Question: A class used by the websites sqlite database to create the template for the corresponding table
@@ -53,8 +59,11 @@ Review: A class used by the websites sqlite database to create the template for 
 '''
 class Review(models.Model):
     movie=models.ForeignKey(Movie,on_delete=models.CASCADE)
-    text=models.CharField(max_length=500)
+    questions=models.CharField(max_length=100)
     score=models.IntegerField(default=0)
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
+    date=models.DateTimeField()
+    
     
 '''
 UserData: A class used by the websites sqlite database to crea the template for the corresponing data.
@@ -62,8 +71,12 @@ In this case it connects a django user to user data.
 '''
 class UserData(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
+    showAll=models.BooleanField(defualt=True)
     hulu=models.BooleanField(default=False)
     amazon=models.BooleanField(default=False)
+    amazonPrime=models.BooleanField(default=False)
+    googlePlay=models.BooleanField(default=False)
+    itunes=models.BooleanField(default=False)
     netflix=models.BooleanField(default=False)
     
 class UserFavorites(models.Model):
