@@ -205,7 +205,7 @@ def signup(request):
             email_tmp=request.POST['inputEmail']
             password_tmp=request.POST.get('inputPassword')
             if(User.objects.filter(username=email_tmp).exists()):
-                return render(request, "signup.html", {'error': "Error: Email is already in use"})
+                return render(request, "signup.html", {'error': "Email is already in use"})
             new_user=User.objects.create_user(email_tmp,email_tmp,password_tmp)
             new_user.save()
             aut_login_temp=authenticate(username=email_tmp, password=password_tmp)
