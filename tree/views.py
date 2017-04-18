@@ -99,8 +99,6 @@ handleQuestion: Handles the users interactions with questions: outputing questio
 input: request: An html request which is sent by the user as they are on the Question webpage
 ouput: An http_response which contains the movie object and other needed information.
 '''
-#Will need to add user functionality to this function so that when a movie is returned, and a user is logged in, that movie is saved to the user account
-#Also, need to figure out how the movies will get saved to the user.
 def handleQuestion(request):
     response_data = {}
     if request.method == "GET":
@@ -246,6 +244,20 @@ class password_change(generic.ListView):
         return context
    
 
+def handleForgotPasswordChange(request):
+    user_name_tmp=request.POST.get('inputPassword')
+    print user_name_tmp
+    return 0
+    old_pass_tmp=request.POST.get('old_password')
+    old_pass_matches_tmp=authenticate(username=user_name_tmp, password=old_pass_tmp)
+    if(old_pass_matches_tmp is None):
+        return None #should redirect the user back to their settings page, once that page has been made.
+    new_pass_tmp=request.POST.get('new_password')
+    user_tmp=User.objects.get(user_name_tmp)
+    user_tmp.set_password(new_pass_tmp)
+    user_tmp.save()
+   
+
 def handlePasswordChange(request):
     user_name_tmp=request.POST.get('email')
     old_pass_tmp=request.POST.get('old_password')
@@ -292,7 +304,7 @@ def handleForgotPassword(request):
     
     
 '''
-password_change: A class used to aid change_password in changing the user's password.
+resetPassword: A class used to aid change_password in changing the user's password.
 '''
 class resetPassword(generic.ListView):
     template_name = 'resetPassword.html'
@@ -338,10 +350,4 @@ output: A redirect call that send the user back to the front page
 '''
 def handleSignOut(request):
     logout(request)
-    return redirect('/tbd/')
-    
-def handleDeleteAccount(request):
-    user_name_tmp=request.POST.get('email')
-    user_tmp=User.objects.get(user_name_tmp)
-    user_tmp.delete()
     return redirect('/tbd/')
