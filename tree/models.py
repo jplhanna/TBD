@@ -71,7 +71,7 @@ In this case it connects a django user to user data.
 '''
 class UserData(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)
-    showAll=models.BooleanField(defualt=True)
+    showAll=models.BooleanField(default=True)
     hulu=models.BooleanField(default=False)
     amazon=models.BooleanField(default=False)
     amazonPrime=models.BooleanField(default=False)
