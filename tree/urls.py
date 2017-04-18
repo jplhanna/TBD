@@ -17,4 +17,5 @@ urlpatterns = [
     url(r'^resetPassword/(?P<user_id>.+)/$', views.resetPassword.as_view(), name='resetPassword'),
     url(r'^signup/', signup),
     url(r'^signin/', signin),
+    url(r'^signin2/', views.signin2, name='signin2'),
 ]

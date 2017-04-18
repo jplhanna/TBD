@@ -1,0 +1,32 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "head.html" %}
+    <title>DELPHI | Sign In</title>
+    <script>
+      function forgotPassword(){
+        ;
+      }
+    </script>
+  </head>
+
+  <body>
+    {% include "navigation.html" %}
+    
+    <div class="col-md-12 container">
+      <h1 class="form-signin-heading">Welcome Back!</h1>
+      <h3>incorrect username or password</h3>
+      <form class="form-group" action="/tbd/handleSignIn" method="post">{% csrf_token %}
+        <input type="text" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
+        <!--<label class="checkbox-inline"><input type="checkbox" value="remember-me">Remember me</label>-->
+        <div class="col-md-2"></div>
+        <div class="col-md-4"><button class="btn btn-lg btn-primary btn-block" type="submit">Sign In</button></div>
+      </form>
+      <div class="col-md-4"><button class="btn btn-lg btn-danger btn-block" onclick="window.location.href = '/tbd/forgotPassword'">Forgot Password</button></div>
+      <div class="col-md-2"></div>
+
+    </div>
+  </body>
+</html>

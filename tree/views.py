@@ -18,7 +18,9 @@ from .models import *
 # Create your views here.
 def index(request):
     return render(request, "index.html")
-    
+
+def signin2(request):
+    return render(request, "signin2.html")
 '''
 questions: A subclass of the ListView class, which is used on by question html(webpage). The class handles the collection, choosing, and presentation of questions
            given to the user during a run of the application. This class also interacts with the Questions table of the sqlite database. The questions then interacts
@@ -339,7 +341,7 @@ def handleSignIn(request):
         login(request,is_user_tmp)
         return redirect('/tbd/')
     else:
-        return redirect('/tbd/signin')
+        return redirect('/tbd/signin2')
 
 '''
 handleSignOut: The method called when a user attempts to sign out.
