@@ -9,7 +9,6 @@ urlpatterns = [
     url(r'^forgotPassword$', views.forgotpassword, name='index'),
     url(r'^handleQuestion$', views.handleQuestion, name='handleQuestion'),
     url(r'^handleResponse$', views.handleResponse, name='handleResponse'),
-    url(r'^handleSignUp$', views.handleSignUp, name='handleSignUp'),
     url(r'^handleSignIn$', views.handleSignIn, name='handleSignIn'),
     url(r'^handleSignOut$', views.handleSignOut, name='handleSignOut'),
     url(r'^handleForgotPassword$', views.handleForgotPassword, name='handleForgotPassword'),

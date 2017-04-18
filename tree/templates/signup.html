@@ -9,11 +9,10 @@
     <body>
         {% include "navigation.html" %}
         
-        
         <div class="container">
             <h2 class="form-signin-heading">Welcome Newbee!</h2>
-            
-            <form class="form-signin" action="/tbd/handleSignUp" method="post">{% csrf_token %}
+            {{error}}
+            <form class="form-signin" action="/tbd/signup/" method="post">{% csrf_token %}
                 <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required autofocus>
                 <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
                 <input type="password" id="inputPass" name="inputPass" class="form-control" placeholder="Confirm Password" required>

@@ -190,9 +190,26 @@ class getMovie(generic.ListView):
         context = super(getMovie, self).get_context_data(**kwargs)
         context['movie'] = get_object_or_404(Movie, id=int(self.kwargs["movie_id"]))
         return context
+
     
+'''
+signup: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
+input: request: An html request which is sent by the user as they are on the SignUp webpage
+output: redirects the user to the TBD front page
+'''
 def signup(request):
     if request.user.username == "":
+        if request.method == "POST":
+            email_tmp=request.POST['inputEmail']
+            password_tmp=request.POST.get('inputPassword')
+            if(User.objects.filter(username=email_tmp).exists()):
+                return render(request, "signup.html", {'error': "Error: Email is already in use"})
+            new_user=User.objects.create_user(email_tmp,email_tmp,password_tmp)
+            new_user.save()
+            aut_login_temp=authenticate(username=email_tmp, password=password_tmp)
+            login(request,aut_login_temp)
+            emailHandler.emailNewUser(email_tmp)
+            return redirect('/tbd/')#Change this redirect to the settings page once it has been made
         return render(request, "signup.html")
     else:
         return redirect('/tbd')
@@ -208,23 +225,6 @@ def forgotpassword(request):
         return render(request, "forgotPassword.html")
     else:
         return redirect('/tbd')
-    
-'''
-handleSignUp: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
-input: request: An html request which is sent by the user as they are on the SignUp webpage
-output: redirects the user to the TBD front page
-'''
-def handleSignUp(request):
-    email_tmp=request.POST['inputEmail']
-    password_tmp=request.POST.get('inputPassword')
-    if(User.objects.filter(username=email_tmp).exists()):
-        return redirect('/tbd/signup')
-    new_user=User.objects.create_user(email_tmp,email_tmp,password_tmp)
-    new_user.save()
-    aut_login_temp=authenticate(username=email_tmp, password=password_tmp)
-    login(request,aut_login_temp)
-    emailHandler.emailNewUser(email_tmp)
-    return redirect('/tbd/')#Change this redirect to the settings page once it has been made
     
 '''
 password_change: A class used to aid change_password in changing the user's password.
