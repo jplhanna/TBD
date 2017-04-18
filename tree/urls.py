@@ -13,6 +13,7 @@ urlpatterns = [
     url(r'^handleSignIn$', views.handleSignIn, name='handleSignIn'),
     url(r'^handleSignOut$', views.handleSignOut, name='handleSignOut'),
     url(r'^handleForgotPassword$', views.handleForgotPassword, name='handleForgotPassword'),
+    url(r'^handleForgotPasswordChange$', views.handleForgotPasswordChange, name='handleForgotPasswordChange'),
     url(r'^movie/(?P<movie_id>[0-9]+)/$', views.getMovie.as_view(), name='handleQuestion'),
     url(r'^resetPassword/(?P<user_id>.+)/$', views.resetPassword.as_view(), name='resetPassword'),
     url(r'^signup/', signup),
