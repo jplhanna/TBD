@@ -7,17 +7,7 @@
     </head>
     <body>
         {% include "navigation.html" %}
-        <!--
-        {% if request.flavour == "mobile" %}
-            <h1 class="col-md-12">TBD</h1>
-        {% else %}
-            <h1 class="col-md-12">To Be Determined</h1>
-        {% endif %}
         
-        <p class="col-md-12 question">Are you ready to play a game?</p>
-        <p class="col-md-6 yes">Yes</p>
-        <p class="col-md-6 no">No</p>
-        -->
         <h3 id="title" style="width:60%;">{{movie.title}}</h3>
         <div class="row-sm-3">
             <button type="button" class="btn btn-success" aria-label="Left Align" onclick="submitResponse(1)">
@@ -27,6 +17,8 @@
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="false"></span>
             </button>
         </div>
+        <div>.</div>
+        <div>.</div>
         <div class="row-sm-2" style="text-align:center;">
             <a href="{{movie.imdb}}" target="_blank"><img src="{% static 'img/IMDb_logo.png' %}" width="100px"/></a>
         </div>
