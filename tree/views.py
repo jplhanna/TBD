@@ -226,7 +226,7 @@ def handleSignUp(request):
     aut_login_temp=authenticate(username=email_tmp, password=password_tmp)
     login(request,aut_login_temp)
     emailHandler.emailNewUser(email_tmp)
-    return redirect('/tbd/')
+    return redirect('/tbd/')#Change this redirect to the settings page once it has been made
     
 '''
 password_change: A class used to aid change_password in changing the user's password.
