@@ -17,7 +17,6 @@ a:hover{
 }
 
 #nav{
-	width:100%;
 	background-color:#071F37;
 }
 
@@ -125,11 +124,6 @@ input:focus, textarea:focus{
     transition: margin-top 0.3s;
 }
 
-#start:hover{
-	margin-top: 5.5em;
-	background-color: #368DE7;
-}
-
 /*sign in page*/
 form{
 	width:60%;
@@ -225,3 +219,4 @@ form h3{
 .navbar-sm .navbar-primary .navbar { min-height:120px; height: 120px; }
 .navbar-sm .navbar-primary .navbar .navbar-brand{ padding: 0px 12px;font-size: 16px;line-height: 40px; }
 .navbar-sm .navbar-primary .navbar .navbar-nav > li > a {  padding-top: 0px; padding-bottom: 0px; line-height: 40px; }
+.navbar-nav{  margin:0;  }
