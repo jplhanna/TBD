@@ -13,11 +13,10 @@ def MovieParser(text_File):
         #could change the code so that it finds the loction of the information using the first line of the csv using indexof
         #this way we are not using magic numbers, and don't have to worry about a consistent csv format for the parser
         for _row_tmp in _csv_tmp:
-            if(_row_tmp[1]=='director_name'):
+            if(_row_tmp[1]=='full_path'):
                 continue
             #3: duration 11: name 17: imdb link 23: year
-            _row_tmp[23] = '0' + _row_tmp[23]
-            _row_tmp[3] = '0' + _row_tmp[3]
-            _movie_tmp=(int(_row_tmp[3]),_row_tmp[11],_row_tmp[17],int(_row_tmp[23]))#figure out the positions of the values we need, write them down
+            _row_tmp[4] = '0' + _row_tmp[4]
+            _movie_tmp=(_row_tmp[0],_row_tmp[1],_row_tmp[2],_row_tmp[3],float(_row_tmp[4]))#figure out the positions of the values we need, write them down
             _movie_List.append(_movie_tmp)
     return _movie_List

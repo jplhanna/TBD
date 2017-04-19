@@ -22,8 +22,8 @@ class Movie(models.Model):
     #might need to increase this size if there are any movies with titles larger than this
     title=models.CharField(max_length=200)#can set this as primary key
     imdb=models.CharField(max_length=500)
-    duration=models.IntegerField(default=0)
-    year=models.IntegerField(default=2017)#current year, might be able to switch this to time current year
+    popularity=models.FloatField(default=0)
+    poster=models.CharField(max_length=500, default="")
     hulu=models.BooleanField(default=False)
     amazon=models.BooleanField(default=False)
     amazonPrime=models.BooleanField(default=False)
