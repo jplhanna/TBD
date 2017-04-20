@@ -8,11 +8,12 @@
 <html lang="en">
     <head>
         <title>Delphi | Settings</title>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         {% include "head.html" %}
         <link rel="stylesheet" href="{% static 'css/settings.css' %}">
+        <script src="{% static 'js/shared.js' %}"></script>
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     </head>
 
     <body style="background-color: #f8f8f8;">
@@ -25,7 +26,7 @@
 				</tr>
 				<tr>
 					<td class="accountTitle">password</td>
-					<td><div class="tinyBTN" id="changePassword">Change</div></td>
+					<td><div class="btn" id="changePassword">Change</div></td>
 				</tr>
 				<tr id="newPassword">
 					<td class="accountTitle">new password</td>
@@ -35,40 +36,16 @@
 				</tr>
 			</table>
 
-			<div id="myService" class="block">
-				<h4 class="title">My streaming service:</h4>
-				<form id="service">
-					<label class="checkbox" for="amazon">
-						<div class="selected"></div>
-			            <input type="checkbox" checked="checked" value="Amazon" id="amazon" data-toggle="checkbox">
-			            Amazon
-		            </label>
-		            <label class="checkbox" for="amazonPrime">
-		            	<div></div>
-			            <input type="checkbox" value="AmazonPrime" id="amazonPrime" data-toggle="checkbox">
-			            Amazon Prime
-		            </label>
-		            <label class="checkbox" for="Netflix">
-		            	<div></div>
-			            <input type="checkbox" value="Netflix" id="Netflix" data-toggle="checkbox">
-			            Netflix
-		            </label>
-		            <label class="checkbox" for="hulu">
-		            	<div></div>
-			            <input type="checkbox" value="hulu" id="hulu" data-toggle="checkbox">
-			            hulu
-		            </label>
-		            <label class="checkbox" for="iTunes">
-		            	<div></div>
-			            <input type="checkbox" value="iTunes" id="iTunes" data-toggle="checkbox">
-			            iTunes
-		            </label>
-		            <label class="checkbox" for="Google Play">
-		            	<div></div>
-			            <input type="checkbox" value="Google Play" id="Google Play" data-toggle="checkbox">
-			            Google Play
-		            </label>
-				</form>
+			<div class="form-group">
+				<div id="myList" class="block">
+					<h4 class="title">My streaming service:</h4>
+					<label class="checkbox-inline"><input type="checkbox" id="Amazon" value="Amazon" onclick="streamingData(0)">Amazon</label>
+					<label class="checkbox-inline"><input type="checkbox" id="AmazonPrime" value="AmazonPrime" onclick="streamingData(1)">Amazon Prime</label>
+					<label class="checkbox-inline"><input type="checkbox" id="Netflix" value="Netflix" onclick="streamingData(2)">Netflix</label>
+					<label class="checkbox-inline"><input type="checkbox" id="Hulu" value="Hulu" onclick="streamingData(3)">Hulu</label>
+					<label class="checkbox-inline"><input type="checkbox" id="iTunes" value="iTunes" onclick="streamingData(4)">iTunes</label>
+					<label class="checkbox-inline"><input type="checkbox" id="GooglePlay" value="GooglePlay" onclick="streamingData(5)">Google Play</label>
+				</div>
 			</div>
 
 			<div id="myList" class="block">

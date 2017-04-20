@@ -67,3 +67,28 @@ function initQuestions() {
     }
     $('#question').html(questions[_question_num]);
 }
+
+function streamingData(num) {
+    var onoff = $('#Amazon').is(":checked") && num == 0;
+    onoff = onoff || $('#AmazonPrime').is(":checked") && num == 1;
+    onoff = onoff || $('#Netflix').is(":checked") && num == 2;
+    onoff = onoff || $('#Hulu').is(":checked") && num == 3;
+    onoff = onoff || $('#iTunes').is(":checked") && num == 4;
+    onoff = onoff || $('#GooglePlay').is(":checked") && num == 5;
+    alert(onoff);
+    $.ajax({
+        url: 'handleQuestion',
+        data: {
+            'q': num.toString(),
+            'a': yn
+        },
+        dataType: 'json',
+        success: function (data) {
+            _question_num++;
+            if(_question_num >= 10 || yn == 0){
+                window.location.href = '/tbd/movie/' + data["best_movie"];
+            }
+            $('#question').html(questions[_question_num]);
+        }
+    });
+}

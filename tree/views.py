@@ -209,8 +209,9 @@ class getMovie(generic.ListView):
 def added(request):
     if request.user.username == "":
         return redirect('/tbd/signin')
-    if ForgotPass.objects.filter(user=request.user, movie.id=movie_id).exists():
-        return render(request,"added.html")
+    movie_id = 1
+    # if UserFavorites.objects.filter(user=request.user, movie.id=movie_id).exists():
+    #     return render(request,"added.html")
 '''
 signup: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
 input: request: An html request which is sent by the user as they are on the SignUp webpage
