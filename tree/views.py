@@ -203,7 +203,10 @@ class getMovie(generic.ListView):
         context['movie'] = get_object_or_404(Movie, id=int(self.kwargs["movie_id"]))
         return context
 
-    
+
+
+def added(request):
+    return render(request,"added.html")
 '''
 signup: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
 input: request: An html request which is sent by the user as they are on the SignUp webpage
@@ -361,3 +364,6 @@ output: A redirect call that send the user back to the front page
 def handleSignOut(request):
     logout(request)
     return redirect('/tbd/')
+    
+def settings(request):
+    return render(request,'settings.html')

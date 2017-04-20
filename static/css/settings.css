@@ -1,0 +1,264 @@
+*{
+	box-sizing: border-box;
+	margin:0;
+	font-family: 'Montserrat', sans-serif;
+}
+
+header{
+	width:100%;
+	height:6em;
+	background-color:#071F37;
+	display: flex;
+	display: -webkit-flex;
+	justify-content:space-between;
+	-webkit-justify-content:space-between;
+}
+
+#logo{
+	width:4em;
+	height:4em;
+	margin:1em 0 1em 2em;
+	background-image:url("../img/logoSimple_256x256.png");
+	background-repeat: no-repeat;
+	background-size: cover;
+	display: inline-block;
+}
+
+ul{
+	display: inline-block;
+	list-style-type: none;
+	padding:0;
+	color:#fff;
+}
+
+li{
+	display: inline-block;
+	color:#fff;
+	margin:2em;
+}
+
+li:hover{
+	color:#419BF9;
+}
+
+main{
+	margin-top: 4em;
+}
+
+h1, h3{
+	width:60%;
+	margin: 0 auto;
+	text-align: center;
+	color:#419BF9;
+}
+
+h1{
+	font-size: 6em;
+}
+
+h3{
+	font-size: 3em;
+	padding-top:1em;
+}
+
+a{
+	text-decoration:none;
+}
+
+#start{
+	display: block;
+	margin:0 auto;
+	margin-top: 6em;
+	width:10em;
+	height:4em;
+	font-size: 1em;
+	color:#fff;
+	background-color: #419BF9;
+	border:none;
+	border-radius: 6px;
+	-webkit-transition: margin-top 0.3s;
+    transition: margin-top 0.3s;
+}
+
+#start:hover{
+	margin-top: 5.5em;
+	background-color: #368DE7;
+}
+
+[contenteditable="true"]:focus{
+	outline: 0px solid transparent;
+	color:#419BF9;
+  	-webkit-text-fill-color: #071F37;
+  	padding-left: 1em;
+}
+
+.tinyBTN{
+	width:6rem;
+	background-color: #419BF9;
+	color:#fff;
+	border-radius: 6px;
+	padding:0.5rem;
+	text-align:center;
+	font-size:0.8rem;
+	letter-spacing: 1.5px;
+	cursor: pointer;
+}
+
+.tinyBTN:hover{
+	background-color: #368DE7;
+}
+
+/*set style for dropdown menu*/
+select{
+	border: 0 !important;
+	width:12rem;
+	height:2.5rem;
+	color:#fff;
+	appearance: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	background: url('../img/dropdownBg.png');
+	background-repeat:no-repeat;
+	background-size:cover;
+	background-position: right center;
+	font-size: 1rem;
+	letter-spacing: 1px;
+	padding-left:1em;
+	margin-left: 2em;
+}
+
+select:focus{
+	outline: none;
+}
+
+select:hover{
+	background: url('../img/dropdownBg_hover.png');
+	background-repeat:no-repeat;
+	background-size:cover;
+	background-position: right center;
+}
+
+/*
+  account setting
+*/
+
+/*set background style for info blocks*/
+.block{
+	width:80%;
+	padding:2% 10%;
+	background-color: #fff;
+	border-radius: 12px;
+	margin:0 auto;
+	margin-bottom: 2%;
+}
+
+/*set gap between rows in table for account info*/
+#accountInfo{
+	border-spacing:0em 2em;
+}
+
+
+.accountTitle{
+	text-transform: uppercase;
+	color:#419BF9;
+	font-size: 0.8rem;
+	letter-spacing: 1px;
+}
+
+.infoDetail{
+	color:#3C4F63;
+	font-size: 1.5rem;
+	letter-spacing: 1px;
+	padding-left: 1em;
+}
+
+#savePassword, #cancelPassword{
+	display: inline-block;
+	margin-left: 1em;
+}
+
+#cancelPassword{
+	border-color: #419BF9;
+	color:#419BF9;
+}
+
+.title{
+	letter-spacing: 1px;
+	display: inline-block;
+	color:#419BF9;
+}
+
+#myList.title{
+	display: block;
+}
+
+#myService form{
+	display: inline-block;
+}
+
+#myList ul, #recom ul{
+	width:50%;
+	color:#3C4F63;
+	text-transform: capitalize;
+	display: block;
+	height: 20vh;
+	overflow-y: scroll;
+	margin: 2em 0;
+}
+
+#myList ul li, #recom ul li{
+	display: block;
+	margin:0;
+	line-height: 200%;
+	display: flex;
+	display: -webkit-flex;
+	align-items: center;
+	-webkit-align-items:center;
+	justify-content: space-between;
+	-webkit-justify-content:space-between;
+}
+
+#myList a, #recom a{
+	color:#3C4F63;
+}
+
+#myList a:hover, #recom a:hover{
+	color:#419BF9;
+}
+
+.delete, .add{
+	display: inline-block;
+}
+
+.delete{
+	width:4rem;
+	height:1.2rem;
+	background: url('../img/delete.png');
+	background-repeat:no-repeat;
+	background-size:90%;
+	background-position: center;
+}
+
+.delete:hover{
+	background: url('../img/delete_hover.png');
+	background-repeat:no-repeat;
+	background-size:90%;
+	background-position: center;
+}
+
+.add{
+	width:10rem;
+	height:2rem;
+	background: url('../img/add.png');
+	background-repeat:no-repeat;
+	background-size:90%;
+	background-position: center;
+}
+
+.add:hover{
+	background: url('../img/add_hover.png');
+	background-repeat:no-repeat;
+	background-size:90%;
+	background-position: center;
+}
+

@@ -1,0 +1,149 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+</script>
+<![endif]-->
+
+<html lang="en">
+    <head>
+        <title>Delphi | Settings</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="{% static 'css/settings.css' %}">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    </head>
+
+    <body style="background-color: #f8f8f8;">
+    	<header>
+            <div id="logo"></div>
+            <ul>
+                <li><a href="/tbd/settings" style="color:#fff">{{user.username}}</a></li>
+                <li><a href="/tbd/handleSignOut" style="color:#fff">Sign Out</a></li>
+            </ul>
+        </header>
+        <main>
+			<table id="accountInfo" class="block">
+				<tr>
+					<td class="accountTitle">email</td>
+					<td class="infoDetail">richardh@piedpiper.com</td>
+				</tr>
+				<tr>
+					<td class="accountTitle">password</td>
+					<td class="infoDetail password" id="currentPassword" style="-webkit-text-security: disc;letter-spacing:2px;">1234567890</td>
+					<td><div class="tinyBTN" id="changePassword">Change</div></td>
+				</tr>
+				<tr id="newPassword">
+					<td  class="accountTitle">new password</td>
+					<td class="infoDetail password" id="inputnewPassword" style="-webkit-text-security: disc;"></td>
+					<td><div class="tinyBTN" id="savePassword">Save</div>
+					<div class="tinyBTN" id="cancelPassword">Cancel</div></td>
+				</tr>
+			</table>
+
+			<div id="myService" class="block">
+				<h4 class="title">My streaming service:</h4>
+				<form id="service">
+					<select name="service">
+				    <option value="Amazon">Amazon</option>
+				    <option value="Amazon Prime">Amazon Prime</option>
+				    <option value="Netflix">Netflix</option>
+				    <option value="Hulu">Hulu</option>
+				    <option value="iTunes">iTunes</option>
+				    <option value="Google Play">Google Play</option>
+				  </select>
+				</form>
+			</div>
+
+			<div id="myList" class="block">
+				<h4 class="title">My Watch List</h4>
+				<ul>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">big hero 6</a><div class="delete"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">the imitation game</a><div class="delete"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">star trek</a><div class="delete"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">fight club</a><div class="delete"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">little miss sunshine</a><div class="delete"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">jurassic park</a><div class="delete"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">saw i</a><div class="delete"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">nebraska</a><div class="delete"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">inside llewyn davis</a><div class="delete"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">once</a><div class="delete"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">juno</a><div class="delete"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">mary and max</a><div class="delete"></div></li>
+				</ul>
+			</div>
+
+			<div id="recom" class="block">
+				<h4 class="title">Recommendations</h4>
+				<ul>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">deal pool</a><div class="add"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">ghost in the shell</a><div class="add"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">star trek</a><div class="add"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">iron man</a><div class="add"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">the theory of everything</a><div class="add"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">jurassic park</a><div class="add"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">transcendence</a><div class="add"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">the lobster</a><div class="add"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">star trek: beyond</a><div class="add"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">zootopia</a><div class="add"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">the martian</a><div class="add"></div></li>
+					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">mad max: fury road</a><div class="add"></div></li>
+				</ul>
+			</div>
+		</main>
+	</body>
+
+	<script>
+		$("#newPassword").hide();
+
+		$("#changePassword").click(function(){
+			$("#currentPassword").prop("contenteditable","true");
+			$("#inputnewPassword").prop("contenteditable","true");
+			$('#currentPassword').focus();
+			$('#currentPassword').empty();
+			$('#inputnewPassword').empty();
+			$("#currentPassword").css({"border":"1px solid #071F37","border-radius":"6px"});
+			$(this).hide();
+			$("#newPassword").show();
+			$("#newPassword").click(function(){
+				//validate old password
+			})
+			$("#inputnewPassword").css({"border":"1px solid #071F37","border-radius":"6px"});
+			$("#cancelPassword").css({"border":"1px solid #419BF9","color":"#419BF9","background-color":"#fff"});
+		});
+
+		$("#savePassword").click(function(){
+			password=$("#inputnewPassword").text();
+			$("#currentPassword").prop("contenteditable","false");
+			$("#currentPassword").css({"border":"none"});
+			$("#changePassword").show();
+			$("#newPassword").hide();
+			$("#currentPassword").text(password);
+			//update password in bac-kend
+		});
+
+	$("#cancelPassword").click(function(){
+		$("#currentPassword").prop("contenteditable","false");
+		$("#currentPassword").css({"border":"none"});
+		$("#changePassword").show();
+		$("#newPassword").hide();
+		$("#currentPassword").text(password);
+	});
+
+	$(".delete").click(function(){
+		$(this).parent().remove();
+	});
+
+	$(".add").click(function(){
+		$(this).parent().append("<div class='delete'></div>");
+		$(this).parent().appendTo('#myList>ul');
+		$(this).parent().find(".add").remove();
+		$('#myList>ul').scrollTop($('#myList>ul')[0].scrollHeight);
+	});
+
+
+
+	</script>
+
+</html>

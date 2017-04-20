@@ -37,7 +37,7 @@
           <div class="nav navbar-nav navbar-right" id="bs-example-navbar-collapse-8">
               <ul class="nav navbar-nav">
                   {% if user.is_authenticated %}
-                      <li><a href="/tbd/handleSignOut">{{user.username}}</a></li>
+                      <li><a href="/tbd/settings">{{user.username}}</a></li>
                       <li><a href="/tbd/handleSignOut">Sign Out</a></li>
                   {% else %}
                       <li><a href="/tbd/signin">Sign In</a></li>
