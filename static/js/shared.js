@@ -22,22 +22,21 @@ function clickNo () {
 
 // AJAX for posting
 function submit(yn) {
-    console.log("yes is working!"); // sanity check
-    if(_question_num >= 9){
+    if(_question_num >= 9 || yn == 0){
         $('#buttons').html(" ");
+        $('#finish').html(" ");
     }
 
     $.ajax({
         url: 'handleQuestion',
         data: {
             'q': _question_num.toString(),
-            'a': yn,
-            'finish': false
+            'a': yn
         },
         dataType: 'json',
         success: function (data) {
             _question_num++;
-            if(_question_num >= 10){
+            if(_question_num >= 10 || yn == 0){
                 window.location.href = '/tbd/movie/' + data["best_movie"];
             }
             $('#question').html(questions[_question_num]);

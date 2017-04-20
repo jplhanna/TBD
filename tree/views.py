@@ -102,9 +102,10 @@ ouput: An http_response which contains the movie object and other needed informa
 def handleQuestion(request):
     response_data = {}
     if request.method == "GET":
-        finish = request.GET.get('finish')
+        #finish = request.GET.get('finish')
         question = int(request.GET.get('q'))
         answer = request.GET.get('a')
+        print(answer)
         array = request.session.__getitem__('scores').split(',')
         array[question] = str(answer)
         str_tmp = array[0]
@@ -112,13 +113,13 @@ def handleQuestion(request):
             str_tmp += ',' + itr
         request.session.__setitem__('scores', str_tmp)
         print request.session.__getitem__('scores')
-        if question == 9 or finish == 'true':
+        if question == 9 or answer == '0':
             movies = Movie.objects.all()
             scores = [float(0)] * len(movies)
             questions = request.session.__getitem__('questions').split(',')
             for itr in range(0, len(array)):
                 if int(array[itr]) == 0:
-                    return
+                    break
                 choices = Score.objects.filter(question_id=int(questions[itr])).all()
                 for choice in choices:
                     scores[choice.movie_id - 1] += float(array[itr]) * float(choice.score)
