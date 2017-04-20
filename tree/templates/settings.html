@@ -26,7 +26,7 @@
 				</tr>
 				<tr>
 					<td class="accountTitle">password</td>
-					<td><div class="btn" id="changePassword">Change</div></td>
+					<td><div class="btn btn-primary" id="changePassword">Change</div></td>
 				</tr>
 				<tr id="newPassword">
 					<td class="accountTitle">new password</td>
@@ -40,11 +40,11 @@
 				<div id="myList" class="block">
 					<h4 class="title">My streaming service:</h4>
 					<label class="checkbox-inline"><input type="checkbox" id="Amazon" value="Amazon" onclick="streamingData(0)" {% if amazon %}checked{% endif %}>Amazon</label>
-					<label class="checkbox-inline"><input type="checkbox" id="AmazonPrime" value="AmazonPrime" onclick="streamingData(1)">Amazon Prime</label>
-					<label class="checkbox-inline"><input type="checkbox" id="Netflix" value="Netflix" onclick="streamingData(2)">Netflix</label>
-					<label class="checkbox-inline"><input type="checkbox" id="Hulu" value="Hulu" onclick="streamingData(3)">Hulu</label>
-					<label class="checkbox-inline"><input type="checkbox" id="iTunes" value="iTunes" onclick="streamingData(4)">iTunes</label>
-					<label class="checkbox-inline"><input type="checkbox" id="GooglePlay" value="GooglePlay" onclick="streamingData(5)">Google Play</label>
+					<label class="checkbox-inline"><input type="checkbox" id="AmazonPrime" value="AmazonPrime" onclick="streamingData(1)" {% if amazonPrime %}checked{% endif %}>Amazon Prime</label>
+					<label class="checkbox-inline"><input type="checkbox" id="Netflix" value="Netflix" onclick="streamingData(2)"{% if netflix %}checked{% endif %}>Netflix</label>
+					<label class="checkbox-inline"><input type="checkbox" id="Hulu" value="Hulu" onclick="streamingData(3)"{% if hulu %}checked{% endif %}>Hulu</label>
+					<label class="checkbox-inline"><input type="checkbox" id="iTunes" value="iTunes" onclick="streamingData(4)"{% if itunes %}checked{% endif %}>iTunes</label>
+					<label class="checkbox-inline"><input type="checkbox" id="GooglePlay" value="GooglePlay" onclick="streamingData(5)" {% if googlePlay %}checked{% endif %}>Google Play</label>
 				</div>
 			</div>
 

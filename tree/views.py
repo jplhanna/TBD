@@ -455,10 +455,10 @@ def handleStreamingServices(request):
     response_data = {}
     if(request.method == "GET"):
         service = int(request.GET.get('service'))
-        onOff = request.GET.get('toggle')
+        onOff = request.GET.get('toggle') == 'true'
         currUser = request.user
         userData = UserData.objects.filter(user=currUser)[0]
-        print onOff
+        print onOff == 'true'
         if(service == 0):
             userData.amazon = onOff
         elif(service == 1):
