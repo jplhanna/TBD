@@ -45,20 +45,48 @@
 			<div id="myService" class="block">
 				<h4 class="title">My streaming service:</h4>
 				<form id="service">
-					<select name="service">
-				    <option value="Amazon">Amazon</option>
-				    <option value="Amazon Prime">Amazon Prime</option>
-				    <option value="Netflix">Netflix</option>
-				    <option value="Hulu">Hulu</option>
-				    <option value="iTunes">iTunes</option>
-				    <option value="Google Play">Google Play</option>
-				  </select>
+					<label class="checkbox" for="amazon">
+						<div class="selected"></div>
+			            <input type="checkbox" checked="checked" value="Amazon" id="amazon" data-toggle="checkbox">
+			            Amazon
+		            </label>
+		            <label class="checkbox" for="amazonPrime">
+		            	<div></div>
+			            <input type="checkbox" value="AmazonPrime" id="amazonPrime" data-toggle="checkbox">
+			            Amazon Prime
+		            </label>
+		            <label class="checkbox" for="Netflix">
+		            	<div></div>
+			            <input type="checkbox" value="Netflix" id="Netflix" data-toggle="checkbox">
+			            Netflix
+		            </label>
+		            <label class="checkbox" for="hulu">
+		            	<div></div>
+			            <input type="checkbox" value="hulu" id="hulu" data-toggle="checkbox">
+			            hulu
+		            </label>
+		            <label class="checkbox" for="iTunes">
+		            	<div></div>
+			            <input type="checkbox" value="iTunes" id="iTunes" data-toggle="checkbox">
+			            iTunes
+		            </label>
+		            <label class="checkbox" for="Google Play">
+		            	<div></div>
+			            <input type="checkbox" value="Google Play" id="Google Play" data-toggle="checkbox">
+			            Google Play
+		            </label>
 				</form>
 			</div>
 
 			<div id="myList" class="block">
 				<h4 class="title">My Watch List</h4>
 				<ul>
+					{% for movie in movie_list %}
+						<li>{{movie.title}}</li>
+					{% empty %}
+						<li></li>
+					{% endfor %}
+					<!--
 					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">big hero 6</a><div class="delete"></div></li>
 					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">the imitation game</a><div class="delete"></div></li>
 					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">star trek</a><div class="delete"></div></li>
@@ -71,6 +99,7 @@
 					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">once</a><div class="delete"></div></li>
 					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">juno</a><div class="delete"></div></li>
 					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">mary and max</a><div class="delete"></div></li>
+					-->
 				</ul>
 			</div>
 
@@ -143,6 +172,9 @@
 		$('#myList>ul').scrollTop($('#myList>ul')[0].scrollHeight);
 	});
 
+	$(".checkbox>div").click(function(){
+		$(this).toggleClass('selected');
+	})
 
 
 	</script>

@@ -138,6 +138,10 @@ select:hover{
 	background-position: right center;
 }
 
+option{
+	color:#3c4f63;
+}
+
 /*
   account setting
 */
@@ -186,6 +190,41 @@ select:hover{
 	letter-spacing: 1px;
 	display: inline-block;
 	color:#419BF9;
+}
+
+.title{
+	display: block;
+}
+
+#myService form{
+	color:#3C4F63;
+	margin-top:1em;
+}
+
+.checkbox{
+	display: block;
+	margin:1.5rem 0;
+}
+
+.checkbox input{
+	display: none;
+}
+
+.checkbox div{
+	width:1.5rem;
+	height:1.5rem;
+	background-color: #f1f1f1;
+	display: inline-block;
+	border-radius: 3px;
+	vertical-align: middle;
+	margin-right: 1rem;
+}
+
+.selected{
+	background: url('../img/selected.png');
+	background-repeat:no-repeat;
+	background-size:cover;
+	background-position: center;
 }
 
 #myList.title{
