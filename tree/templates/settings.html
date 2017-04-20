@@ -8,7 +8,7 @@
 <html lang="en">
     <head>
         <title>Delphi | Settings</title>
-        <meta charset="utf-8">
+        {% include "head.html" %}
         <link rel="stylesheet" href="{% static 'css/settings.css' %}">
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,13 +16,7 @@
     </head>
 
     <body style="background-color: #f8f8f8;">
-    	<header>
-            <div id="logo"></div>
-            <ul>
-                <li><a href="/tbd/settings" style="color:#fff">{{user.username}}</a></li>
-                <li><a href="/tbd/handleSignOut" style="color:#fff">Sign Out</a></li>
-            </ul>
-        </header>
+    	{% include "navigation.html" %}
         <main>
 			<table id="accountInfo" class="block">
 				<tr>
@@ -31,11 +25,10 @@
 				</tr>
 				<tr>
 					<td class="accountTitle">password</td>
-					<td class="infoDetail password" id="currentPassword" style="-webkit-text-security: disc;letter-spacing:2px;">1234567890</td>
 					<td><div class="tinyBTN" id="changePassword">Change</div></td>
 				</tr>
 				<tr id="newPassword">
-					<td  class="accountTitle">new password</td>
+					<td class="accountTitle">new password</td>
 					<td class="infoDetail password" id="inputnewPassword" style="-webkit-text-security: disc;"></td>
 					<td><div class="tinyBTN" id="savePassword">Save</div>
 					<div class="tinyBTN" id="cancelPassword">Cancel</div></td>
@@ -81,10 +74,8 @@
 			<div id="myList" class="block">
 				<h4 class="title">My Watch List</h4>
 				<ul>
-					{% for movie in movie_list %}
-						<li>{{movie.title}}</li>
-					{% empty %}
-						<li></li>
+					{% for movie in favorites %}
+						<li>{{movie.movie.title}}</li>
 					{% endfor %}
 					<!--
 					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">big hero 6</a><div class="delete"></div></li>
