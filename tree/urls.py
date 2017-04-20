@@ -20,5 +20,5 @@ urlpatterns = [
     url(r'^signup/', signup),
     url(r'^signin/', signin),
     url(r'^signin2/', views.signin2, name='signin2'),
-    url(r'^settings/', views.settings)
+    url(r'^settings/', views.settings.as_view())
 ]

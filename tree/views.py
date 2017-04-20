@@ -207,6 +207,8 @@ class getMovie(generic.ListView):
 
 
 def added(request):
+    if request.user.username == "":
+        return redirect('/tbd/signin')
     return render(request,"added.html")
 '''
 signup: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
@@ -366,5 +368,29 @@ def handleSignOut(request):
     logout(request)
     return redirect('/tbd/')
     
-def settings(request):
-    return render(request,'settings.html')
+    
+'''
+settings: A class used to show user their settings.
+'''
+class settings(generic.ListView):
+    template_name = 'settings.html'
+    context_object_name = 'question_list'
+    
+    '''
+    get_queryset: A method which returns the entire Movies table from the sqlite database
+    output: A list containing Movie objects
+    '''
+    def get_queryset(self):
+        return UserFavorites.objects.all()
+    
+    '''
+    get_context_data: a method used to retrieve contextual data for the current webpage. Specifically used when the user is asking to change their password.
+    input: kwargs: Is a dictionary used by django for command inputs. Should be empty.
+    output: context: a Dictionary containg the key 'email' which maps to the email connected to the current user
+    '''
+    def get_context_data(self,**kwargs):
+        if(self.request.user.username == ""):
+            return redirect('/tbd/signin')
+        context=super(settings,self).get_context_data(**kwargs)
+        context['favorites']=UserFavorites.objects.filter(user=self.request.user).all()
+        return context
