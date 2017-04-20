@@ -76,7 +76,7 @@ function streamingData(num) {
     onoff = onoff || $('#iTunes').is(":checked") && num == 4;
     onoff = onoff || $('#GooglePlay').is(":checked") && num == 5;
     $.ajax({
-        url: 'handleStreamingServices',
+        url: '/tbd/handleStreamingServices',
         data: {
             'service': num.toString(),
             'toggle': onoff

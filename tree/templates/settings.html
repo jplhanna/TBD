@@ -39,7 +39,7 @@
 			<div class="form-group">
 				<div id="myList" class="block">
 					<h4 class="title">My streaming service:</h4>
-					<label class="checkbox-inline"><input type="checkbox" id="Amazon" value="Amazon" onclick="streamingData(0)">Amazon</label>
+					<label class="checkbox-inline"><input type="checkbox" id="Amazon" value="Amazon" onclick="streamingData(0)" {% if amazon %}checked{% endif %}>Amazon</label>
 					<label class="checkbox-inline"><input type="checkbox" id="AmazonPrime" value="AmazonPrime" onclick="streamingData(1)">Amazon Prime</label>
 					<label class="checkbox-inline"><input type="checkbox" id="Netflix" value="Netflix" onclick="streamingData(2)">Netflix</label>
 					<label class="checkbox-inline"><input type="checkbox" id="Hulu" value="Hulu" onclick="streamingData(3)">Hulu</label>

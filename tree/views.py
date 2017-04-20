@@ -205,14 +205,13 @@ class getMovie(generic.ListView):
         return context
 
 
-'''
+
 def added(request):
     if request.user.username == "":
         return redirect('/tbd/signin')
     movie_id = 1
     # if UserFavorites.objects.filter(user=request.user, movie.id=movie_id).exists():
     #     return render(request,"added.html")
-'''
 '''
 signup: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
 input: request: An html request which is sent by the user as they are on the SignUp webpage
@@ -278,7 +277,7 @@ def handleForgotPasswordChange(request):
    
 
 def handlePasswordChange(request):
-    user_name_tmp=request.POST.get('email')
+    user_name_tmp=request.user.username
     old_pass_tmp=request.POST.get('old_password')
     old_pass_matches_tmp=authenticate(username=user_name_tmp, password=old_pass_tmp)
     if(old_pass_matches_tmp is None):
@@ -397,7 +396,12 @@ class settings(generic.ListView):
         context=super(settings,self).get_context_data(**kwargs)
         context['favorites']=UserFavorites.objects.filter(user=self.request.user).all()
         currUser=self.request.user
-        userData=UserData.objects.filter(user=currUser)
+        userData=UserData.objects.filter(user=currUser).all()
+        if len(userData) < 1:
+            userData = UserData(user=currUser)
+            userData.save()
+        else:
+            userData = userData[0]
         context['amazon']=userData.amazon
         context['amazonPrime']=userData.amazonPrime
         context['netflix']=userData.netflix
@@ -410,11 +414,13 @@ class settings(generic.ListView):
 
     
 def handleStreamingServices(request):
+    response_data = {}
     if(request.method == "GET"):
-        service=request.GET.get('service')
+        service=int(request.GET.get('service'))
         onOff=request.GET.get('toggle')
-        currUser=request.User
-        userData=UserData.objects.filter(user=currUser)
+        currUser=request.user
+        userData=UserData.objects.filter(user=currUser)[0]
+        print onOff
         if(service==0):
             userData.amazon=onOff
         elif(service==1):
@@ -428,3 +434,10 @@ def handleStreamingServices(request):
         elif(service==5):
             userData.googlePlay=onOff
         userData.save()
+        
+        response_data['result'] = 'Create post successful!'
+
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )
