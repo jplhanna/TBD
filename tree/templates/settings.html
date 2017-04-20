@@ -26,7 +26,7 @@
 				</tr>
 				<tr>
 					<td class="accountTitle">password</td>
-					<td><div class="btn btn-primary" id="changePassword">Change</div></td>
+					<td><button type="button" class="btn btn-primary" id="changePassword">Change</button></td>
 				</tr>
 				<tr id="newPassword">
 					<td class="accountTitle">new password</td>
@@ -89,6 +89,26 @@
 				</ul>
 			</div>
 			<td><a href="/tbd"><div class="tinyBTN" style="margin:auto" >Save</div></a></td>
+			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccount" id="deleteAccount">Delete</button>
+			<div class="modal fade" id="thisModal" tabindex="-1" role="dialog" aria-labelledby="deleteAccountLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="deleteAccountLabel">Modal title</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							Are you sure you want to delete your account?
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+							<button type="button" class="btn btn-danger">Yes</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</main>
 	</body>
 

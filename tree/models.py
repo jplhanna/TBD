@@ -79,6 +79,9 @@ class UserData(models.Model):
     itunes=models.BooleanField(default=False)
     netflix=models.BooleanField(default=False)
     
+    def __str__(self):
+        return self.user.username
+    
 class UserFavorites(models.Model):
     movie=models.ForeignKey(Movie,on_delete=models.CASCADE)
     user=models.ForeignKey(User,on_delete=models.CASCADE)
