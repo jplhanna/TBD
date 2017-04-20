@@ -75,20 +75,15 @@ function streamingData(num) {
     onoff = onoff || $('#Hulu').is(":checked") && num == 3;
     onoff = onoff || $('#iTunes').is(":checked") && num == 4;
     onoff = onoff || $('#GooglePlay').is(":checked") && num == 5;
-    alert(onoff);
     $.ajax({
-        url: 'handleQuestion',
+        url: 'handleStreamingServices',
         data: {
-            'q': num.toString(),
-            'a': yn
+            'service': num.toString(),
+            'toggle': onoff
         },
         dataType: 'json',
         success: function (data) {
-            _question_num++;
-            if(_question_num >= 10 || yn == 0){
-                window.location.href = '/tbd/movie/' + data["best_movie"];
-            }
-            $('#question').html(questions[_question_num]);
+            console.log("Success!");
         }
     });
 }
