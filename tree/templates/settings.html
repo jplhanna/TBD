@@ -161,9 +161,9 @@
 		$("#currentPassword").text(password);
 	});
 
-	$(".delete").click(function(){
-		$(this).parent().remove();
-	});
+    $("#myList").on("click",".delete",function(){
+        $(this).parent().remove();
+    });
 
 	$(".add").click(function(){
 		$(this).parent().append("<div class='delete'></div>");
