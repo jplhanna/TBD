@@ -205,13 +205,14 @@ class getMovie(generic.ListView):
         return context
 
 
-
+'''
 def added(request):
     if request.user.username == "":
         return redirect('/tbd/signin')
     movie_id = 1
     # if UserFavorites.objects.filter(user=request.user, movie.id=movie_id).exists():
     #     return render(request,"added.html")
+'''
 '''
 signup: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
 input: request: An html request which is sent by the user as they are on the SignUp webpage
@@ -395,4 +396,35 @@ class settings(generic.ListView):
             return redirect('/tbd/signin')
         context=super(settings,self).get_context_data(**kwargs)
         context['favorites']=UserFavorites.objects.filter(user=self.request.user).all()
+        currUser=self.request.user
+        userData=UserData.objects.filter(user=currUser)
+        context['amazon']=userData.amazon
+        context['amazonPrime']=userData.amazonPrime
+        context['netflix']=userData.netflix
+        context['hulu']=userData.hulu
+        context['itunes']=userData.itunes
+        context['googlePlay']=userData.googlePlay
         return context
+        
+        
+
+    
+def handleStreamingServices(request):
+    if(request.method == "GET"):
+        service=request.GET.get('service')
+        onOff=request.GET.get('toggle')
+        currUser=request.User
+        userData=UserData.objects.filter(user=currUser)
+        if(service==0):
+            userData.amazon=onOff
+        elif(service==1):
+            userData.amazonPrime=onOff
+        elif(service==2):
+            userData.netflix=onOff
+        elif(service==3):
+            userData.hulu=onOff
+        elif(service==4):
+            userData.itunes=onOff
+        elif(service==5):
+            userData.googlePlay=onOff
+        userData.save()
