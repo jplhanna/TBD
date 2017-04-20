@@ -55,7 +55,7 @@ class questions(generic.ListView):
         questions_string = questions_string.split(',')
         questions_tmp = []
         for itr in questions_string:
-            questions_tmp.append(Question.objects.get(id=int(itr)))
+            questions_tmp.append(Question.objects.get(id = int(itr)))
         return questions_tmp
         
     '''
@@ -157,7 +157,7 @@ def handleResponse(request):
             score = int(scores[itr])
             if score == 0:
                 return
-            score_obj = get_object_or_404(Score, movie_id=movie, question_id=int(questions[itr]))
+            score_obj = get_object_or_404(Score, movie_id = movie, question_id = int(questions[itr]))
             score_obj.score += multiplier * float(.05) * float(score)
             score_obj.save()
 
@@ -165,7 +165,7 @@ def handleResponse(request):
 
         return HttpResponse(
             json.dumps(response_data),
-            content_type="application/json"
+            content_type = "application/json"
         )
 
 '''
@@ -174,12 +174,12 @@ input: request: An html request which is sent by the user as they are on the fro
 output: Redirects the user to a random movie info page
 '''
 def handleRandom(request):
-    total_movies_tmp=Movie.objects.count()-1
-    rand_movie_index_tmp=random.randint(0,total_movies_tmp)
+    total_movies_tmp = Movie.objects.count()-1
+    rand_movie_index_tmp = random.randint(0,total_movies_tmp)
     return redirect('/tbd/movie/' + str(rand_movie_index_tmp) + '/')
 
 '''
-getMovie: A class used to return the movie found by the questions, and to be recommended to the user.
+getMovie: A class used to return a movie found by the questions or the random button, and to be recommended to the user.
 '''
 class getMovie(generic.ListView):
     template_name = 'movie.html'
@@ -201,11 +201,16 @@ class getMovie(generic.ListView):
     '''
     def get_context_data(self, **kwargs):
         context = super(getMovie, self).get_context_data(**kwargs)
-        context['movie'] = get_object_or_404(Movie, id=int(self.kwargs["movie_id"]))
+        context['movie'] = get_object_or_404(Movie, id = int(self.kwargs["movie_id"]))
         return context
 
 
-
+'''
+added: A method used when the user asks to add a movie to their favorites list\
+input: request: An html request when the user presses the add to favorites button on a movie info page
+output: redirect the user to the signin page if they are not logged index
+modifies: Changes the UserFavorites table by adding a new UserFavorites object which corresponds to the current user and the movie they wished to add.
+'''
 def added(request):
     if request.user.username == "":
         return redirect('/tbd/signin')
@@ -220,18 +225,24 @@ def added(request):
 '''
 signup: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
 input: request: An html request which is sent by the user as they are on the SignUp webpage
-output: redirects the user to the TBD front page
+output: If the user is already signed in or successfully signs up they are signed into the Delphi homepage
+        Otherwise they are sent back to the signup page, signifying the email is in use, if that was the issue
+modifies: The Django user database by creating a new user object
+          The UserData table in the Django sqlite database by creating a corresponing UserData object for the new user
 '''
 def signup(request):
     if request.user.username == "":
         if request.method == "POST":
             email_tmp=request.POST['inputEmail']
             password_tmp=request.POST.get('inputPassword')
-            if(User.objects.filter(username=email_tmp).exists()):
+            if(User.objects.filter(username = email_tmp).exists()):
                 return render(request, "signup.html", {'error': "Email is already in use"})
             new_user=User.objects.create_user(email_tmp,email_tmp,password_tmp)
             new_user.save()
-            aut_login_temp=authenticate(username=email_tmp, password=password_tmp)
+            #makes a UserData database object that is related to the user just made
+            new_user_data = UserData(user = new_user)
+            new_user_data.save()
+            aut_login_temp = authenticate(username = email_tmp, password = password_tmp)
             login(request,aut_login_temp)
             emailHandler.emailNewUser(email_tmp)
             return redirect('/tbd/')#Change this redirect to the settings page once it has been made
@@ -239,12 +250,24 @@ def signup(request):
     else:
         return redirect('/tbd')
     
+'''
+signin: A method called when a user clicks the signin button on any Delphi webpage.
+input: request: An html request which is sent when a user presses the signin button on the Delphi navigation bar
+output: If the user is somehow already logged in, they are sent back to the Delphi homepage.
+        Otherwise the user is sent to the signin webpage
+'''
 def signin(request):
     if request.user.username == "":
         return render(request, "signin.html")
     else:
         return redirect('/tbd')
     
+'''
+forgotpassword: A method called when the user wishes to reset their password because they forgot it, while trying to log in
+input: request: An html request which is sent when the user presses the forgot password button on the signin webpage
+output: If the user is somehow already logged in, they are sent back to the Delphi homepage.
+        Otherwise the user is sent to the forgotpassword webpage
+'''
 def forgotpassword(request):
     if request.user.username == "":
         return render(request, "forgotPassword.html")
@@ -262,36 +285,45 @@ class password_change(generic.ListView):
     output: context: a Dictionary containg the key 'email' which maps to the email connected to the current user
     '''
     def get_context_data(self,**kwargs):
-        context=super(password_change,self).get_context_data(**kwargs)
-        context['email']=get_object_or_404(User,id=int(self.kwargs['email_id']))
+        context = super(password_change,self).get_context_data(**kwargs)
+        context['email'] = get_object_or_404(User,id=int(self.kwargs['email_id']))
         return context
    
+'''
+handleForgotPasswordChange: A method called from the unique webpage used when a user forgets their password and requests to change it.ArithmeticError
+input: request: AN html request sent from the changed forgotten password webpage.
 
+currently not fully functional
+'''
 def handleForgotPasswordChange(request):
-    user_name_tmp=request.POST.get('inputPassword')
+    user_name_tmp = request.POST.get('inputPassword')
     print user_name_tmp
     return 0
-    old_pass_tmp=request.POST.get('old_password')
-    old_pass_matches_tmp=authenticate(username=user_name_tmp, password=old_pass_tmp)
+    old_pass_tmp = request.POST.get('old_password')
+    old_pass_matches_tmp = authenticate(username=user_name_tmp, password=old_pass_tmp)
     if(old_pass_matches_tmp is None):
         return None #should redirect the user back to their settings page, once that page has been made.
-    new_pass_tmp=request.POST.get('new_password')
-    user_tmp=User.objects.get(user_name_tmp)
+    new_pass_tmp = request.POST.get('new_password')
+    user_tmp = User.objects.get(user_name_tmp)
     user_tmp.set_password(new_pass_tmp)
     user_tmp.save()
+    return redirect('/tbd/')
    
-
+'''
+handlePasswordChange: A method called when the user tries to change their password from their settings page
+input: request: An html request which is sent by the user when they try change their password from the settings webpage
+output: Will only send a redirect back to the settings page if the password change fails
+'''
 def handlePasswordChange(request):
     user_name_tmp=request.user.username
     old_pass_tmp=request.POST.get('old_password')
-    old_pass_matches_tmp=authenticate(username=user_name_tmp, password=old_pass_tmp)
+    old_pass_matches_tmp=authenticate(username = user_name_tmp, password = old_pass_tmp)
     if(old_pass_matches_tmp is None):
-        return None #should redirect the user back to their settings page, once that page has been made.
+        return redirect('/tbd/settings/') #should redirect the user back to their settings page, once that page has been made.
     new_pass_tmp=request.POST.get('new_password')
     user_tmp=User.objects.get(user_name_tmp)
     user_tmp.set_password(new_pass_tmp)
     user_tmp.save()
-    #should probably either return a success state or redirect the user back to their settings page
 
 '''
 handleForgotPassword: The method called when a user signifies that they forgot their password on the signin page.
@@ -302,8 +334,8 @@ def handleForgotPassword(request):
     user_name_tmp=request.POST.get('email')
     user_tmp = get_object_or_404(User, username=user_name_tmp)
     random_url = ""
-    if(ForgotPass.objects.filter(username=user_name_tmp).exists()):
-        random_url = ForgotPass.objects.filter(username=user_name_tmp).random
+    if(ForgotPass.objects.filter(username = user_name_tmp).exists()):
+        random_url = ForgotPass.objects.filter(username = user_name_tmp).random
     else:
         for count_tmp in range(1, 10):
             for itr in range(0, 5 * count_tmp):
@@ -327,18 +359,11 @@ def handleForgotPassword(request):
     
     
 '''
-resetPassword: A class used to aid change_password in changing the user's password.
+resetPassword: A class used to aid handleForgotPassword in changing the user's password.
 '''
 class resetPassword(generic.ListView):
     template_name = 'resetPassword.html'
     context_object_name = 'question_list'
-    
-    '''
-    get_queryset: A method which returns the entire Movies table from the sqlite database
-    output: A list containing Movie objects
-    '''
-    def get_queryset(self):
-        return Movie.objects.all()
     
     '''
     get_context_data: a method used to retrieve contextual data for the current webpage. Specifically used when the user is asking to change their password.
@@ -347,7 +372,7 @@ class resetPassword(generic.ListView):
     '''
     def get_context_data(self,**kwargs):
         context=super(resetPassword,self).get_context_data(**kwargs)
-        context['random']=self.kwargs["user_id"]
+        context['random'] = self.kwargs["user_id"]
         return context
     
     
@@ -377,7 +402,7 @@ def handleSignOut(request):
     
     
 '''
-settings: A class used to show user their settings.
+settings: A class used to show user their settings while they are on their settings page.
 '''
 class settings(generic.ListView):
     template_name = 'settings.html'
@@ -393,7 +418,8 @@ class settings(generic.ListView):
     '''
     get_context_data: a method used to retrieve contextual data for the current webpage. Specifically used when the user is asking to change their password.
     input: kwargs: Is a dictionary used by django for command inputs. Should be empty.
-    output: context: a Dictionary containg the key 'email' which maps to the email connected to the current user
+    output: context: a Dictionary containg the key 'favorites' which maps to a list of favorited movies connected to the current user,
+                     as well as a key for each streaming service, which maps to a boolean that signifies whether that service checked off or not
     '''
     def get_context_data(self,**kwargs):
         _movie_array_tmp = []
@@ -410,37 +436,41 @@ class settings(generic.ListView):
             userData.save()
         else:
             userData = userData[0]
-        context['amazon']=userData.amazon
-        context['amazonPrime']=userData.amazonPrime
-        context['netflix']=userData.netflix
-        context['hulu']=userData.hulu
-        context['itunes']=userData.itunes
-        context['googlePlay']=userData.googlePlay
+        context['amazon'] = userData.amazon
+        context['amazonPrime'] = userData.amazonPrime
+        context['netflix'] = userData.netflix
+        context['hulu'] = userData.hulu
+        context['itunes'] = userData.itunes
+        context['googlePlay'] = userData.googlePlay
         return context
         
         
 
-    
+'''
+handleStreamingServices: A method which handles saving users streaming services. It is called every time a user checks or unchecks a service on their settings page
+input: request: An html request which is sent by the user when on page within the TBD webpage, while they are using their settings page.
+modifies: The UserData table in the Django sqlite database. Specifically the UserData connected to the currently logged in user.
+'''
 def handleStreamingServices(request):
     response_data = {}
     if(request.method == "GET"):
-        service=int(request.GET.get('service'))
-        onOff=request.GET.get('toggle')
-        currUser=request.user
-        userData=UserData.objects.filter(user=currUser)[0]
+        service = int(request.GET.get('service'))
+        onOff = request.GET.get('toggle')
+        currUser = request.user
+        userData = UserData.objects.filter(user=currUser)[0]
         print onOff
-        if(service==0):
-            userData.amazon=onOff
-        elif(service==1):
-            userData.amazonPrime=onOff
-        elif(service==2):
-            userData.netflix=onOff
-        elif(service==3):
-            userData.hulu=onOff
-        elif(service==4):
-            userData.itunes=onOff
-        elif(service==5):
-            userData.googlePlay=onOff
+        if(service == 0):
+            userData.amazon = onOff
+        elif(service == 1):
+            userData.amazonPrime = onOff
+        elif(service == 2):
+            userData.netflix = onOff
+        elif(service == 3):
+            userData.hulu = onOff
+        elif(service == 4):
+            userData.itunes = onOff
+        elif(service == 5):
+            userData.googlePlay = onOff
         userData.save()
         
         response_data['result'] = 'Create post successful!'
