@@ -10,16 +10,6 @@ $( document ).ready(function(){
     answer.style.fontSize = "35px";
 });
 
-function clickYes() {
-    var answer = document.getElementById("answer");
-    answer.innerHTML = "-- answered yes --";
-}
-
-function clickNo () {
-    var answer = document.getElementById("answer");
-    answer.innerHTML = "-- answered no --";
-}
-
 // AJAX for posting
 function submit(yn) {
     if(_question_num >= 9 || yn == 0){
@@ -80,6 +70,26 @@ function streamingData(num) {
         data: {
             'service': num.toString(),
             'toggle': onoff
+        },
+        dataType: 'json',
+        success: function (data) {
+            console.log("Success!");
+        }
+    });
+}
+
+function addToFav() {
+    var list = window.location.href.split("/")
+    var movie_id = "1";
+    if(list[list.length - 1] == ""){
+        movie_id = list[list.length - 2];
+    }else{
+        movie_id = list[list.length - 1];
+    }
+    $.ajax({
+        url: '/tbd/added',
+        data: {
+            'movie_id': movie_id
         },
         dataType: 'json',
         success: function (data) {

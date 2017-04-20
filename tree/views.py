@@ -209,9 +209,14 @@ class getMovie(generic.ListView):
 def added(request):
     if request.user.username == "":
         return redirect('/tbd/signin')
-    movie_id = 1
-    # if UserFavorites.objects.filter(user=request.user, movie.id=movie_id).exists():
-    #     return render(request,"added.html")
+    if request.method == "GET":
+        movie_id=int(request.GET.get('movie_id'))
+        movie = Movie.objects.filter(id=movie_id).all()[0]
+        if UserFavorites.objects.filter(user=request.user, movie=movie).exists():
+            return render(request,"added.html")
+        userFav = UserFavorites(user=request.user, movie=movie)
+        userFav.save()
+        return render(request,"added.html")
 '''
 signup: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
 input: request: An html request which is sent by the user as they are on the SignUp webpage
@@ -391,10 +396,13 @@ class settings(generic.ListView):
     output: context: a Dictionary containg the key 'email' which maps to the email connected to the current user
     '''
     def get_context_data(self,**kwargs):
+        _movie_array_tmp = []
         if(self.request.user.username == ""):
             return redirect('/tbd/signin')
         context=super(settings,self).get_context_data(**kwargs)
-        context['favorites']=UserFavorites.objects.filter(user=self.request.user).all()
+        for m in UserFavorites.objects.filter(user=self.request.user).all():
+            _movie_array_tmp.append(m.movie)
+        context['favorites'] = _movie_array_tmp
         currUser=self.request.user
         userData=UserData.objects.filter(user=currUser).all()
         if len(userData) < 1:

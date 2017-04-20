@@ -33,7 +33,7 @@ ul{
 
 li{
 	display: inline-block;
-	color:#fff;
+	color:#419BF9;
 	margin:2em;
 }
 
@@ -61,7 +61,8 @@ h3{
 	padding-top:1em;
 }
 
-a{
+a.faves{
+	color: red !important;
 	text-decoration:none;
 }
 

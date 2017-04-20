@@ -52,7 +52,7 @@
 				<h4 class="title">My Watch List</h4>
 				<ul>
 					{% for movie in favorites %}
-						<li>{{movie.movie.title}}</li>
+						<li><a class="faves" href="{{movie.imdb}}" target="blank">{{movie.title}}</a><div class="delete"></div></li>
 					{% endfor %}
 					<!--
 					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">big hero 6</a><div class="delete"></div></li>
