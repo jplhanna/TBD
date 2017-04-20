@@ -207,7 +207,11 @@ class getMovie(generic.ListView):
 
 
 def added(request):
-    return render(request,"added.html")
+    if request.user.username == "":
+        return redirect('/tbd/signin')
+    movie_id = 1
+    # if UserFavorites.objects.filter(user=request.user, movie.id=movie_id).exists():
+    #     return render(request,"added.html")
 '''
 signup: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
 input: request: An html request which is sent by the user as they are on the SignUp webpage
@@ -273,7 +277,7 @@ def handleForgotPasswordChange(request):
    
 
 def handlePasswordChange(request):
-    user_name_tmp=request.POST.get('email')
+    user_name_tmp=request.user.username
     old_pass_tmp=request.POST.get('old_password')
     old_pass_matches_tmp=authenticate(username=user_name_tmp, password=old_pass_tmp)
     if(old_pass_matches_tmp is None):
@@ -366,5 +370,74 @@ def handleSignOut(request):
     logout(request)
     return redirect('/tbd/')
     
-def settings(request):
-    return render(request,'settings.html')
+    
+'''
+settings: A class used to show user their settings.
+'''
+class settings(generic.ListView):
+    template_name = 'settings.html'
+    context_object_name = 'question_list'
+    
+    '''
+    get_queryset: A method which returns the entire Movies table from the sqlite database
+    output: A list containing Movie objects
+    '''
+    def get_queryset(self):
+        return UserFavorites.objects.all()
+    
+    '''
+    get_context_data: a method used to retrieve contextual data for the current webpage. Specifically used when the user is asking to change their password.
+    input: kwargs: Is a dictionary used by django for command inputs. Should be empty.
+    output: context: a Dictionary containg the key 'email' which maps to the email connected to the current user
+    '''
+    def get_context_data(self,**kwargs):
+        if(self.request.user.username == ""):
+            return redirect('/tbd/signin')
+        context=super(settings,self).get_context_data(**kwargs)
+        context['favorites']=UserFavorites.objects.filter(user=self.request.user).all()
+        currUser=self.request.user
+        userData=UserData.objects.filter(user=currUser).all()
+        if len(userData) < 1:
+            userData = UserData(user=currUser)
+            userData.save()
+        else:
+            userData = userData[0]
+        context['amazon']=userData.amazon
+        context['amazonPrime']=userData.amazonPrime
+        context['netflix']=userData.netflix
+        context['hulu']=userData.hulu
+        context['itunes']=userData.itunes
+        context['googlePlay']=userData.googlePlay
+        return context
+        
+        
+
+    
+def handleStreamingServices(request):
+    response_data = {}
+    if(request.method == "GET"):
+        service=int(request.GET.get('service'))
+        onOff=request.GET.get('toggle')
+        currUser=request.user
+        userData=UserData.objects.filter(user=currUser)[0]
+        print onOff
+        if(service==0):
+            userData.amazon=onOff
+        elif(service==1):
+            userData.amazonPrime=onOff
+        elif(service==2):
+            userData.netflix=onOff
+        elif(service==3):
+            userData.hulu=onOff
+        elif(service==4):
+            userData.itunes=onOff
+        elif(service==5):
+            userData.googlePlay=onOff
+        userData.save()
+        
+        response_data['result'] = 'Create post successful!'
+
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type="application/json"
+        )

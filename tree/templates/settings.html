@@ -8,83 +8,51 @@
 <html lang="en">
     <head>
         <title>Delphi | Settings</title>
-        <meta charset="utf-8">
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        {% include "head.html" %}
         <link rel="stylesheet" href="{% static 'css/settings.css' %}">
+        <script src="{% static 'js/shared.js' %}"></script>
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     </head>
 
     <body style="background-color: #f8f8f8;">
-    	<header>
-            <div id="logo"></div>
-            <ul>
-                <li><a href="/tbd/settings" style="color:#fff">{{user.username}}</a></li>
-                <li><a href="/tbd/handleSignOut" style="color:#fff">Sign Out</a></li>
-            </ul>
-        </header>
+    	{% include "navigation.html" %}
         <main>
 			<table id="accountInfo" class="block">
 				<tr>
 					<td class="accountTitle">email</td>
-					<td class="infoDetail">richardh@piedpiper.com</td>
+					<td class="infoDetail">{{user.email}}</td>
 				</tr>
 				<tr>
 					<td class="accountTitle">password</td>
-					<td class="infoDetail password" id="currentPassword" style="-webkit-text-security: disc;letter-spacing:2px;">1234567890</td>
-					<td><div class="tinyBTN" id="changePassword">Change</div></td>
+					<td><div class="btn" id="changePassword">Change</div></td>
 				</tr>
 				<tr id="newPassword">
-					<td  class="accountTitle">new password</td>
+					<td class="accountTitle">new password</td>
 					<td class="infoDetail password" id="inputnewPassword" style="-webkit-text-security: disc;"></td>
 					<td><div class="tinyBTN" id="savePassword">Save</div>
 					<div class="tinyBTN" id="cancelPassword">Cancel</div></td>
 				</tr>
 			</table>
 
-			<div id="myService" class="block">
-				<h4 class="title">My streaming service:</h4>
-				<form id="service">
-					<label class="checkbox" for="amazon">
-						<div class="selected"></div>
-			            <input type="checkbox" checked="checked" value="Amazon" id="amazon" data-toggle="checkbox">
-			            Amazon
-		            </label>
-		            <label class="checkbox" for="amazonPrime">
-		            	<div></div>
-			            <input type="checkbox" value="AmazonPrime" id="amazonPrime" data-toggle="checkbox">
-			            Amazon Prime
-		            </label>
-		            <label class="checkbox" for="Netflix">
-		            	<div></div>
-			            <input type="checkbox" value="Netflix" id="Netflix" data-toggle="checkbox">
-			            Netflix
-		            </label>
-		            <label class="checkbox" for="hulu">
-		            	<div></div>
-			            <input type="checkbox" value="hulu" id="hulu" data-toggle="checkbox">
-			            hulu
-		            </label>
-		            <label class="checkbox" for="iTunes">
-		            	<div></div>
-			            <input type="checkbox" value="iTunes" id="iTunes" data-toggle="checkbox">
-			            iTunes
-		            </label>
-		            <label class="checkbox" for="Google Play">
-		            	<div></div>
-			            <input type="checkbox" value="Google Play" id="Google Play" data-toggle="checkbox">
-			            Google Play
-		            </label>
-				</form>
+			<div class="form-group">
+				<div id="myList" class="block">
+					<h4 class="title">My streaming service:</h4>
+					<label class="checkbox-inline"><input type="checkbox" id="Amazon" value="Amazon" onclick="streamingData(0)" {% if amazon %}checked{% endif %}>Amazon</label>
+					<label class="checkbox-inline"><input type="checkbox" id="AmazonPrime" value="AmazonPrime" onclick="streamingData(1)">Amazon Prime</label>
+					<label class="checkbox-inline"><input type="checkbox" id="Netflix" value="Netflix" onclick="streamingData(2)">Netflix</label>
+					<label class="checkbox-inline"><input type="checkbox" id="Hulu" value="Hulu" onclick="streamingData(3)">Hulu</label>
+					<label class="checkbox-inline"><input type="checkbox" id="iTunes" value="iTunes" onclick="streamingData(4)">iTunes</label>
+					<label class="checkbox-inline"><input type="checkbox" id="GooglePlay" value="GooglePlay" onclick="streamingData(5)">Google Play</label>
+				</div>
 			</div>
 
 			<div id="myList" class="block">
 				<h4 class="title">My Watch List</h4>
 				<ul>
-					{% for movie in movie_list %}
-						<li>{{movie.title}}</li>
-					{% empty %}
-						<li></li>
+					{% for movie in favorites %}
+						<li>{{movie.movie.title}}</li>
 					{% endfor %}
 					<!--
 					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">big hero 6</a><div class="delete"></div></li>

@@ -67,3 +67,23 @@ function initQuestions() {
     }
     $('#question').html(questions[_question_num]);
 }
+
+function streamingData(num) {
+    var onoff = $('#Amazon').is(":checked") && num == 0;
+    onoff = onoff || $('#AmazonPrime').is(":checked") && num == 1;
+    onoff = onoff || $('#Netflix').is(":checked") && num == 2;
+    onoff = onoff || $('#Hulu').is(":checked") && num == 3;
+    onoff = onoff || $('#iTunes').is(":checked") && num == 4;
+    onoff = onoff || $('#GooglePlay').is(":checked") && num == 5;
+    $.ajax({
+        url: '/tbd/handleStreamingServices',
+        data: {
+            'service': num.toString(),
+            'toggle': onoff
+        },
+        dataType: 'json',
+        success: function (data) {
+            console.log("Success!");
+        }
+    });
+}
