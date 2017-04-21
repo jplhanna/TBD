@@ -115,6 +115,19 @@ def handleQuestion(request):
         print request.session.__getitem__('scores')
         if question == 9 or answer == '0':
             movies = Movie.objects.all()
+            
+            '''
+            currUser=request.user
+            if(currUser.username==""):
+                movies = Movie.objects.all()
+            else:
+                userData=UserData.objects.filter(user = currUser)[0]
+                if(userData.showAll==True ):
+                    movies=Movie.objects.all()
+                else:
+                    movies = Movie.objects.filter(netflix = userData.netflix, amazon = userData.amazon,
+                    amazonPrime = userData.amazonPrime, hulu =  userData.hulu, googlePlay = userData.googlePlay)
+            '''
             scores = [float(0)] * len(movies)
             questions = request.session.__getitem__('questions').split(',')
             for itr in range(0, len(array)):
@@ -483,6 +496,10 @@ def handleStreamingServices(request):
             userData.itunes = onOff
         elif(service == 5):
             userData.googlePlay = onOff
+        if(userData.amazon == userData.amazonPrime == userData.netflix == userData.hulu == userData.itunes == userData.googlePlay == False):
+            userData.showAll=True
+        else:
+            userData.showAll=False
         userData.save()
         
         response_data['result'] = 'Create post successful!'
@@ -490,4 +507,28 @@ def handleStreamingServices(request):
         return HttpResponse(
             json.dumps(response_data),
             content_type="application/json"
+        )
+        
+        
+def handleDeleteAccount(request):
+    currUser=request.user
+    if(currUser.username == ""):
+        return redirect("/tbd/signin")
+    else:
+        currUser.delete()
+        return redirect("/tbd")
+        
+def handleDeleteFavorite(request):
+    response_data = {}
+    if(request.method == "GET"):
+        movie_id_tmp = request.GET.get('movie_id')
+        currUser = request.user
+        favorite_tmp = UserFavorites.objects.filter(user=currUser, movie_id = movie_id_tmp)
+        favorite_tmp.delete()
+        
+        response_data['result'] = 'Delete successful!'
+        
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type = "application/json"
         )
