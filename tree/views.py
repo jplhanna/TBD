@@ -212,16 +212,28 @@ output: redirect the user to the signin page if they are not logged index
 modifies: Changes the UserFavorites table by adding a new UserFavorites object which corresponds to the current user and the movie they wished to add.
 '''
 def added(request):
+    response_data = {}
     if request.user.username == "":
         return redirect('/tbd/signin')
     if request.method == "GET":
         movie_id=int(request.GET.get('movie_id'))
         movie = Movie.objects.filter(id=movie_id).all()[0]
-        if UserFavorites.objects.filter(user=request.user, movie=movie).exists():
+        if int(request.GET.get('add')) == 1:
+            if UserFavorites.objects.filter(user=request.user, movie=movie).exists():
+                return render(request,"added.html")
+            userFav = UserFavorites(user=request.user, movie=movie)
+            userFav.save()
             return render(request,"added.html")
-        userFav = UserFavorites(user=request.user, movie=movie)
-        userFav.save()
-        return render(request,"added.html")
+        else:
+            fav = UserFavorites.objects.filter(user=request.user, movie=movie)
+            if UserFavorites.objects.filter(user=request.user, movie=movie).exists():
+                fav.delete()
+            response_data['result'] = 'Create post successful!'
+
+            return HttpResponse(
+                json.dumps(response_data),
+                content_type = "application/json"
+            )
 '''
 signup: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
 input: request: An html request which is sent by the user as they are on the SignUp webpage

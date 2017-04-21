@@ -78,18 +78,23 @@ function streamingData(num) {
     });
 }
 
-function addToFav() {
-    var list = window.location.href.split("/")
+function addToFav(add, id) {
     var movie_id = "1";
-    if(list[list.length - 1] == ""){
-        movie_id = list[list.length - 2];
+    if (add == 1){
+        var list = window.location.href.split("/");
+        if(list[list.length - 1] == ""){
+            movie_id = list[list.length - 2];
+        }else{
+            movie_id = list[list.length - 1];
+        }
     }else{
-        movie_id = list[list.length - 1];
+        movie_id = id;
     }
     $.ajax({
         url: '/tbd/added',
         data: {
-            'movie_id': movie_id
+            'movie_id': movie_id,
+            'add': add
         },
         dataType: 'json',
         success: function (data) {
