@@ -9,7 +9,6 @@
     <head>
         <title>Delphi | Settings</title>
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        {% include "head.html" %}
         <link rel="stylesheet" href="{% static 'css/settings.css' %}">
         <script src="{% static 'js/shared.js' %}"></script>
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
@@ -17,7 +16,18 @@
     </head>
 
     <body style="background-color: #f8f8f8;">
-    	{% include "navigation.html" %}
+    	<header>
+            <div id="logo"></div>
+            <ul>
+				{% if user.is_authenticated %}
+				  <li><a style = "color:#fff; text-decoration:none;" href="/tbd/settings">{{user.username}}</a></li>
+				  <li><a style = "color:#fff; text-decoration:none;" href="/tbd/handleSignOut">Sign Out</a></li>
+				{% else %}
+				  <li><a href="/tbd/signin">Sign In</a></li>
+				  <li><a href="/tbd/signup">Sign Up</a></li>
+				{% endif %}
+            </ul>
+        </header>
         <main>
 			<table id="accountInfo" class="block">
 				<tr>
@@ -38,7 +48,7 @@
 
 			<div class="form-group">
 				<div id="myService" class="block">
-					<h4 class="title">My streaming service:</h4>
+					<h4 class="title" style="margin-bottom: 1rem;">My streaming service:</h4>
 					<label class="checkbox-inline"><input type="checkbox" id="Amazon" value="Amazon" onclick="streamingData(0)" {% if amazon %}checked{% endif %}>Amazon</label>
 					<label class="checkbox-inline"><input type="checkbox" id="AmazonPrime" value="AmazonPrime" onclick="streamingData(1)" {% if amazonPrime %}checked{% endif %}>Amazon Prime</label>
 					<label class="checkbox-inline"><input type="checkbox" id="Netflix" value="Netflix" onclick="streamingData(2)"{% if netflix %}checked{% endif %}>Netflix</label>
