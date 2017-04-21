@@ -37,7 +37,7 @@
 			</table>
 
 			<div class="form-group">
-				<div id="myList" class="block">
+				<div id="myService" class="block">
 					<h4 class="title">My streaming service:</h4>
 					<label class="checkbox-inline"><input type="checkbox" id="Amazon" value="Amazon" onclick="streamingData(0)" {% if amazon %}checked{% endif %}>Amazon</label>
 					<label class="checkbox-inline"><input type="checkbox" id="AmazonPrime" value="AmazonPrime" onclick="streamingData(1)" {% if amazonPrime %}checked{% endif %}>Amazon Prime</label>
@@ -54,20 +54,6 @@
 					{% for movie in favorites %}
 						<li><a class="faves" href="{{movie.imdb}}" target="blank">{{movie.title}}</a><div class="delete"></div></li>
 					{% endfor %}
-					<!--
-					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">big hero 6</a><div class="delete"></div></li>
-					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">the imitation game</a><div class="delete"></div></li>
-					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">star trek</a><div class="delete"></div></li>
-					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">fight club</a><div class="delete"></div></li>
-					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">little miss sunshine</a><div class="delete"></div></li>
-					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">jurassic park</a><div class="delete"></div></li>
-					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">saw i</a><div class="delete"></div></li>
-					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">nebraska</a><div class="delete"></div></li>
-					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">inside llewyn davis</a><div class="delete"></div></li>
-					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">once</a><div class="delete"></div></li>
-					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">juno</a><div class="delete"></div></li>
-					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">mary and max</a><div class="delete"></div></li>
-					-->
 				</ul>
 			</div>
 
