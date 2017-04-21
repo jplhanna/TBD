@@ -115,6 +115,19 @@ def handleQuestion(request):
         print request.session.__getitem__('scores')
         if question == 9 or answer == '0':
             movies = Movie.objects.all()
+            
+            '''
+            currUser=request.user
+            if(currUser.username==""):
+                movies = Movie.objects.all()
+            else:
+                userData=UserData.objects.filter(user = currUser)[0]
+                if(userData.showAll==True ):
+                    movies=Movie.objects.all()
+                else:
+                    movies = Movie.objects.filter(netflix = userData.netflix, amazon = userData.amazon,
+                    amazonPrime = userData.amazonPrime, hulu =  userData.hulu, googlePlay = userData.googlePlay)
+            '''
             scores = [float(0)] * len(movies)
             questions = request.session.__getitem__('questions').split(',')
             for itr in range(0, len(array)):
@@ -212,16 +225,28 @@ output: redirect the user to the signin page if they are not logged index
 modifies: Changes the UserFavorites table by adding a new UserFavorites object which corresponds to the current user and the movie they wished to add.
 '''
 def added(request):
+    response_data = {}
     if request.user.username == "":
         return redirect('/tbd/signin')
     if request.method == "GET":
         movie_id=int(request.GET.get('movie_id'))
         movie = Movie.objects.filter(id=movie_id).all()[0]
-        if UserFavorites.objects.filter(user=request.user, movie=movie).exists():
+        if int(request.GET.get('add')) == 1:
+            if UserFavorites.objects.filter(user=request.user, movie=movie).exists():
+                return render(request,"added.html")
+            userFav = UserFavorites(user=request.user, movie=movie)
+            userFav.save()
             return render(request,"added.html")
-        userFav = UserFavorites(user=request.user, movie=movie)
-        userFav.save()
-        return render(request,"added.html")
+        else:
+            fav = UserFavorites.objects.filter(user=request.user, movie=movie)
+            if UserFavorites.objects.filter(user=request.user, movie=movie).exists():
+                fav.delete()
+            response_data['result'] = 'Create post successful!'
+
+            return HttpResponse(
+                json.dumps(response_data),
+                content_type = "application/json"
+            )
 '''
 signup: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
 input: request: An html request which is sent by the user as they are on the SignUp webpage
@@ -471,6 +496,10 @@ def handleStreamingServices(request):
             userData.itunes = onOff
         elif(service == 5):
             userData.googlePlay = onOff
+        if(userData.amazon == userData.amazonPrime == userData.netflix == userData.hulu == userData.itunes == userData.googlePlay == False):
+            userData.showAll=True
+        else:
+            userData.showAll=False
         userData.save()
         
         response_data['result'] = 'Create post successful!'
@@ -478,4 +507,28 @@ def handleStreamingServices(request):
         return HttpResponse(
             json.dumps(response_data),
             content_type="application/json"
+        )
+        
+        
+def handleDeleteAccount(request):
+    currUser=request.user
+    if(currUser.username == ""):
+        return redirect("/tbd/signin")
+    else:
+        currUser.delete()
+        return redirect("/tbd")
+        
+def handleDeleteFavorite(request):
+    response_data = {}
+    if(request.method == "GET"):
+        movie_id_tmp = request.GET.get('movie_id')
+        currUser = request.user
+        favorite_tmp = UserFavorites.objects.filter(user=currUser, movie_id = movie_id_tmp)
+        favorite_tmp.delete()
+        
+        response_data['result'] = 'Delete successful!'
+        
+        return HttpResponse(
+            json.dumps(response_data),
+            content_type = "application/json"
         )
