@@ -302,3 +302,16 @@ option{
 	background-position: center;
 }
 
+.deletebtn{
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    border-radius: 6px;
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    float: right;
+    margin: 10px 10px;
+    cursor: pointer;
+}

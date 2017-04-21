@@ -84,14 +84,27 @@
 					<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">mad max: fury road</a><div class="add"></div></li>
 				</ul>
 			</div>
-			<td><a href="/tbd"><div class="tinyBTN" style="margin:auto" >Save</div></a></td>
+			<td><a href="/tbd"><div class="tinyBTN" style="margin:auto;" >Save</div></a></td>
 			
-			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccount" id="deleteAccount">Delete</button>
+			<button class="deletebtn" onclick="deleteAccount()">Delete</button>
+			<script>
+				function deleteAccount() {
+				    if (confirm("Do you really want to delete your account?") == true) {
+						$.ajax({
+            				url: '/tbd/handleDeleteAccount'
+        				})
+        				window.location.href = "/tbd";
+				    }
+				}
+			</script>
+			
+			<!--
+			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccount" id="deleteAccount" style="background-color:red;">Delete</button>
 			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="deleteAccountLabel" aria-hidden="true">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="deleteAccountLabel">Account Deletion</h5>
+							<h5 class="modal-title" id="deleteAccountLabel" >Account Deletion</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 								<span aria-hidden="true">&times;</span>
 							</button>
@@ -106,6 +119,7 @@
 					</div>
 				</div>
 			</div>
+			-->
 		</main>
 	</body>
 
