@@ -9,6 +9,7 @@ import numpy as np
 import random
 import json
 import emailHandler as eH_tmp
+from datetime import datetime
 emailHandler = eH_tmp.emailHandler()
 
 from .models import *
@@ -146,8 +147,16 @@ def handleQuestion(request):
                     if choice.movie_id in idToLocation:
                         scores[idToLocation[choice.movie_id]] += float(array[itr]) * float(choice.score)
             scores = np.matrix(scores)
-            response_data['best_movie'] = movies[np.argmax(scores)].id
-
+            best_movie = movies[np.argmax(scores)]
+            response_data['best_movie'] = best_movie.id
+            _recommend_tmp = UserRecommended.objects.filter(user=request.user, movie=best_movie)
+            if _recommend_tmp.exists():
+                _recommend_tmp = UserRecommended.objects.filter(user=request.user, movie=best_movie).all()[0]
+                _recommend_tmp.date = datetime.now()
+            else:
+                _recommend_tmp = UserRecommended(user=request.user, movie=best_movie,
+                date=datetime.now())
+            _recommend_tmp.save()
 
         response_data['result'] = 'Create post successful!'
 
@@ -333,18 +342,14 @@ input: request: AN html request sent from the changed forgotten password webpage
 currently not fully functional
 '''
 def handleForgotPasswordChange(request):
-    user_name_tmp = request.POST.get('inputPassword')
-    print user_name_tmp
-    return 0
-    old_pass_tmp = request.POST.get('old_password')
-    old_pass_matches_tmp = authenticate(username=user_name_tmp, password=old_pass_tmp)
-    if old_pass_matches_tmp is None:
-        return None #should redirect the user back to settings page, once that page has been made.
-    new_pass_tmp = request.POST.get('new_password')
-    user_tmp = User.objects.get(user_name_tmp)
-    user_tmp.set_password(new_pass_tmp)
-    user_tmp.save()
-    return redirect('/tbd/')
+    new_pass_tmp = request.POST.get('inputPassword')
+    random = request.POST.get('submit')
+    check = get_object_or_404(ForgotPass, random=random)
+    user = get_object_or_404(User, username=check.username)
+    user.set_password(new_pass_tmp)
+    user.save()
+    check.delete()
+    return redirect('/tbd/signin')
 
 '''
 handlePasswordChange: A method called when the user tries to change their password from their settings page
@@ -372,7 +377,7 @@ def handleForgotPassword(request):
     user_tmp = get_object_or_404(User, username=user_name_tmp)
     random_url = ""
     if ForgotPass.objects.filter(username=user_name_tmp).exists():
-        random_url = ForgotPass.objects.filter(username=user_name_tmp).random
+        random_url = ForgotPass.objects.filter(username=user_name_tmp).all()[0].random
     else:
         for count_tmp in range(1, 10):
             for itr in range(0, 5 * count_tmp):
@@ -401,6 +406,13 @@ resetPassword: A class used to aid handleForgotPassword in changing the user's p
 class resetPassword(generic.ListView):
     template_name = 'resetPassword.html'
     context_object_name = 'question_list'
+
+    '''
+    get_queryset: A method which returns the entire Movies table from the sqlite database
+    output: A list containing Movie objects
+    '''
+    def get_queryset(self):
+        return UserFavorites.objects.all()
 
     '''
     get_context_data: a method used to retrieve contextual data for the current webpage.
@@ -462,13 +474,17 @@ class settings(generic.ListView):
                      as well as a key for each streaming service, which maps to a boolean that signifies whether that service checked off or not
     '''
     def get_context_data(self, **kwargs):
-        _movie_array_tmp = []
+        _fav_movie_array_tmp = []
+        _prev_movie_array_tmp = []
         if self.request.user.username == "":
             return redirect('/tbd/signin')
         context = super(settings, self).get_context_data(**kwargs)
         for m in UserFavorites.objects.filter(user=self.request.user).all():
-            _movie_array_tmp.append(m.movie)
-        context['favorites'] = _movie_array_tmp
+            _fav_movie_array_tmp.append(m.movie)
+        for m in UserRecommended.objects.filter(user=self.request.user).all().order_by('-date'):
+            _prev_movie_array_tmp.append(m.movie)
+        context['favorites'] = _fav_movie_array_tmp
+        context['previous'] = _prev_movie_array_tmp
         currUser = self.request.user
         userData = UserData.objects.filter(user=currUser).all()
         if len(userData) < 1:
