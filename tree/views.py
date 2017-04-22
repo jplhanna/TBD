@@ -124,27 +124,30 @@ def handleQuestion(request):
         if question == 9 or answer == '0':
             movies = Movie.objects.all()
 
-            '''
             currUser=request.user
             if(currUser.username==""):
                 movies = Movie.objects.all()
             else:
                 userData=UserData.objects.filter(user = currUser)[0]
-                if(userData.showAll==True ):
+                if userData.showAll==True:
                     movies=Movie.objects.all()
                 else:
                     movies = Movie.objects.filter(netflix = userData.netflix,
                     amazon = userData.amazon, amazonPrime = userData.amazonPrime,
-                    hulu =  userData.hulu, googlePlay = userData.googlePlay)
-            '''
+                    hulu = userData.hulu, googlePlay = userData.googlePlay).all()
+
             scores = [float(0)] * len(movies)
+            idToLocation = {}
+            for _movie_itr_tmp in range(0, len(movies)):
+                idToLocation[movies[_movie_itr_tmp]] = _movie_itr_tmp
             questions = request.session.__getitem__('questions').split(',')
             for itr in range(0, len(array)):
                 if int(array[itr]) == 0:
                     break
                 choices = Score.objects.filter(question_id=int(questions[itr])).all()
                 for choice in choices:
-                    scores[choice.movie_id - 1] += float(array[itr]) * float(choice.score)
+                    if choice.movie_id in idToLocation:
+                        scores[idToLocation[choice.movie_id]] += float(array[itr]) * float(choice.score)
             scores = np.matrix(scores)
             response_data['best_movie'] = movies[np.argmax(scores)].id
 
