@@ -122,8 +122,6 @@ def handleQuestion(request):
         request.session.__setitem__('scores', str_tmp)
         print request.session.__getitem__('scores')
         if question == 9 or answer == '0':
-            movies = Movie.objects.all()
-
             currUser=request.user
             if(currUser.username==""):
                 movies = Movie.objects.all()
@@ -135,7 +133,6 @@ def handleQuestion(request):
                     movies = Movie.objects.filter(netflix = userData.netflix,
                     amazon = userData.amazon, amazonPrime = userData.amazonPrime,
                     hulu = userData.hulu, googlePlay = userData.googlePlay).all()
-
             scores = [float(0)] * len(movies)
             idToLocation = {}
             for _movie_itr_tmp in range(0, len(movies)):
@@ -549,6 +546,5 @@ def handleDeleteFavorite(request):
 
         return HttpResponse(
             json.dumps(response_data),
-            content_type="application/json"
+            content_type = "application/json"
         )
-        
