@@ -18,9 +18,19 @@ from .models import *
 #by looking in the Django documentation
 
 # Create your views here.
+'''
+index: The method called when the user reaches the main page of the Delphi website.
+input: request: An html request which is sent by the user when they try to enter the Delphi website
+output: A render call using the users request and index.html, which builds the main page
+'''
 def index(request):
     return render(request, "index.html")
 
+'''
+signin2: The method called when the user fails to sign in due to a bad password or email.
+input: request: An html request which is sent by the handleSignIn method when the user fails to sign in
+output: A render call using the users original signin request and the second signin webpage, thus building that page.
+'''
 def signin2(request):
     return render(request, "signin2.html")
 '''
@@ -472,6 +482,7 @@ class settings(generic.ListView):
     input: kwargs: Is a dictionary used by django for command inputs. Should be empty.
     output: context: a Dictionary containg the key 'favorites' which maps to a list of favorited movies connected to the current user,
                      as well as a key for each streaming service, which maps to a boolean that signifies whether that service checked off or not
+    modifies: In the rare case that the user did not have a corresponding UserData object in the sqlite database, that object is created and saved.
     '''
     def get_context_data(self, **kwargs):
         _fav_movie_array_tmp = []
@@ -505,6 +516,7 @@ class settings(generic.ListView):
 '''
 handleStreamingServices: A method which handles saving users streaming services. It is called every time a user checks or unchecks a service on their settings page
 input: request: An html request which is sent by the user when on page within the TBD webpage, while they are using their settings page.
+Output: An HttpResponse used to verify that the method successfully ran
 modifies: The UserData table in the Django sqlite database. Specifically the UserData connected to the currently logged in user.
 '''
 def handleStreamingServices(request):
@@ -541,7 +553,15 @@ def handleStreamingServices(request):
             content_type="application/json"
         )
 
-
+'''
+handleDeleteAccount: A method which is called when the user wishes to delete their account.
+input: request: An html request sent when the user confirms they want to delete their account
+                on their settings page
+output: The user is redirected back to the Delphi front page, if they were somehow not logged
+        in they are instead sent to signin page
+modifies: If the user is logged in, their account is deleted from the django database. All
+          connected objects in the sqlite database are automatically deleted.
+'''
 def handleDeleteAccount(request):
     currUser = request.user
     if currUser.username == "":
@@ -550,6 +570,12 @@ def handleDeleteAccount(request):
         currUser.delete()
         return redirect("/tbd")
 
+'''
+handleDeleteFavorite: A method called when the user wishes to delete a movie from their favorites.
+input: request: An html request sent when the user clicks the delete button on their favorites list
+output: An HttpResponse used to verify that the method successfully ran.
+modifies: The favorites table in the slqite database, the corresponding movie is removed.
+'''
 def handleDeleteFavorite(request):
     response_data = {}
     if request.method == "GET":

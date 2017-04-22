@@ -3,10 +3,10 @@ from tree.models import Movie
 from parser import MovieParser
 
 #So rather than calling the parser we call manage with a specific function line which will call this. The function should include the location of the file being added
-#Parser could be called to parse the file and return the proper list. The parser could be a factor method
+#Parser could be called to parse the file and return the proper list. The parser could be a factory method
 
 class Command(BaseCommand):
-    help="Populates Movie table/database with data given in csv's"
+    help="Updates Movie table/database with data given in csv's"
     
     def add_arguments(self,parser):
         #The argument of the add_movie_data command, aka the csv file location, there should be at least 1
@@ -14,7 +14,7 @@ class Command(BaseCommand):
         parser.add_argument('available',nargs=1,help='Must input one availability location')
     
     '''
-    CreateMovies: A method which populates or adds movies into the database
+    CreateMovies: A method which adds movies into the database, or updates the information of currently existing movies
     input: csv: A string containing the file location with the movies to be input
     modifies: The movie table contained in db.splite3, and based on the Movie model in the Tree application. Adds movies into said database
     '''
