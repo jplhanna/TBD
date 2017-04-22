@@ -2,7 +2,7 @@ from django.conf.urls import url
 from tree.views import signup,signin
 
 from . import views
-
+#This file is simply meant to contain all urls used by the Tree application of the TBD project. Aka, the Delphi Website
 urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^question$', views.questions.as_view(), name='index'),
