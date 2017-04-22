@@ -7,5 +7,4 @@ from .models import Movie, Question, Score, UserData
 
 admin.site.register(Movie)
 admin.site.register(Question)
-admin.site.register(Score)
 admin.site.register(UserData)
