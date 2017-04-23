@@ -12,12 +12,24 @@
         
         <h3 id="title" style="width:60%;">{{movie.title}}</h3>
         <div class="row-sm-3">
-            <button type="button" class="btn btn-success" aria-label="Left Align" onclick="submitResponse(1)">
+            <button type="button" class="btn btn-up" aria-label="Left Align" onclick="changeGreen();submitResponse(1);">
                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="false"></span>
             </button>
-            <button type="button" class="btn btn-danger" aria-label="Left Align" onclick="submitResponse(-1)">
+            <script>
+                function changeGreen() {
+                    $(".btn-up").css("background-color","#5cb85c");
+                    $(".btn-down").css("background-color","#aec1d6");
+                }
+            </script>
+            <button type="button" class="btn btn-down" aria-label="Left Align" onclick="changeRed();submitResponse(-1)">
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="false"></span>
             </button>
+            <script>
+                function changeRed() {
+                    $(".btn-down").css("background-color","#d9534f");
+                    $(".btn-up").css("background-color","#aec1d6");
+                }
+            </script>
         </div>
         <div>.</div>
         <div>.</div>
@@ -25,6 +37,13 @@
             <a href="{{movie.imdb}}" target="_blank"><img src="{% static 'img/justWatch_logo.png' %}" width="150px"/></a>
         </div>
         <a href="/tbd/question"><button class="btn btn-primary">Start over</button></a>
-        <a onclick="addToFav(1)"><button class="btn btn-primary">Add to favorites</button></a>
+        <a href="/tbd/handleRandom"><button class="btn btn-primary">Random</button></a>
+        <a onclick="changeText();addToFav(1)"><button class="btn btn-primary" id="fav">Add to favorites</button></a>
+        <script>
+            function changeText(){
+                $("#fav").text("Added");
+            }
+        </script>
+        
     </body>
 </html>
