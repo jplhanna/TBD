@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^handleSignOut$', views.handleSignOut, name='handleSignOut'),
     url(r'^handleForgotPassword$', views.handleForgotPassword, name='handleForgotPassword'),
     url(r'^handleForgotPasswordChange$', views.handleForgotPasswordChange, name='handleForgotPasswordChange'),
+    url(r'^handleDeleteAccount$', views.handleDeleteAccount, name='handleDeleteAccount'),
     url(r'^handleStreamingServices$', views.handleStreamingServices, name='handleStreamingServices'),
     url(r'^movie/(?P<movie_id>[0-9]+)/$', views.getMovie.as_view(), name='handleQuestion'),
     url(r'^added$', views.added, name='added'),

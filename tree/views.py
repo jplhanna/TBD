@@ -276,6 +276,7 @@ def added(request):
                 json.dumps(response_data),
                 content_type="application/json"
             )
+    return render(request,"added.html")
 '''
 signup: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
 input: request: An html request which is sent by the user as they are on the SignUp webpage
@@ -287,6 +288,23 @@ modifies: The Django user database by creating a new user object
 def signup(request):
     if request.user.username == "":
         if request.method == "POST":
+            email_tmp=request.POST['inputEmail']
+            password_tmp=request.POST.get('inputPassword')
+            confirm_tmp=request.POST.get('inputPass')
+            if(User.objects.filter(username = email_tmp).exists()):
+                return render(request, "signup.html", {'error': "Email is already in use"})
+            if(password_tmp==confirm_tmp):
+                new_user=User.objects.create_user(email_tmp,email_tmp,password_tmp)
+                new_user.save()
+                #makes a UserData database object that is related to the user just made
+                new_user_data = UserData(user = new_user)
+                new_user_data.save()
+                aut_login_temp = authenticate(username = email_tmp, password = password_tmp)
+                login(request,aut_login_temp)
+                emailHandler.emailNewUser(email_tmp)
+                return redirect('/tbd/')#Change this redirect to the settings page once it has been made
+            else:
+                return render(request,"signup.html", {'error':"Password didn't match"})
             email_tmp = request.POST['inputEmail']
             password_tmp = request.POST.get('inputPassword')
             if User.objects.filter(username=email_tmp).exists():
@@ -568,6 +586,8 @@ def handleDeleteAccount(request):
         return redirect("/tbd/signin")
     else:
         currUser.delete()
+        return redirect("/tbd/signin")
+        
         return redirect("/tbd")
 
 '''
