@@ -11,6 +11,7 @@ import json
 import emailHandler as eH_tmp
 from datetime import datetime
 emailHandler = eH_tmp.emailHandler()
+from questionHandler import questionHandler
 
 from .models import *
 
@@ -133,7 +134,10 @@ def handleQuestion(request):
         request.session.__setitem__('scores', str_tmp)
         print request.session.__getitem__('scores')
         if question == 9 or answer == '0':
-            currUser=request.user
+            currUser = request.user
+            questions = request.session.__getitem__('questions').split(',')
+            q_help_tmp = questionHandler(currUser)
+            '''
             if(currUser.username==""):
                 movies = Movie.objects.all()
             else:
@@ -158,6 +162,9 @@ def handleQuestion(request):
                         scores[idToLocation[choice.movie_id]] += float(array[itr]) * float(choice.score)
             scores = np.matrix(scores)
             best_movie = movies[np.argmax(scores)]
+            '''
+            #response_data['best_movie'] = best_movie.id
+            best_movie = q_help_tmp.getBestMovie(array, questions)
             response_data['best_movie'] = best_movie.id
             _recommend_tmp = UserRecommended.objects.filter(user=request.user, movie=best_movie)
             if _recommend_tmp.exists():
