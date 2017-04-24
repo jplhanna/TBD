@@ -1,9 +1,5 @@
 # Delphi
-<<<<<<< HEAD
-webpage or app for finding the title of a book, movie, or video game based on answering questions about preferences.
-=======
 Webapp for finding the title of a movie or television show based on answering 10 or less questions about preferences.
->>>>>>> cc7389fa01df714d7751aeee020d89c3d768b960
 
 # Setup instructions:
 This project was implemented using Django. See https://www.djangoproject.com/ for more information.
