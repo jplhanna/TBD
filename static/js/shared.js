@@ -37,6 +37,9 @@ function submit(yn) {
 // AJAX for posting
 function submitResponse(like) {
     console.log("submitResponse is working!"); // sanity check
+    var list = window.location.href.split("/");
+    var movie_id = list[list.length - 2];
+    alert(movie_id);
 
     $.ajax({
         url: '/tbd/handleResponse',

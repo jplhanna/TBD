@@ -11,7 +11,7 @@ class questionHandler:
         movies=Movie.objects.all()
         if(currUser.username==""):
             return movies
-        userData=UserData.objects.filter(user = currUser)[0]
+        userData=UserData.objects.filter(user=currUser)[0]
         if userData.showAll==True:
             return movies
         if userData.netflix == True:
@@ -31,7 +31,7 @@ class questionHandler:
         scores = [float(0)] * len(movies)
         idToLocation = {}
         for _movie_itr_tmp in range(0, len(movies)):
-            idToLocation[movies[_movie_itr_tmp]] = _movie_itr_tmp
+            idToLocation[movies[_movie_itr_tmp].id] = _movie_itr_tmp
         for itr in range(0, len(QA)):
             if int(QA[itr]) == 0:
                 break
@@ -41,5 +41,6 @@ class questionHandler:
                     scores[idToLocation[choice.movie_id]] += float(QA[itr]) * float(choice.score)
         scores = np.matrix(scores)
         best_movie = movies[np.argmax(scores)]
+        print scores
         return best_movie
         
