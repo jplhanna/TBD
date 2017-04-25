@@ -241,7 +241,7 @@ def added(request):
     if request.user.username == "":
         return redirect('/tbd/signin')
     if request.method == "GET":
-        return user_help.addToFavotite(request)
+        return user_help.addToFavorite(request)
         '''
         movie_id = int(request.GET.get('movie_id'))
         movie = Movie.objects.filter(id=movie_id).all()[0]

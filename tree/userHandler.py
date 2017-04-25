@@ -48,7 +48,7 @@ class userHandler:
         user.set_password(password)
         user.save()
     
-    def addToFavotite(self, request):
+    def addToFavorite(self, request):
         movie_id = int(request.GET.get('movie_id'))
         movie = Movie.objects.filter(id=movie_id).all()[0]
         if int(request.GET.get('add')) == 1:
