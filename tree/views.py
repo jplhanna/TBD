@@ -171,7 +171,10 @@ def handleResponse(request):
         movie = int(request.GET.get('movie'))
         multiplier = float(1 * response)
         if response == current_response:
-            return
+            return HttpResponse(
+                json.dumps(response_data),
+                content_type="application/json"
+            )
         elif current_response != 0:
             multiplier = float(2 * response)
         scores = request.session.__getitem__('scores').split(',')
@@ -179,7 +182,10 @@ def handleResponse(request):
         for itr in range(0, 10):
             score = int(scores[itr])
             if score == 0:
-                return
+                return HttpResponse(
+                    json.dumps(response_data),
+                    content_type="application/json"
+                )
             score_obj = get_object_or_404(Score, movie_id=movie,
                                           question_id=int(questions[itr]))
             score_obj.score += multiplier * float(.05) * float(score)
