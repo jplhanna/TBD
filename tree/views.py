@@ -136,27 +136,10 @@ def handleQuestion(request):
         if question == 9 or answer == '0':
             currUser = request.user
             questions = request.session.__getitem__('questions').split(',')
-            if(currUser.username==""):
-                movies = Movie.objects.all()
-                scores = [float(0)] * len(movies)
-                idToLocation = {}
-                for _movie_itr_tmp in range(0, len(movies)):
-                    idToLocation[movies[_movie_itr_tmp]] = _movie_itr_tmp
-                questions = request.session.__getitem__('questions').split(',')
-                for itr in range(0, len(array)):
-                    if int(array[itr]) == 0:
-                        break
-                    choices = Score.objects.filter(question_id=int(questions[itr])).all()
-                    for choice in choices:
-                        if choice.movie_id in idToLocation:
-                            scores[idToLocation[choice.movie_id]] += float(array[itr]) * float(choice.score)
-                scores = np.matrix(scores)
-                best_movie = movies[np.argmax(scores)]
-                response_data['best_movie'] = best_movie.id
-            else:
-                q_help_tmp = questionHandler(currUser)
-                best_movie = q_help_tmp.getBestMovie(array, questions)
-                response_data['best_movie'] = best_movie.id
+            q_help_tmp = questionHandler(currUser)
+            best_movie = q_help_tmp.getBestMovie(array, questions)
+            response_data['best_movie'] = best_movie.id
+            if currUser.username != "":
                 _recommend_tmp = UserRecommended.objects.filter(user=request.user, movie=best_movie)
                 if _recommend_tmp.exists():
                     _recommend_tmp = UserRecommended.objects.filter(user=request.user, movie=best_movie).all()[0]
@@ -165,18 +148,6 @@ def handleQuestion(request):
                     _recommend_tmp = UserRecommended(user=request.user, movie=best_movie,
                     date=datetime.now())
                 _recommend_tmp.save()
-            '''
-            if(currUser.username==""):
-                movies = Movie.objects.all()
-            else:
-                userData=UserData.objects.filter(user = currUser)[0]
-                if userData.showAll==True:
-                    movies=Movie.objects.all()
-                else:
-                    movies = Movie.objects.filter(netflix = userData.netflix,
-                    amazon = userData.amazon, amazonPrime = userData.amazonPrime,
-                    hulu = userData.hulu, googlePlay = userData.googlePlay).all()
-            '''
             #response_data['best_movie'] = best_movie.id
 
         response_data['result'] = 'Create post successful!'
