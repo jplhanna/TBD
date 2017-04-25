@@ -184,7 +184,6 @@ def handleResponse(request):
                                           question_id=int(questions[itr]))
             score_obj.score += multiplier * float(.05) * float(score)
             score_obj.save()
-
         response_data['result'] = 'Create post successful!'
 
         return HttpResponse(
