@@ -9,8 +9,10 @@ import numpy as np
 import random
 import json
 import emailHandler as eH_tmp
+from userHandler import userHandler
 from datetime import datetime
 emailHandler = eH_tmp.emailHandler()
+user_help=userHandler()
 from questionHandler import questionHandler
 
 from .models import *
@@ -240,6 +242,8 @@ def added(request):
     if request.user.username == "":
         return redirect('/tbd/signin')
     if request.method == "GET":
+        user_help.addToFavotite(request)
+        '''
         movie_id = int(request.GET.get('movie_id'))
         movie = Movie.objects.filter(id=movie_id).all()[0]
         if int(request.GET.get('add')) == 1:
@@ -258,6 +262,7 @@ def added(request):
                 json.dumps(response_data),
                 content_type="application/json"
             )
+        '''
     return render(request,"added.html")
 '''
 signup: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
@@ -273,6 +278,8 @@ def signup(request):
             email_tmp=request.POST['inputEmail']
             password_tmp=request.POST.get('inputPassword')
             confirm_tmp=request.POST.get('inputPass')
+            return user_help.createUser(email_tmp, password_tmp, confirm_tmp, request)
+            '''
             if(User.objects.filter(username = email_tmp).exists()):
                 return render(request, "signup.html", {'error': "Email is already in use"})
             if(password_tmp==confirm_tmp):
@@ -287,19 +294,7 @@ def signup(request):
                 return redirect('/tbd/')#Change this redirect to the settings page once it has been made
             else:
                 return render(request,"signup.html", {'error':"Password didn't match"})
-            email_tmp = request.POST['inputEmail']
-            password_tmp = request.POST.get('inputPassword')
-            if User.objects.filter(username=email_tmp).exists():
-                return render(request, "signup.html", {'error': "Email is already in use"})
-            new_user = User.objects.create_user(email_tmp, email_tmp, password_tmp)
-            new_user.save()
-            #makes a UserData database object that is related to the user just made
-            new_user_data = UserData(user=new_user)
-            new_user_data.save()
-            aut_login_temp = authenticate(username=email_tmp, password=password_tmp)
-            login(request, aut_login_temp)
-            emailHandler.emailNewUser(email_tmp)
-            return redirect('/tbd/')#Change this redirect to the settings page once it has been made
+            '''
         return render(request, "signup.html")
     else:
         return redirect('/tbd')
@@ -355,9 +350,12 @@ def handleForgotPasswordChange(request):
     new_pass_tmp = request.POST.get('inputPassword')
     random = request.POST.get('submit')
     check = get_object_or_404(ForgotPass, random=random)
-    user = get_object_or_404(User, username=check.username)
+    user_tmp = get_object_or_404(User, username=check.username)
+    user_help.changePassword(user_tmp, new_pass_tmp)
+    '''
     user.set_password(new_pass_tmp)
     user.save()
+    '''
     check.delete()
     return redirect('/tbd/signin')
 
@@ -374,8 +372,11 @@ def handlePasswordChange(request):
         return redirect('/tbd/settings/') #should redirect the user back to settings page
     new_pass_tmp = request.POST.get('new_password')
     user_tmp = User.objects.get(user_name_tmp)
+    user_help.changePassword(user_tmp, new_pass_tmp)
+    '''
     user_tmp.set_password(new_pass_tmp)
     user_tmp.save()
+    '''
 
 '''
 handleForgotPassword: The method called when a user signifies that they forgot their password on the signin page.
@@ -525,6 +526,9 @@ def handleStreamingServices(request):
         service = int(request.GET.get('service'))
         onOff = request.GET.get('toggle') == 'true'
         currUser = request.user
+        user_help=userHandler()
+        user_help.setStreamingData(service, onOff, currUser)
+        '''
         userData = UserData.objects.filter(user=currUser)[0]
         print onOff == 'true'
         if service == 0:
@@ -545,6 +549,7 @@ def handleStreamingServices(request):
         else:
             userData.showAll = False
         userData.save()
+        '''
 
         response_data['result'] = 'Create post successful!'
 
@@ -581,10 +586,14 @@ modifies: The favorites table in the slqite database, the corresponding movie is
 def handleDeleteFavorite(request):
     response_data = {}
     if request.method == "GET":
+        '''
         movie_id_tmp = request.GET.get('movie_id')
         currUser = request.user
         favorite_tmp = UserFavorites.objects.filter(user=currUser, movie_id=movie_id_tmp)
         favorite_tmp.delete()
+        '''
+        user_help=userHandler()
+        user_help.deleteFavorite(request)
 
         response_data['result'] = 'Delete successful!'
 
