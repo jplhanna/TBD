@@ -4,9 +4,25 @@ from django.shortcuts import render, redirect
 from .models import *
 import emailHandler as eH
 
+'''
+userHandler: a simple static class used by the views.py when doing major interactions or modifications with a Django user object
+
+representation invariant: this._emailHandler will always equal a static instance of a emailHandler class from emailHandler.py
+
+abstract function: None
+'''
 class userHandler:
     _emailHandler=eH.emailHandler()
     
+    '''
+    createUser: called when ever someone attempts to create a new user account, and redirects the user to a different webpage
+    input: email: A string which should be a legitamite email input by the user
+           password: A string containing the password the user wishes to use for their account
+           confirm_password: A string containing a second input by the user to confirm their password
+           request: An html request sent by the signup webpage went the user submits their information
+    output: If the email is already in use or the password do not match the they are returned to the signup page with an error
+            Otherwise the user is sent to their settings page
+    '''
     def createUser(self, email, password, confirm_password, request):
         if(User.objects.filter(username = email).exists()):
             return render(request, "signup.html", {'error': "Email is already in use"})
@@ -19,10 +35,17 @@ class userHandler:
             aut_login_temp = authenticate(username = email, password = password)
             login(request,aut_login_temp)
             self._emailHandler.emailNewUser(email)
-            return redirect('/tbd/')#Change this redirect to the settings page once it has been made
+            return redirect('/tbd/settings/')#Change this redirect to the settings page once it has been made
         else:
             return render(request,"signup.html", {'error':"Password didn't match"})
-            
+    
+    '''
+    setStreamingData: a method which is called whenever the user interacts with their streaming services on their settings page
+    input: service: should contain an integer between 0 and 5, which corresponds to a streaming service
+           status: A boolean which signifies whether the user is checking or unchecking that streaming service
+           currUser: The django user object for the current user
+    modifies: changes a streaming service boolen within the corresponding userData object for the current user
+    '''
     def setStreamingData(self, service, status, currUser):
         userData = UserData.objects.filter(user=currUser)[0]
         if service == 0:
@@ -44,10 +67,22 @@ class userHandler:
             userData.showAll = False
         userData.save()
     
+    '''
+    changePassword: simply changes the password for a user
+    input: user: The django user object that will have its password changed
+           password: A string containing the new password for the user
+    modifies: Changes the password for the corresponding user
+    '''
     def changePassword(self, user, password):
         user.set_password(password)
         user.save()
     
+    '''
+    addToFavorite: Called whenever a user wishes to add a movie to their favorites list, either from a movie info page, or their settings page
+    input: request: An html request sent from the settings page, or movie info page, when a user clicks add to favorites
+    output: Sends the webpage a render to give feedback the the movie was added.
+    modifies: The UserFavorites sql database, by either adding or removing an object
+    '''
     def addToFavorite(self, request):
         movie_id = int(request.GET.get('movie_id'))
         movie = Movie.objects.filter(id=movie_id).all()[0]
@@ -68,6 +103,11 @@ class userHandler:
                 content_type="application/json"
             )
     
+    '''
+    deleteFavorite: called when the user wishes to delete a favorite from their settings page
+    input: request: an html request sent when the user clicks to delete a movie from their favorites list on their settings page
+    modifies: The UserFavorites sql database, by removing an object
+    '''
     def deleteFavorite(self, request):
         movie_id_tmp = request.GET.get('movie_id')
         currUser = request.user
