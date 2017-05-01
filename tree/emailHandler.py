@@ -1,7 +1,16 @@
 from django.core.mail import send_mail
 
 
+'''
+emailHandler: A simple static class used by the userHandler and views class whenever the delphi webapp needs to send an email to a user
 
+Representation Invarient: this._email_account will always equal the email address that will be used by the delphi webapp. Should match the one in /tbd/settings.py
+                          this._new_acc_subject and this._forget_pass_subject should always contain a string which is the subject of an email corresponding to a function
+                          this._new_acc_email_file and this._forg_pass_email_file should always contain a string that paths to a txt file containing the body of an email
+                          which should corresponds to a function
+
+Abstraction Function: None
+'''
 class emailHandler:
     _email_account='delphi.tbd@gmail.com'
     _new_acc_subject='New Delphi Account'
