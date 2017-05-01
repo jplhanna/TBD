@@ -1,146 +1,59 @@
-*{
-	box-sizing: border-box;
-	margin:0;
-	font-family: 'Montserrat', sans-serif;
-}
-
-header{
-	width:100%;
-	height:6em;
-	background-color:#071F37;
-	display: flex;
-	display: -webkit-flex;
-	justify-content:space-between;
-	-webkit-justify-content:space-between;
-}
-
-#logo{
-	width:4em;
-	height:4em;
-	margin:1em 0 1em 2em;
-	background-image:url("../img/logoSimple_256x256.png");
-	background-repeat: no-repeat;
-	background-size: cover;
-	display: inline-block;
-}
-
-ul{
-	display: inline-block;
-	list-style-type: none;
-	padding:0;
-	color:#fff;
-}
-
-li{
-	display: inline-block;
-	color:#419BF9;
-	margin:2em;
-}
-
-li:hover{
-	color:#419BF9;
-}
-
-main{
-	margin-top: 4em;
-}
-
-h1, h3{
-	width:60%;
-	margin: 0 auto;
-	text-align: center;
-	color:#419BF9;
-}
-
-h1{
-	font-size: 6em;
-}
-
-h3{
-	font-size: 3em;
-	padding-top:1em;
+h4{
+	font-size: 2em;
 }
 
 a.faves{
-	color: red !important;
+	color: #419BF9;
 	text-decoration:none;
 }
 
-#start{
+#myService label{
+	color:#419BF9;
 	display: block;
-	margin:0 auto;
-	margin-top: 6em;
-	width:10em;
-	height:4em;
-	font-size: 1em;
-	color:#fff;
-	background-color: #419BF9;
-	border:none;
-	border-radius: 6px;
-	-webkit-transition: margin-top 0.3s;
-    transition: margin-top 0.3s;
-}
-
-#start:hover{
-	margin-top: 5.5em;
-	background-color: #368DE7;
+	line-height:2;
+	font-size: 1.5rem;
+	margin:0;
+	display: flex;
+	display: -webkit-flex;
+	-webkit-align-items:center;
+	align-items:center;
 }
 
 [contenteditable="true"]:focus{
 	outline: 0px solid transparent;
-	color:#419BF9;
   	-webkit-text-fill-color: #071F37;
   	padding-left: 1em;
+  	border-radius:6px;
+}
+
+#inputnewPassword{
+	border:1px solid #419BF9;
+	border-radius:6px;
+	line-height: 2;
+	margin:1rem;
 }
 
 .tinyBTN{
-	width:6rem;
+	width:12rem;
+	height:4rem;
 	background-color: #419BF9;
 	color:#fff;
+	border:none;
 	border-radius: 6px;
-	padding:0.5rem;
+	padding:1rem;
 	text-align:center;
-	font-size:0.8rem;
+	font-size:1.2rem;
 	letter-spacing: 1.5px;
 	cursor: pointer;
+	margin:1rem;
+}
+
+.tinyBTN:focus{
+	outline: none;
 }
 
 .tinyBTN:hover{
 	background-color: #368DE7;
-}
-
-/*set style for dropdown menu*/
-select{
-	border: 0 !important;
-	width:12rem;
-	height:2.5rem;
-	color:#fff;
-	appearance: none;
-	-moz-appearance: none;
-	-webkit-appearance: none;
-	background: url('../img/dropdownBg.png');
-	background-repeat:no-repeat;
-	background-size:cover;
-	background-position: right center;
-	font-size: 1rem;
-	letter-spacing: 1px;
-	padding-left:1em;
-	margin-left: 2em;
-}
-
-select:focus{
-	outline: none;
-}
-
-select:hover{
-	background: url('../img/dropdownBg_hover.png');
-	background-repeat:no-repeat;
-	background-size:cover;
-	background-position: right center;
-}
-
-option{
-	color:#3c4f63;
 }
 
 /*
@@ -160,13 +73,17 @@ option{
 /*set gap between rows in table for account info*/
 #accountInfo{
 	border-spacing:0em 2em;
+	width:80%;
 }
 
+#accountInfo tr{
+	height:6rem;
+}
 
 .accountTitle{
 	text-transform: uppercase;
 	color:#419BF9;
-	font-size: 0.8rem;
+	font-size: 1.2rem;
 	letter-spacing: 1px;
 }
 
@@ -178,6 +95,8 @@ option{
 }
 
 #savePassword, #cancelPassword{
+	width:12rem;
+	height:4rem;
 	display: inline-block;
 	margin-left: 1em;
 }
@@ -189,12 +108,8 @@ option{
 
 .title{
 	letter-spacing: 1px;
-	display: inline-block;
-	color:#419BF9;
-}
-
-.title{
 	display: block;
+	color:#419BF9;
 }
 
 #myService form{
@@ -244,6 +159,7 @@ option{
 	height: 20vh;
 	overflow-y: scroll;
 	margin: 2em 0;
+	font-size: 1.5rem;
 }
 
 #myList ul li, #recom ul li{
@@ -271,8 +187,8 @@ option{
 }
 
 .delete{
-	width:4rem;
-	height:1.2rem;
+	width:8rem;
+	height:2.4rem;
 	background: url('../img/delete.png');
 	background-repeat:no-repeat;
 	background-size:90%;
@@ -287,8 +203,8 @@ option{
 }
 
 .add{
-	width:10rem;
-	height:2rem;
+	width:15rem;
+	height:3rem;
 	background: url('../img/add.png');
 	background-repeat:no-repeat;
 	background-size:90%;
@@ -300,18 +216,4 @@ option{
 	background-repeat:no-repeat;
 	background-size:90%;
 	background-position: center;
-}
-
-.deletebtn{
-    background-color: red;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    border-radius: 6px;
-    text-align: center;
-    text-decoration: none;
-    display: block;
-    float: right;
-    margin: 10px 10px;
-    cursor: pointer;
 }
