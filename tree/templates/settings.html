@@ -8,9 +8,7 @@
 <html lang="en">
     <head>
         <title>Delphi | Settings</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <link rel="stylesheet" href="{% static 'css/style.css' %}">
         <link rel="stylesheet" href="{% static 'css/settings.css' %}">
         <script src="{% static 'js/shared.js' %}"></script>
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
@@ -18,26 +16,35 @@
     </head>
     
     <body style="background-color: #f8f8f8;">
-    	{% include "navigation.html" %}
+    	<header>
+            <a class="navbar-brand" href="/"><img src="{% static 'img/logoSimple_256x256.png' %}" height="84px"/></a>
+            <ul>
+				{% if user.is_authenticated %}
+				  <li><a style = "color:#fff; text-decoration:none;" href="/tbd/settings">{{user.username}}</a></li>
+				  <li><a style = "color:#fff; text-decoration:none;" href="/tbd/handleSignOut">Sign Out</a></li>
+				{% else %}
+				  <li><a href="/tbd/signin">Sign In</a></li>
+				  <li><a href="/tbd/signup">Sign Up</a></li>
+				{% endif %}
+            </ul>
+        </header>
         <main>
-        	<div  class="block">
-			<table id="accountInfo">
+			<table id="accountInfo" class="block">
 				<tr>
 					<td class="accountTitle">email</td>
 					<td class="infoDetail">{{user.email}}</td>
 				</tr>
-				<tr id="oldPassword">
+				<tr>
 					<td class="accountTitle">password</td>
-					<td><button type="button" class="tinyBTN" id="changePassword">Change</button></td>
+					<td><button type="button" class="btn btn-primary" id="changePassword">Change</button></td>
 				</tr>
 				<tr id="newPassword">
 					<td class="accountTitle">new password</td>
-					<td><input class="infoDetail password" id="inputnewPassword" style="-webkit-text-security: disc;"></td>
+					<td class="infoDetail password" id="inputnewPassword" style="-webkit-text-security: disc;"></td>
 					<td><div class="tinyBTN" id="savePassword">Save</div>
 					<div class="tinyBTN" id="cancelPassword">Cancel</div></td>
 				</tr>
 			</table>
-			</div>
 
 			<div class="form-group">
 				<div id="myService" class="block">
@@ -80,8 +87,9 @@
 					<!--<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">mad max: fury road</a><div class="add"></div></li>-->
 				</ul>
 			</div>
-			<a href="/tbd" style="display:block;text-align:center;margin-bottom:6rem;"><button class="btn">Save</button></a>
-			<!-- <button class="btn" onclick="deleteAccount()">Delete</button> -->
+			<td><a href="/tbd"><div class="tinyBTN" style="margin:auto;" >Save</div></a></td>
+			
+			<button class="deletebtn" onclick="deleteAccount()">Delete</button>
 			<script>
 				function deleteAccount() {
 				    if (confirm("Do you really want to delete your account?") == true) {
@@ -92,6 +100,29 @@
 				    }
 				}
 			</script>
+			
+			<!--
+			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccount" id="deleteAccount" style="background-color:red;">Delete</button>
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="deleteAccountLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="deleteAccountLabel" >Account Deletion</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<p>Are you sure you want to delete your account?</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-primary" data-dismiss="modal">No</button>
+							<button type="button" class="btn btn-danger">Yes</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			-->
 		</main>
 	</body>
 
@@ -99,25 +130,36 @@
 		$("#newPassword").hide();
 
 		$("#changePassword").click(function(){
-			$("#oldPassword").hide();
+			$("#currentPassword").prop("contenteditable","true");
+			$("#inputnewPassword").prop("contenteditable","true");
+			$('#currentPassword').focus();
+			$('#currentPassword').empty();
+			$('#inputnewPassword').empty();
+			$("#currentPassword").css({"border":"1px solid #071F37","border-radius":"6px"});
+			$(this).hide();
 			$("#newPassword").show();
 			$("#newPassword").click(function(){
 				//validate old password
-			});
+			})
+			$("#inputnewPassword").css({"border":"1px solid #071F37","border-radius":"6px"});
 			$("#cancelPassword").css({"border":"1px solid #419BF9","color":"#419BF9","background-color":"#fff"});
 		});
 
 		$("#savePassword").click(function(){
 			password=$("#inputnewPassword").text();
+			$("#currentPassword").prop("contenteditable","false");
+			$("#currentPassword").css({"border":"none"});
+			$("#changePassword").show();
 			$("#newPassword").hide();
-			$("#oldPassword").show();
 			$("#currentPassword").text(password);
 			//update password in bac-kend
 		});
 
 	$("#cancelPassword").click(function(){
+		$("#currentPassword").prop("contenteditable","false");
+		$("#currentPassword").css({"border":"none"});
+		$("#changePassword").show();
 		$("#newPassword").hide();
-		$("#oldPassword").show();
 		$("#currentPassword").text(password);
 	});
 

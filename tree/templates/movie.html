@@ -7,37 +7,46 @@
         <title>Delphi Recommendation Engine</title>
         <script src="{% static 'js/shared.js' %}"></script>
     </head>
-    <body style="background-color:#f8f8f8; height:100vh; overflow:hidden;">
+    <body>
         {% include "navigation.html" %}
-        <div id="wrapper">
-            <a onclick="addToFav(1)"><div id="fav"></div></a>
-            
-            <!--movie image-->
-            <div class="row-sm-2" style="text-align:center;margin-top:-2rem;">
-                <a href="{{movie.imdb}}" target="_blank"><img src="{{movie.poster}}" width="150px"/></a>
-            </div>
         
-            <h4 id="title">{{movie.title}}</h4>
-            <h5 id="survey">Do you like this recommendation?</h5>
-            <div class="buttons" >
-                <button type="button" class="btn survey btn-up" onclick="submitResponse(1);">Yes</button>
-                <button type="button" class="btn survey btn-down" onclick="submitResponse(-1);">No</button>
-            </div>
+        <h3 id="title" style="width:60%;">{{movie.title}}</h3>
+        <div class="row-sm-3">
+            <button type="button" class="btn btn-up" aria-label="Left Align" onclick="changeGreen();submitResponse(1);">
+                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="false"></span>
+            </button>
+            <script>
+                function changeGreen() {
+                    $(".btn-up").css("background-color","#5cb85c");
+                    $(".btn-down").css("background-color","#aec1d6");
+                }
+            </script>
+            <button type="button" class="btn btn-down" aria-label="Left Align" onclick="changeRed();submitResponse(-1)">
+                <span class="glyphicon glyphicon-thumbs-down" aria-hidden="false"></span>
+            </button>
+            <script>
+                function changeRed() {
+                    $(".btn-down").css("background-color","#d9534f");
+                    $(".btn-up").css("background-color","#aec1d6");
+                }
+            </script>
         </div>
-        <div class="buttons" style="width:24%">
-            <a href="/tbd/question"><button class="btn btn-success" id="start" style="margin:1em">Start over</button></a>
-            <a href="/tbd/handleRandom"><button class="btn btn-success" style="margin:1em">Random</button></a>
+        <div>.</div>
+        <div>.</div>
+        <div class="row-sm-2" style="text-align:center;">
+            <a href="{{movie.imdb}}" target="_blank"><img src="{{movie.poster}}" width="150px"/></a>
         </div>
+        <div id="buttons">
+        <a href="/tbd/question"><button class="btn btn-success" id="start" style="margin:1em">Start over</button></a>
+        <a href="/tbd/handleRandom"><button class="btn btn-success" style="margin:1em">Random</button></a>
+        </div>
+        {% if user.username != "" %}
+            <a onclick="changeText();addToFav(1)"><button class="btn btn-primary" id="fav">Add to favorites</button></a>
+        {% endif %}
         <script>
-
-                $('#fav').click(function(){
-                    $(this).css("background-image","url('/static/img/faved.png')");
-                });
-            
-            $(".survey").click(function(){
-                $(this).css({"background-color":"#419BF9","color":"#fff"});
-                $(this).siblings().css({"background-color":"#CAD8E6","color":"#fff"});
-            })
+            function changeText(){
+                $("#fav").text("Added");
+            }
         </script>
         
     </body>

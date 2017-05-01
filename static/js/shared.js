@@ -13,8 +13,8 @@ $( document ).ready(function(){
 // AJAX for posting
 function submit(yn) {
     if(_question_num >= 9 || yn == 0){
-        $('#buttons').hide();
-        $('#finish').hide();
+        $('#buttons').html(" ");
+        $('#finish').html(" ");
     }
 
     $.ajax({

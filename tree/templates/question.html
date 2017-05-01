@@ -24,12 +24,12 @@
         <h3 id = "question"></h3>
         <p id = "results"></p>
         <p id = "answer"></p>
-        <div class="buttons" style="width:25%;margin-top:4rem;">
-            <button type="button" class="btn" id="buttonYes" onclick="submit(1)" style="background-color:#98C38C;color:#fff;">Yes</button>
-            <button type="button" class="btn" id="buttonNo" onclick="submit(-1)" style="background-color:#F17272;color:#fff;">No</button>
+        <div id="buttons">
+            <button type="button" class="btn btn-success" id="buttonYes" onclick="submit(1)" style="font-size=35px;">Yes</button>
+            <button type="button" class="btn btn-danger" id="buttonNo" onclick="submit(-1)" style="font-size=35px;">No</button>
         </div>
-        <div id="finish" >
-            <button type="button" class="btn" id="buttonFinish" onclick="submit(0)" style="display:block;margin:0 auto;margin-top:12rem;">Finish</button>
+        <div id="finish">
+            <button type="button" class="btn btn-primary" id="buttonFinish" onclick="submit(0)" style="font-size=35px">Finish</button>s
         </div>
     </body>
 </html>
