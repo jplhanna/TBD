@@ -38,7 +38,7 @@ class questionHandler:
             choices = Score.objects.filter(question_id=int(questions[itr])).all()
             for choice in choices:
                 if choice.movie_id in idToLocation:
-                    scores[idToLocation[choice.movie_id]] += float(QA[itr]) * float(choice.score)
+                    scores[idToLocation[choice.movie_id]] += float(QA[itr]) * float(choice.score) * movies[idToLocation[choice.movie_id]].popularity
         scores = np.matrix(scores)
         best_movie = movies[np.argmax(scores)]
         print scores

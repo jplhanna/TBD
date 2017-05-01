@@ -6,16 +6,18 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.core.mail import send_mail
 import numpy as np
-import random
-import json
-import emailHandler as eH_tmp
+import tree.emailHandler as eH_tmp
 from userHandler import userHandler
 from datetime import datetime
-emailHandler = eH_tmp.emailHandler()
-user_help=userHandler()
 from questionHandler import questionHandler
 
 from .models import *
+
+import random
+import json
+
+emailHandler = eH_tmp.emailHandler()
+user_help = userHandler()
 
 #For more information on the adt's of the subclasses of ListView can be found
 #by looking in the Django documentation
@@ -101,11 +103,15 @@ class questions(generic.ListView):
         if self.request.session.session_key == None:
             self.request.session.create()
         if('scores' not in self.request.session or
-           self.request.session.__getitem__('scores')[-1] != '0'):
+           'finish' not in self.request.session or
+           self.request.session.__getitem__('scores')[-1] != '0' or
+           self.request.session.__getitem__('finish') == 1):
             self.request.session.__setitem__('scores', scores_str)
+            self.request.session.__setitem__('finish', 0)
         current_scores = self.request.session.__getitem__('scores')
         if current_scores[0] != '0' and current_scores[-1] == '0':
-            context['question_list'] = self.getQuestionsFromString(self.request.session.__getitem__('questions'))
+            context['question_list'] = self.getQuestionsFromString(
+                self.request.session.__getitem__('questions'))
             context['scores'] = current_scores
             return context
         context['question_list'], str = self.getQuestions()
@@ -127,15 +133,17 @@ def handleQuestion(request):
         #finish = request.GET.get('finish')
         question = int(request.GET.get('q'))
         answer = request.GET.get('a')
-        print answer
+        print "ans", answer
         array = request.session.__getitem__('scores').split(',')
         array[question] = str(answer)
         str_tmp = array[0]
         for itr in array[1:]:
             str_tmp += ',' + itr
         request.session.__setitem__('scores', str_tmp)
-        print request.session.__getitem__('scores')
+        print "important", request.session.__getitem__('scores')
         if question == 9 or answer == '0':
+            if str_tmp == "0,0,0,0,0,0,0,0,0,0":
+                return handleRandom(request)
             currUser = request.user
             questions = request.session.__getitem__('questions').split(',')
             q_help_tmp = questionHandler(currUser)
@@ -144,12 +152,15 @@ def handleQuestion(request):
             if currUser.username != "":
                 _recommend_tmp = UserRecommended.objects.filter(user=request.user, movie=best_movie)
                 if _recommend_tmp.exists():
-                    _recommend_tmp = UserRecommended.objects.filter(user=request.user, movie=best_movie).all()[0]
+                    _recommend_tmp = UserRecommended.objects.filter(user=request.user,
+                                                                    movie=best_movie).all()[0]
                     _recommend_tmp.date = datetime.now()
                 else:
-                    _recommend_tmp = UserRecommended(user=request.user, movie=best_movie,
-                    date=datetime.now())
+                    _recommend_tmp = UserRecommended(user=request.user,
+                                                     movie=best_movie, date=datetime.now())
                 _recommend_tmp.save()
+            request.session.__setitem__('finish', 1)
+            handleRandom(request)
             #response_data['best_movie'] = best_movie.id
 
         response_data['result'] = 'Create post successful!'
@@ -268,7 +279,7 @@ def added(request):
                 content_type="application/json"
             )
         '''
-    return render(request,"added.html")
+    return render(request, "added.html")
 '''
 signup: Handles the user inputting and email and password into the input boxes on the SignUp webpage for the TBD website.
 input: request: An html request which is sent by the user as they are on the SignUp webpage
@@ -280,9 +291,9 @@ modifies: The Django user database by creating a new user object
 def signup(request):
     if request.user.username == "":
         if request.method == "POST":
-            email_tmp=request.POST['inputEmail']
-            password_tmp=request.POST.get('inputPassword')
-            confirm_tmp=request.POST.get('inputPass')
+            email_tmp = request.POST['inputEmail']
+            password_tmp = request.POST.get('inputPassword')
+            confirm_tmp = request.POST.get('inputPass')
             return user_help.createUser(email_tmp, password_tmp, confirm_tmp, request)
             '''
             if(User.objects.filter(username = email_tmp).exists()):
@@ -296,7 +307,8 @@ def signup(request):
                 aut_login_temp = authenticate(username = email_tmp, password = password_tmp)
                 login(request,aut_login_temp)
                 emailHandler.emailNewUser(email_tmp)
-                return redirect('/tbd/')#Change this redirect to the settings page once it has been made
+                return redirect('/tbd/')
+                #Change this redirect to the settings page once it has been made
             else:
                 return render(request,"signup.html", {'error':"Password didn't match"})
             '''
@@ -392,26 +404,26 @@ def handleForgotPassword(request):
     user_name_tmp = request.POST.get('email')
     user_tmp = get_object_or_404(User, username=user_name_tmp)
     random_url = ""
-    if ForgotPass.objects.filter(username=user_name_tmp).exists():
-        random_url = ForgotPass.objects.filter(username=user_name_tmp).all()[0].random
-    else:
-        for count_tmp in range(1, 10):
-            for itr in range(0, 5 * count_tmp):
-                tmp = int(random.random()*62)
-                if tmp < 10:
-                    random_url += str(tmp)
-                elif tmp < 36:
-                    random_url += chr(tmp + 55)
-                else:
-                    random_url += chr(tmp + 61)
-            if not ForgotPass.objects.filter(random=random_url).exists():
-                break
+    # if ForgotPass.objects.filter(user=user_tmp).exists():
+    #     random_url = ForgotPass.objects.filter(user=user_tmp).all()[0].random
+    # else:
+    for count_tmp in range(1, 10):
+        for itr in range(0, 5 * count_tmp):
+            tmp = int(random.random()*62)
+            if tmp < 10:
+                random_url += str(tmp)
+            elif tmp < 36:
+                random_url += chr(tmp + 55)
             else:
-                random_url = ""
-        if random_url == "":
-            return redirect('/tbd/forgotPassword')
-        forgotpass_tmp = ForgotPass(username=user_name_tmp, random=random_url)
-        forgotpass_tmp.save()
+                random_url += chr(tmp + 61)
+        if not ForgotPass.objects.filter(random=random_url).exists():
+            break
+        else:
+            random_url = ""
+    if random_url == "":
+        return redirect('/tbd/forgotPassword')
+    forgotpass_tmp = ForgotPass(user=user_tmp, random=random_url)
+    forgotpass_tmp.save()
     emailHandler.emailForgPass(user_name_tmp, random_url)
     return redirect('/tbd/signin')
 
@@ -531,7 +543,7 @@ def handleStreamingServices(request):
         service = int(request.GET.get('service'))
         onOff = request.GET.get('toggle') == 'true'
         currUser = request.user
-        user_help=userHandler()
+        user_help = userHandler()
         user_help.setStreamingData(service, onOff, currUser)
         '''
         userData = UserData.objects.filter(user=currUser)[0]
@@ -578,8 +590,6 @@ def handleDeleteAccount(request):
         return redirect("/tbd/signin")
     else:
         currUser.delete()
-        return redirect("/tbd/signin")
-        
         return redirect("/tbd")
 
 '''
@@ -597,12 +607,12 @@ def handleDeleteFavorite(request):
         favorite_tmp = UserFavorites.objects.filter(user=currUser, movie_id=movie_id_tmp)
         favorite_tmp.delete()
         '''
-        user_help=userHandler()
+        user_help = userHandler()
         user_help.deleteFavorite(request)
 
         response_data['result'] = 'Delete successful!'
 
         return HttpResponse(
             json.dumps(response_data),
-            content_type = "application/json"
+            content_type="application/json"
         )

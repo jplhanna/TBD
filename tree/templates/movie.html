@@ -40,7 +40,9 @@
         <a href="/tbd/question"><button class="btn btn-success" id="start" style="margin:1em">Start over</button></a>
         <a href="/tbd/handleRandom"><button class="btn btn-success" style="margin:1em">Random</button></a>
         </div>
-        <a onclick="changeText();addToFav(1)"><button class="btn btn-primary" id="fav">Add to favorites</button></a>
+        {% if user.username != "" %}
+            <a onclick="changeText();addToFav(1)"><button class="btn btn-primary" id="fav">Add to favorites</button></a>
+        {% endif %}
         <script>
             function changeText(){
                 $("#fav").text("Added");
