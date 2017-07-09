@@ -66,22 +66,11 @@
 					{% for movie in previous %}
 						<li><a class="faves" href="{{movie.imdb}}" target="blank">{{movie.title}}</a><div class="add"></div></li>
 					{% endfor %}
-					<!--<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">deal pool</a><div class="add"></div></li>-->
-					<!--<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">ghost in the shell</a><div class="add"></div></li>-->
-					<!--<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">star trek</a><div class="add"></div></li>-->
-					<!--<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">iron man</a><div class="add"></div></li>-->
-					<!--<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">the theory of everything</a><div class="add"></div></li>-->
-					<!--<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">jurassic park</a><div class="add"></div></li>-->
-					<!--<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">transcendence</a><div class="add"></div></li>-->
-					<!--<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">the lobster</a><div class="add"></div></li>-->
-					<!--<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">star trek: beyond</a><div class="add"></div></li>-->
-					<!--<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">zootopia</a><div class="add"></div></li>-->
-					<!--<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">the martian</a><div class="add"></div></li>-->
-					<!--<li><a href="http://www.imdb.com/title/tt2245084/" target="blank">mad max: fury road</a><div class="add"></div></li>-->
 				</ul>
 			</div>
-			<a href="/tbd" style="display:block;text-align:center;margin-bottom:6rem;"><button class="btn">Save</button></a>
-			<!-- <button class="btn" onclick="deleteAccount()">Delete</button> -->
+			<a href="/tbd" style="display:block;text-align:center;margin-bottom:6rem;"><button class="btn">Save</button>
+			<button class="btn" onclick="deleteAccount()">Delete</button></a>
+			
 			<script>
 				function deleteAccount() {
 				    if (confirm("Do you really want to delete your account?") == true) {

@@ -616,3 +616,7 @@ def handleDeleteFavorite(request):
             json.dumps(response_data),
             content_type="application/json"
         )
+
+
+def setting2(request):
+    return render(request,"settings2.html")

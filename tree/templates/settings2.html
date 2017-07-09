@@ -1,0 +1,45 @@
+{% load staticfiles %}
+<!DOCTYPE <!DOCTYPE html>
+<html>
+    </<head>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        {% include "head.html" %}
+        <title>Delphi Recommendation Engine</title>
+        <script src="{% static 'js/shared.js' %}"></script>
+    </head>
+    </<body style="background-color:#f8f8f8; height:100vh; overflow:hidden;">
+        {% include "navigation.html" %}
+        <div id="wrapper">
+            <table class="table" id="account_info">
+                <tbody>
+                    <tr>
+                        <td class="accountTitle">email</td>
+                        <td class="infoDetail">{{user.email}}</td>
+                    </tr>
+                    <tr id="old password">
+                        <td class="accountTitle">password</td>
+                        <td><button type="tinyBTN" class="tinyBTN" data-toggle="collapse" data-target="#changePass1">Change Password</button></td>
+                    </tr>
+                    <tr id="new password">
+                        <td>
+                            <div id="changePass1" class="collapse">
+                                <table class="table" id="newPassInfo">
+                                    <tbody>
+                                        <td class="accountTitle">new password</td>
+                    					<td><input class="infoDetail password" id="inputnewPassword" style="-webkit-text-security: disc;"></td>
+                    					<td>
+                    					    <button type="tinyBTN" class="tinyBTN" id="savePassword">Save</button>
+                    					    <button type="tinyBTN" class="tinyBTN" id="cancelPassword">Cancel</button>
+                    					</td>
+                					</tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+                
+            </table>
+        </div>
+        
+    </body>
+</html>

@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from tree.views import signup,signin
+from tree.views import signup, signin, setting2
 
 from . import views
 #This file is simply meant to contain all urls used by the Tree application of the TBD project. Aka, the Delphi Website
@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^signup/', signup),
     url(r'^signin/', signin),
     url(r'^signin2/', views.signin2, name='signin2'),
-    url(r'^settings/', views.settings.as_view())
+    url(r'^settings/', views.settings.as_view()),
+    url(r'^settings2/', setting2)
 ]
