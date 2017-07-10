@@ -9,31 +9,23 @@
     </head>
     </<body style="background-color:#f8f8f8; height:100vh; overflow:hidden;">
         {% include "navigation.html" %}
-        <div id="wrapper">
+        <div class="well well-sm" id="wrapper">
             <table class="table" id="account_info">
                 <tbody>
                     <tr>
                         <td class="accountTitle">email</td>
                         <td class="infoDetail">{{user.email}}</td>
                     </tr>
-                    <tr id="old password">
+                    <tr id="changePass" class="demo collapse in">
                         <td class="accountTitle">password</td>
-                        <td><button type="tinyBTN" class="tinyBTN" data-toggle="collapse" data-target="#changePass1">Change Password</button></td>
+                        <td><button type="tinyBTN" class="tinyBTN" data-parent=".table" data-toggle="collapse" data-target=".demo">Change Password</button></td>
                     </tr>
-                    <tr id="new password">
+                    <tr id="changePass" class="demo collapse">
                         <td>
-                            <div id="changePass1" class="collapse">
-                                <table class="table" id="newPassInfo">
-                                    <tbody>
-                                        <td class="accountTitle">new password</td>
-                    					<td><input class="infoDetail password" id="inputnewPassword" style="-webkit-text-security: disc;"></td>
-                    					<td>
-                    					    <button type="tinyBTN" class="tinyBTN" id="savePassword">Save</button>
-                    					    <button type="tinyBTN" class="tinyBTN" id="cancelPassword">Cancel</button>
-                    					</td>
-                					</tbody>
-                                </table>
-                            </div>
+                            new password
+        					<input class="infoDetail password" type="password" id="inputnewPassword">
+    					    <button type="tinyBTN" class="tinyBTN" id="savePassword" onclick="updatePass(1)" data-parent=".table" data-toggle="collapse" data-target=".demo">Save</button>
+    					    <button type="tinyBTN" class="tinyBTN" id="cancelPassword" data-toggle="collapse" data-parent=".table" data-target=".demo">Cancel</button>
                         </td>
                     </tr>
                 </tbody>
